@@ -955,6 +955,24 @@
             renderTeacherTable(e.target.value);
         });
 
+        // --- TOAST NOTIFICATION FUNCTION ---
+        function showToast(title, msg, type = 'success') {
+            const t = document.getElementById('custom-toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-message').textContent = msg;
+            const icon = document.getElementById('toast-icon');
+            
+            t.className = `fixed bottom-6 right-6 max-w-sm w-full bg-white rounded-xl shadow-2xl border-l-4 p-4 z-50 flex items-start gap-3 toast-enter-active ${type==='success'?'border-green-500':'border-red-500'}`;
+            icon.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check text-green-500':'fa-circle-xmark text-red-500'} text-xl"></i>`;
+            
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => t.classList.replace('toast-enter-active', 'toast-exit-active'), 4000);
+        }
+        
+        document.getElementById('close-toast').addEventListener('click', () => {
+            document.getElementById('custom-toast').classList.replace('toast-enter-active', 'toast-exit-active');
+        });
+
         window.addEventListener('DOMContentLoaded', initApp);
         setInterval(() => {
             const next = document.querySelector('.slide.active').nextElementSibling;

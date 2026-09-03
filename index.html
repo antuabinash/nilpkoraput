@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NILP ଆୱାର୍ଡ ପୋର୍ଟାଲ୍ | Koraput District</title>
+    <script src="tailwind.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
+        .slide { opacity: 0; transition: opacity 1.5s ease-in-out; position: absolute; inset: 0; z-index: 0; }
+        .slide.active { opacity: 1; z-index: 10; }
+        .glass-panel { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .toast-enter { transform: translateY(100%); opacity: 0; }
+        .toast-enter-active { transform: translateY(0); opacity: 1; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .toast-exit-active { transform: translateY(100%); opacity: 0; transition: all 0.3s ease-in; }
+        .gov-gradient { background: linear-gradient(90deg, #1e3a8a 0%, #082f49 100%); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-orange-500">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 sm:h-20 items-center">
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <img src="india_govt_logo.png" alt="Govt of India" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/1e3a8a?text=India'">
+                    <img src="odisha_govt_logo.png" alt="Govt of Odisha" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/1e3a8a?text=Odisha'">
+                    <div class="hidden md:flex flex-col border-l-2 border-slate-200 pl-4 ml-2">
+                        <span class="font-extrabold text-xl text-blue-900 leading-tight">NILP ଆୱାର୍ଡ ପୋର୍ଟାଲ୍</span>
+                        <span class="text-[10px] uppercase font-bold text-orange-600 tracking-wider">Koraput District Portal</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <img src="ullas_logo.png" alt="ULLAS" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/ea580c?text=ULLAS'">
+                    <span id="auth-status" class="text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full flex items-center gap-1 sm:gap-2 border border-amber-200 shadow-sm whitespace-nowrap">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i> <span class="hidden sm:inline">ସଂଯୋଗ ହେଉଛି...</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative w-full h-[40vh] min-h-[300px] md:h-[50vh] gov-gradient overflow-hidden shadow-inner">
+        <div id="slider" class="w-full h-full relative mix-blend-overlay opacity-40">
+            <div class="slide active bg-cover bg-center" style="background-image: url('slide_1.jpg');"></div>
+            <div class="slide bg-cover bg-center" style="background-image: url('slide_2.jpg');"></div>
+            <div class="slide bg-cover bg-center" style="background-image: url('slide_3.jpg');"></div>
+        </div>
+        <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-500 border border-orange-400 rounded-full text-white text-xs font-bold mb-4 shadow-lg">
+                <i class="fa-solid fa-shield-halved"></i> District Administration, Koraput
+            </div>
+            
+            <h1 class="text-3xl md:text-5xl font-black text-white mb-4 drop-shadow-2xl leading-tight tracking-tight">
+                ନବ ଭାରତ ସାକ୍ଷରତା କାର୍ଯ୍ୟକ୍ରମ (ଉଲ୍ଲାସ): <br class="hidden md:block"/> ଉଲ୍ଲାସ ସମ୍ମାନ
+            </h1>
+            <p class="text-slate-100 text-sm md:text-lg max-w-3xl mb-6 drop-shadow-md font-medium leading-relaxed px-2">
+                ଆମ ଜିଲ୍ଲାର ବୟସ୍କମାନଙ୍କୁ ଶିକ୍ଷିତ କରିବା ଏହି ମହତ ଅଭିଯାନର ମୂଳ ଲକ୍ଷ୍ୟ | ନିଜ ବିଦ୍ୟାଳୟ ପକ୍ଷରୁ ସର୍ବାଧିକ ନାମାଙ୍କନ କରନ୍ତୁ ଏବଂ କୋରାପୁଟ ପ୍ରଶାସନ ଦ୍ୱାରା ସମ୍ମାନିତ ହୁଅନ୍ତୁ |
+            </p>
+            
+            <div class="animate-bounce mt-2 text-white font-bold bg-white/20 px-6 py-2.5 rounded-full backdrop-blur-md border border-white/40 text-sm md:text-base shadow-xl">
+                <i class="fa-solid fa-hand-pointer mr-2"></i> ଏହି ସୁଯୋଗ ପାଇବା ପାଇଁ ତଳେ ଥିବା <span class="text-orange-300">'ପଞ୍ଜିକରଣ'</span> ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ!
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-8 -mt-8 relative z-30">
+        
+        <div class="mb-6 flex justify-center">
+            <div class="bg-white border-2 border-red-500/20 text-slate-800 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fade-in-up">
+                <div class="bg-red-100 text-red-600 w-8 h-8 rounded-full flex items-center justify-center animate-pulse shrink-0">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <span class="font-medium text-sm md:text-base">ଶେଷ ତାରିଖ (Last Date): <strong class="text-red-600 ml-1" id="display-deadline">20/09/26</strong></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+            <button id="btn-show-form" class="group relative overflow-hidden bg-white border-2 border-blue-600 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-5 text-left border-b-4 border-b-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-100">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-blue-50 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div class="bg-blue-100 text-blue-800 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-file-signature"></i></div>
+                    <div>
+                        <h2 class="font-bold text-slate-800 mb-1">ପଞ୍ଜିକରଣ</h2>
+                        <p id="apply-subtext" class="text-slate-500 text-xs font-medium">ନୂଆ ଆବେଦନ କରନ୍ତୁ</p>
+                    </div>
+                </div>
+            </button>
+
+            <button id="btn-show-update" class="group relative overflow-hidden bg-white border-2 border-cyan-500 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-5 text-left border-b-4 border-b-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-100">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-cyan-50 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div class="bg-cyan-100 text-cyan-700 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    <div>
+                        <h2 class="font-bold text-slate-800 mb-1">ସ୍କୋର୍ ଅପଡେଟ୍</h2>
+                        <p id="update-subtext" class="text-slate-500 text-xs font-medium">ଆପଣଙ୍କର ସ୍କୋର ବଢାନ୍ତୁ</p>
+                    </div>
+                </div>
+            </button>
+
+            <button id="btn-show-leaderboard" class="group relative overflow-hidden bg-white border-2 border-emerald-500 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-5 text-left border-b-4 border-b-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-emerald-50 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div class="bg-emerald-100 text-emerald-700 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-ranking-star"></i></div>
+                    <div>
+                        <h2 class="font-bold text-slate-800 mb-1">ଲିଡରବୋର୍ଡ</h2>
+                        <p class="text-slate-500 text-xs font-medium">ପ୍ରଦର୍ଶନ ଟ୍ରାକ୍ କରନ୍ତୁ</p>
+                    </div>
+                </div>
+            </button>
+
+            <button id="btn-show-certificate" class="group relative overflow-hidden bg-white border-2 border-amber-500 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-5 text-left border-b-4 border-b-amber-600 focus:outline-none focus:ring-4 focus:ring-amber-100">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-amber-50 rounded-full z-0 group-hover:scale-150 transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div class="bg-amber-100 text-amber-700 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-award"></i></div>
+                    <div>
+                        <h2 class="font-bold text-slate-800 mb-1">ସାର୍ଟିଫିକେଟ୍</h2>
+                        <p class="text-slate-500 text-xs font-medium">ପ୍ରମାଣପତ୍ର ଡାଉନଲୋଡ୍</p>
+                    </div>
+                </div>
+            </button>
+        </div>
+
+        <!-- NOMINATION FORM SECTION -->
+        <section id="section-form" class="hidden animate-fade-in-up">
+            <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-blue-800">
+                <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <div class="bg-blue-100 text-blue-800 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa-solid fa-user-plus"></i></div>
+                        ଶିକ୍ଷକ ପଞ୍ଜିକରଣ ଫର୍ମ (Koraput)
+                    </h3>
+                    <button class="close-section text-slate-400 hover:text-slate-700 transition-colors bg-slate-50 hover:bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <form id="nomination-form" class="p-6 md:p-8 bg-white/50">
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-8 flex gap-3 text-blue-800 text-sm">
+                        <i class="fa-solid fa-circle-info mt-0.5"></i>
+                        <div>ଏକାଧିକ ଶିକ୍ଷକ ଗୋଟିଏ ବିଦ୍ୟାଳୟରୁ ଆବେଦନ କରିପାରିବେ | ପ୍ରତ୍ୟେକ ଶିକ୍ଷକ ନିଜର ସ୍ୱତନ୍ତ୍ର ଫୋନ୍ ନମ୍ବର ବ୍ୟବହାର କରିବା ଆବଶ୍ୟକ |</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-5">
+                            <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-regular fa-id-badge text-indigo-500"></i> ବ୍ୟକ୍ତିଗତ ବିବରଣୀ</h4>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ପୂରା ନାମ (Full Name) *</label>
+                                <input type="text" id="teacher-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+91</span>
+                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide" placeholder="9876543210">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">୪-ଅଙ୍କ ପିନ୍ ତିଆରି କରନ୍ତୁ *</label>
+                                    <div class="relative">
+                                        <input type="password" id="teacher-pin" pattern="[0-9]{4}" title="Must be exactly 4 digits" maxlength="4" required class="w-full pl-4 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-widest text-center text-lg font-bold" placeholder="• • • •">
+                                        <button type="button" id="toggle-pin" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 transition-colors">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">ପିନ୍ ନିଶ୍ଚିତ କରନ୍ତୁ *</label>
+                                    <div class="relative">
+                                        <input type="password" id="teacher-pin-confirm" pattern="[0-9]{4}" title="Must be exactly 4 digits" maxlength="4" required class="w-full pl-4 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-widest text-center text-lg font-bold" placeholder="• • • •">
+                                        <button type="button" id="toggle-pin-confirm" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 transition-colors">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-5">
+                            <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-solid fa-school text-indigo-500"></i> ବିଦ୍ୟାଳୟ ତଥ୍ୟ</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">ବ୍ଲକ୍ (Block) *</label>
+                                    <div class="relative">
+                                        <select id="loc-block" required class="w-full pl-4 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white appearance-none cursor-pointer">
+                                            <option value="" disabled selected>ବାଛନ୍ତୁ...</option>
+                                        </select>
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">କ୍ଲଷ୍ଟର (Cluster) *</label>
+                                    <input type="text" id="loc-cluster" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white" placeholder="Type Cluster Name">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">UDISE କୋଡ୍ *</label>
+                                    <input type="text" id="school-udise" pattern="[0-9]{11}" title="UDISE code must be exactly 11 digits" maxlength="11" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-widest" placeholder="11-digit code">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ବିଦ୍ୟାଳୟ ନାମ (School Name) *</label>
+                                <input type="text" id="school-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଆପଣଙ୍କ ଦ୍ୱାରା ନାମାଙ୍କିତ ଶିକ୍ଷାର୍ଥୀ (Learners Enrolled) *</label>
+                                <input type="number" id="learners-enrolled" min="20" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white font-bold text-indigo-700" placeholder="Minimum 20">
+                            </div>
+                        </div>
+
+                        <!-- Optional Profile Photo (Proof removed) -->
+                        <div class="space-y-5 md:col-span-2 mt-2">
+                            <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> ପ୍ରୋଫାଇଲ୍ ଫଟୋ (Profile Photo)</h4>
+                            <div class="relative group max-w-sm mx-auto">
+                                <input type="file" id="file-photo" accept="image/jpeg, image/png, image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center group-hover:border-indigo-400 bg-white transition-all">
+                                    <div id="preview-photo-container" class="w-16 h-16 mx-auto mb-3 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200">
+                                        <i class="fa-solid fa-user-tie text-2xl text-slate-400"></i>
+                                    </div>
+                                    <p class="text-sm font-bold text-slate-700">ଶିକ୍ଷକଙ୍କ ଫଟୋ <span class="text-indigo-500 ml-1">- Optional</span></p>
+                                    <p class="text-xs text-slate-500 mt-1 font-medium" id="file-photo-name">Touch here to select photo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-200 flex justify-end gap-3">
+                        <button type="button" class="close-section px-6 py-3 border-2 border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-bold transition-colors">ବାତିଲ୍ (Cancel)</button>
+                        <button type="submit" id="submit-btn" class="px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 group relative overflow-hidden">
+                            <span class="relative z-10">ଦାଖଲ କରନ୍ତୁ (Submit)</span>
+                            <div id="submit-spinner" class="hidden relative z-10 w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- UPDATE SCORE SECTION -->
+        <section id="section-update" class="hidden animate-fade-in-up">
+            <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-cyan-500 max-w-2xl mx-auto">
+                <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <div class="bg-cyan-100 text-cyan-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                        ଆପଣଙ୍କର ସ୍କୋର ଅପଡେଟ୍ କରନ୍ତୁ
+                    </h3>
+                    <button class="close-section text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6 md:p-8 bg-slate-50/50">
+                    <div id="update-login-div" class="block">
+                        <p class="text-slate-600 mb-6 font-medium text-center">ଲଗ୍ ଇନ୍ କରିବାକୁ ଆପଣଙ୍କର ପଞ୍ଜୀକୃତ ଫୋନ୍ ନମ୍ବର ଏବଂ ୪-ଅଙ୍କ ବିଶିଷ୍ଟ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ |</p>
+                        <form id="update-login-form" class="space-y-4 max-w-sm mx-auto">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
+                                <input type="tel" id="up-phone" pattern="[0-9]{10}" required class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-center tracking-widest font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">୪-ଅଙ୍କ ପିନ୍ (4-Digit PIN) *</label>
+                                <div class="relative">
+                                    <input type="password" id="up-pin" pattern="[0-9]{4}" required class="w-full pl-4 pr-10 py-3 border border-slate-300 rounded-xl bg-white text-center tracking-[1em] font-bold text-xl" placeholder="••••">
+                                    <button type="button" id="toggle-up-pin" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-cyan-600 transition-colors">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" id="btn-up-login" class="w-full py-3 mt-2 bg-cyan-600 text-white rounded-xl hover:bg-cyan-700 font-bold shadow flex justify-center items-center gap-2">
+                                ଲଗ୍ ଇନ୍ (Login)
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="update-data-div" class="hidden">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm mb-6 text-center">
+                            <div class="w-16 h-16 mx-auto bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-user-tie"></i></div>
+                            <h4 class="font-black text-xl text-slate-800" id="disp-teacher-name">Teacher Name</h4>
+                            <p class="text-sm text-slate-500 font-medium" id="disp-school-name">School Name</p>
+                            <div class="mt-4 flex justify-center gap-4">
+                                <div class="bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
+                                    <p class="text-xs text-slate-400 font-bold uppercase">ବର୍ତ୍ତମାନର ସ୍କୋର୍</p>
+                                    <p class="text-2xl font-black text-slate-700" id="disp-current-score">0</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="update-data-form" class="max-w-sm mx-auto">
+                            <label class="block text-sm font-bold text-cyan-700 mb-2 text-center">ନୂତନ ସମୁଦାୟ ସଂଖ୍ୟା (New Total Enrollment) *</label>
+                            <input type="number" id="new-score" required class="w-full px-4 py-4 border-2 border-cyan-400 rounded-xl bg-cyan-50 text-center font-black text-3xl text-cyan-900 focus:outline-none focus:ring-4 focus:ring-cyan-200 transition-all shadow-inner mb-6">
+                            
+                            <button type="submit" id="btn-save-update" class="w-full py-4 bg-cyan-600 text-white rounded-xl hover:bg-cyan-700 font-black shadow-lg text-lg flex items-center justify-center gap-2 relative overflow-hidden">
+                                <span class="relative z-10">ସ୍କୋର୍ ସେଭ୍ କରନ୍ତୁ (Save Update)</span>
+                                <div id="update-submit-spinner" class="hidden relative z-10 w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUCCESS SECTION -->
+        <section id="section-success" class="hidden animate-fade-in-up">
+            <div class="glass-panel rounded-2xl shadow-xl border-t-4 border-green-500 overflow-hidden mb-12 p-10 md:p-16 flex flex-col items-center justify-center text-center">
+                <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-inner border-4 border-white"><i class="fa-solid fa-check text-5xl text-green-600"></i></div>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-4">ଆବେଦନ ସଫଳ ହେଲା!</h2>
+                <h3 class="text-xl font-bold text-slate-600 mb-6">(Application Successful)</h3>
+                
+                <p class="text-slate-700 font-medium mb-8 leading-relaxed bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm max-w-2xl text-lg">
+                    ଲିଡରବୋର୍ଡରେ ଶୀର୍ଷରେ ରହିବା ପାଇଁ ଦୟାକରି ଅଧିକରୁ ଅଧିକ ନାମଲେଖା (Enrollment) ଯୋଡନ୍ତୁ, ଏହି ସୁଯୋଗ ହାତଛଡ଼ା କରନ୍ତୁ ନାହିଁ! ଏହାସହିତ ଆପଣଙ୍କର ଅଂଶଗ୍ରହଣ ପ୍ରମାଣପତ୍ର ମଧ୍ୟ ଏଠାରୁ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ।
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                    <button id="btn-success-to-cert" class="px-8 py-3.5 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-amber-600">
+                        <i class="fa-solid fa-award"></i> ସାର୍ଟିଫିକେଟ୍ (Get Certificate)
+                    </button>
+                    <button class="close-section px-8 py-3.5 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-slate-900">
+                        ହୋମ୍ କୁ ଫେରନ୍ତୁ (Home)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATE SECTION -->
+        <section id="section-certificate" class="hidden animate-fade-in-up">
+            <div class="glass-panel rounded-2xl shadow-xl border-t-4 border-amber-500 overflow-hidden mb-12 flex flex-col items-center justify-center p-6 md:p-12 relative max-w-2xl mx-auto">
+                <div id="cert-login-div" class="w-full">
+                    <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center mb-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <div class="bg-amber-100 text-amber-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa-solid fa-award"></i></div>
+                            ସାର୍ଟିଫିକେଟ୍ ଡାଉନଲୋଡ୍
+                        </h3>
+                        <button class="close-section text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <form id="cert-login-form" class="space-y-4 max-w-sm mx-auto">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
+                            <input type="tel" id="cert-phone" pattern="[0-9]{10}" required class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-center tracking-widest font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">୪-ଅଙ୍କ ପିନ୍ (4-Digit PIN) *</label>
+                            <div class="relative">
+                                <input type="password" id="cert-pin" pattern="[0-9]{4}" required class="w-full pl-4 pr-10 py-3 border border-slate-300 rounded-xl bg-white text-center tracking-[1em] font-bold text-xl" placeholder="••••">
+                                <button type="button" id="toggle-cert-pin" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-amber-600 transition-colors">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" id="btn-cert-login" class="w-full py-3 mt-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-lg flex justify-center items-center gap-2 transition-all">
+                            ଲଗ୍ ଇନ୍ (Login)
+                        </button>
+                    </form>
+                </div>
+
+                <div id="cert-download-div" class="hidden w-full text-center">
+                    <!-- Badge Icon updates dynamically -->
+                    <div id="cert-tier-icon" class="w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-white"><i class="fa-solid fa-award text-4xl"></i></div>
+                    <h2 class="text-2xl font-black text-slate-800 mb-1" id="cert-disp-name">Teacher Name</h2>
+                    <p class="text-slate-500 font-medium mb-2">Your participation certificate is ready!</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8" id="cert-disp-tier">Level</p>
+                    <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600">
+                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ 
+                    </button>
+                    <canvas id="cert-canvas" class="hidden"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEADERBOARD SECTION -->
+        <section id="section-leaderboard" class="hidden animate-fade-in-up">
+            <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-emerald-500">
+                <div class="bg-white px-6 py-5 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3">
+                        <div class="bg-emerald-100 text-emerald-600 w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-ranking-star"></i></div>
+                        ଲିଡରବୋର୍ଡ (Koraput Leaderboard)
+                    </h3>
+                </div>
+                
+                <div class="p-0 md:p-6 bg-slate-50/50">
+                    <div class="bg-slate-800 text-white p-6 md:rounded-2xl shadow-inner flex justify-center items-center mb-6 text-center">
+                        <div>
+                            <p class="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1" id="lb-title">ସମୁଦାୟ ଜିଲ୍ଲା ଆବେଦନ (Total District Teachers)</p>
+                            <p class="text-4xl font-black tracking-tight text-emerald-400" id="lb-total-teachers">0</p>
+                        </div>
+                    </div>
+
+                    <div id="lb-loading" class="py-16 flex flex-col items-center justify-center text-slate-400">
+                        <div class="w-12 h-12 border-4 border-slate-200 border-t-emerald-500 animate-spin rounded-full mb-4"></div>
+                        <p class="font-medium">Fetching real-time aggregates...</p>
+                    </div>
+
+                    <div id="view-blocks" class="hidden overflow-x-auto bg-white md:rounded-xl shadow-sm border border-slate-200 no-scrollbar">
+                        <table class="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 text-xs uppercase font-bold tracking-wider border-b border-slate-200">
+                                    <th class="p-4 text-center w-16">Rank</th>
+                                    <th class="p-4">Block (ବ୍ଲକ୍)</th>
+                                    <th class="p-4 text-center">Teachers Applied</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-blocks" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+
+                    <div id="view-schools" class="hidden overflow-x-auto bg-white md:rounded-xl shadow-sm border border-slate-200 no-scrollbar">
+                        
+                        <!-- CLUSTER FILTER ADDED HERE -->
+                        <div class="bg-slate-100 p-3 text-sm font-semibold text-slate-600 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3">
+                            <button id="btn-back-blocks" class="hover:text-indigo-600 transition-colors flex items-center gap-2 px-3 py-1 bg-white rounded shadow-sm w-full sm:w-auto text-center justify-center">
+                                <i class="fa-solid fa-arrow-left"></i> Back to Blocks
+                            </button>
+                            
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                <label class="text-xs uppercase font-bold text-slate-500 hidden md:block">Filter:</label>
+                                <select id="filter-cluster" class="p-1.5 px-3 border border-slate-300 rounded shadow-sm outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-auto text-sm">
+                                    <option value="ALL">All Clusters</option>
+                                </select>
+                            </div>
+
+                            <span class="text-xs uppercase font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full shadow-sm whitespace-nowrap hidden sm:block" id="badge-current-block"></span>
+                        </div>
+
+                        <table class="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-600 text-xs uppercase font-bold tracking-wider border-b border-slate-200">
+                                    <th class="p-4 text-center w-16">Rank</th>
+                                    <th class="p-4">Teacher & School</th>
+                                    <th class="p-4">Cluster</th>
+                                    <th class="p-4 text-center">Enrolled</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-schools" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="custom-toast" class="fixed bottom-6 right-6 max-w-sm w-full bg-white rounded-xl shadow-2xl border-l-4 border-green-500 p-4 z-50 flex items-start gap-3 toast-enter hidden">
+        <div id="toast-icon" class="text-green-500 mt-0.5"><i class="fa-solid fa-circle-check text-xl"></i></div>
+        <div class="flex-grow">
+            <h4 id="toast-title" class="font-bold text-slate-800">Success</h4>
+            <p id="toast-message" class="text-sm text-slate-600 mt-1 font-medium">Operation completed successfully.</p>
+        </div>
+        <button id="close-toast" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, getDoc, updateDoc, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        const appId = 'nilp-koraput'; 
+        
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : {
+                apiKey: "AIzaSyD3HN5SCXq0dQ94wP73PHTJdwjNVAJOJm8",
+                authDomain: "livequizapp-5e433.firebaseapp.com",
+                databaseURL: "https://livequizapp-5e433-default-rtdb.firebaseio.com",
+                projectId: "livequizapp-5e433",
+                storageBucket: "livequizapp-5e433.firebasestorage.app",
+                messagingSenderId: "393541118458",
+                appId: "1:393541118458:web:76620000b8f08e87561c43"
+            };
+
+        let app, db, auth, storage;
+        let currentUser = null;
+        let isFirebaseReady = false;
+
+        let activeTeacherRef = null;
+        let activeTeacherData = null;
+        
+        let certTeacherName = "";
+        let certTeacherScore = 0;
+        let newlyRegisteredTeacherName = ""; 
+        let newlyRegisteredScore = 0;
+
+        let currentBlockTeachers = []; // Holds the fetched teachers for cluster filtering
+
+        const koraputBlocks = {
+            "BANDHUGAON": "Bandhugaon (ବନ୍ଧୁଗାଁ)", "BOIPARIGUDA": "Boipariguda (ବୋଇପାରିଗୁଡ଼ା)", 
+            "BORIGUMMA": "Borigumma (ବୋରିଗୁମ୍ମା)", "DASAMANTAPUR": "Dasamantapur (ଦଶମନ୍ତପୁର)", 
+            "JEYPORE": "Jeypore (ଜୟପୁର)", "KORAPUT": "Koraput (କୋରାପୁଟ)",
+            "KOTPAD": "Kotpad (କୋଟପାଡ଼)", "KUNDURA": "Kundura (କୁନ୍ଦୁରା)", 
+            "LAMTAPUT": "Lamtaput (ଲାମ୍ପଟାପୁଟ)", "LAXMIPUR": "Laxmipur (ଲକ୍ଷ୍ମୀପୁର)", 
+            "NANDAPUR": "Nandapur (ନନ୍ଦପୁର)", "NARAYANPATNA": "Narayanpatna (ନାରାୟଣପାଟଣା)",
+            "POTTANGI": "Pottangi (ପଟ୍ଟାଙ୍ଗି)", "SEMILIGUDA": "Semiliguda (ସେମିଳିଗୁଡ଼ା)"
+        };
+
+        const sections = {
+            form: document.getElementById('section-form'),
+            leaderboard: document.getElementById('section-leaderboard'),
+            success: document.getElementById('section-success'),
+            certificate: document.getElementById('section-certificate'),
+            update: document.getElementById('section-update')
+        };
+        const buttons = {
+            form: document.getElementById('btn-show-form'),
+            leaderboard: document.getElementById('btn-show-leaderboard'),
+            certificate: document.getElementById('btn-show-certificate'),
+            update: document.getElementById('btn-show-update')
+        };
+
+        async function initApp() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = initializeFirestore(app, { localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()}) });
+                storage = getStorage(app); 
+
+                populateBlockDropdown();
+                signInAnonymously(auth).catch(e => console.error(e));
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        currentUser = user; isFirebaseReady = true;
+                        document.getElementById('auth-status').innerHTML = `<i class="fa-solid fa-shield-check"></i> ସୁରକ୍ଷିତ (Secure)`;
+                        document.getElementById('auth-status').className = "text-xs font-bold px-3 py-1.5 bg-green-50 text-green-700 rounded-full flex items-center gap-2 border border-green-200 shadow-sm";
+                        
+                        const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+                        onSnapshot(settingsRef, (docSnap) => {
+                            let isClosed = false;
+                            if (docSnap.exists()) {
+                                const data = docSnap.data();
+                                if (data.deadlineTextOdia) document.getElementById('display-deadline').textContent = data.deadlineTextOdia;
+                                if (data.deadlineDate) {
+                                    const deadline = new Date(data.deadlineDate + 'T23:59:59');
+                                    if (new Date() > deadline) isClosed = true;
+                                }
+                            }
+                            if (isClosed) {
+                                const applyBtn = document.getElementById('btn-show-form');
+                                applyBtn.disabled = true;
+                                applyBtn.className = "relative overflow-hidden bg-slate-100 border-2 border-slate-300 rounded-2xl p-5 text-left border-b-4 border-b-slate-400 cursor-not-allowed opacity-75 grayscale transition-all duration-300";
+                                document.getElementById('apply-subtext').textContent = "ନୂଆ ପଞ୍ଜିକରଣ ବନ୍ଦ ହୋଇଯାଇଛି";
+                                document.getElementById('apply-subtext').className = "text-red-600 text-xs font-bold";
+
+                                const updateBtn = document.getElementById('btn-show-update');
+                                updateBtn.disabled = true;
+                                updateBtn.className = "relative overflow-hidden bg-slate-100 border-2 border-slate-300 rounded-2xl p-5 text-left border-b-4 border-b-slate-400 cursor-not-allowed opacity-75 grayscale transition-all duration-300";
+                                document.getElementById('update-subtext').textContent = "ଅପଡେଟ୍ ବନ୍ଦ ହୋଇଯାଇଛି";
+                                document.getElementById('update-subtext').className = "text-red-600 text-xs font-bold";
+                            }
+                        });
+                    }
+                });
+            } catch (err) { console.error("Init Error:", err); }
+        }
+
+        function populateBlockDropdown() {
+            const select = document.getElementById('loc-block');
+            Object.keys(koraputBlocks).sort().forEach(key => { select.add(new Option(koraputBlocks[key], key)); });
+        }
+
+        function hideAllSections() {
+            Object.values(sections).forEach(sec => sec.classList.add('hidden'));
+            Object.values(buttons).forEach(btn => btn.classList.remove('ring-4', 'ring-blue-100', 'ring-emerald-100', 'ring-amber-100', 'ring-cyan-100'));
+        }
+
+        buttons.form.addEventListener('click', () => { hideAllSections(); sections.form.classList.remove('hidden'); sections.form.scrollIntoView(); buttons.form.classList.add('ring-4', 'ring-blue-100'); });
+        buttons.leaderboard.addEventListener('click', () => { hideAllSections(); sections.leaderboard.classList.remove('hidden'); sections.leaderboard.scrollIntoView(); buttons.leaderboard.classList.add('ring-4', 'ring-emerald-100'); loadOverallLeaderboard(); });
+        buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView(); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
+        buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView(); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
+
+        document.querySelectorAll('.close-section').forEach(btn => btn.addEventListener('click', () => { hideAllSections(); window.scrollTo({top:0}); }));
+
+        const setupPinToggle = (btnId, inputId) => {
+            const btn = document.getElementById(btnId);
+            if(btn) btn.addEventListener('click', () => {
+                const pinInput = document.getElementById(inputId);
+                const icon = btn.querySelector('i');
+                if(pinInput.type === 'password') { pinInput.type = 'text'; icon.classList.replace('fa-eye', 'fa-eye-slash'); } 
+                else { pinInput.type = 'password'; icon.classList.replace('fa-eye-slash', 'fa-eye'); }
+            });
+        };
+        setupPinToggle('toggle-pin', 'teacher-pin');
+        setupPinToggle('toggle-pin-confirm', 'teacher-pin-confirm');
+        setupPinToggle('toggle-up-pin', 'up-pin');
+        setupPinToggle('toggle-cert-pin', 'cert-pin');
+
+        function compressImage(file, isAvatar = false) {
+            return new Promise((resolve, reject) => {
+                if (!file) return resolve(null);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        let w = img.width, h = img.height;
+                        if (isAvatar) {
+                            const size = Math.min(w, h);
+                            canvas.width = 150; canvas.height = 150;
+                            ctx.drawImage(img, (w-size)/2, (h-size)/2, size, size, 0, 0, 150, 150);
+                        } else {
+                            const max = 800;
+                            if (w > h && w > max) { h *= max / w; w = max; } else if (h > max) { w *= max / h; h = max; }
+                            canvas.width = w; canvas.height = h;
+                            ctx.drawImage(img, 0, 0, w, h);
+                        }
+                        resolve(canvas.toDataURL('image/jpeg', 0.6));
+                    };
+                    img.onerror = reject;
+                };
+            });
+        }
+
+        document.getElementById(`file-photo`).addEventListener('change', (e) => {
+            if(e.target.files.length > 0) {
+                const file = e.target.files[0];
+                document.getElementById(`file-photo-name`).textContent = file.name;
+                document.getElementById(`file-photo-name`).classList.add('text-indigo-600');
+                const reader = new FileReader();
+                reader.onload = (ev) => { document.getElementById(`preview-photo-container`).innerHTML = `<img src="${ev.target.result}" class="w-full h-full object-cover">`; }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // --- SUBMISSION LOGIC (Removed Proof) ---
+        document.getElementById('nomination-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!isFirebaseReady || !currentUser) return showToast('Error', 'Database offline.', 'error');
+            
+            const pin = document.getElementById('teacher-pin').value.trim();
+            if (pin !== document.getElementById('teacher-pin-confirm').value.trim()) return showToast('Error', 'PINs do not match.', 'error');
+
+            const btn = document.getElementById('submit-btn');
+            const spinner = document.getElementById('submit-spinner');
+            btn.disabled = true; spinner.classList.remove('hidden');
+
+            try {
+                const blockVal = document.getElementById('loc-block').value;
+                const phone = document.getElementById('teacher-phone').value.trim();
+                const learners = parseInt(document.getElementById('learners-enrolled').value, 10);
+
+                const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+                if (!dupSnap.empty) {
+                    showToast('Duplicate Phone', 'Phone Number already registered.', 'error');
+                    btn.disabled = false; spinner.classList.add('hidden'); return;
+                }
+
+                const ts = Date.now();
+                let photoUrl = "https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo";
+                if (document.getElementById('file-photo').files[0]) {
+                    const photoRef = ref(storage, `artifacts/${appId}/public/data/uploads/${ts}_photo.jpg`);
+                    await uploadString(photoRef, await compressImage(document.getElementById('file-photo').files[0], true), 'data_url');
+                    photoUrl = await getDownloadURL(photoRef);
+                }
+
+                newlyRegisteredTeacherName = document.getElementById('teacher-name').value.trim();
+                newlyRegisteredScore = learners;
+
+                const batch = writeBatch(db);
+                batch.set(doc(collection(db, 'artifacts', appId, 'public', 'data', 'nominations')), {
+                    teacherName: newlyRegisteredTeacherName,
+                    phone: phone,
+                    securityPin: pin,
+                    district: "KORAPUT",
+                    block: blockVal,
+                    cluster: document.getElementById('loc-cluster').value.trim().toUpperCase(),
+                    udiseCode: document.getElementById('school-udise').value.trim(),
+                    schoolName: document.getElementById('school-name').value.trim().toUpperCase(),
+                    learnersEnrolled: learners,
+                    photoUrl: photoUrl,
+                    userId: currentUser.uid,
+                    createdAt: serverTimestamp()
+                });
+
+                batch.set(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', blockVal), { blockId: blockVal, totalEnrolled: increment(learners), teacherCount: increment(1), lastUpdated: serverTimestamp() }, { merge: true });
+                await batch.commit();
+
+                document.getElementById('nomination-form').reset();
+                hideAllSections(); sections.success.classList.remove('hidden');
+                
+            } catch (err) { console.error(err); showToast('Upload Failed', err.message, 'error'); } 
+            finally { btn.disabled = false; spinner.classList.add('hidden'); }
+        });
+
+        // --- UPDATE LOGIC (Removed Proof) ---
+        document.getElementById('update-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-up-login');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`; btn.disabled = true;
+
+            try {
+                const phone = document.getElementById('up-phone').value.trim();
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+
+                const docSnap = snap.docs[0];
+                if (docSnap.data().securityPin !== document.getElementById('up-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+
+                activeTeacherRef = docSnap.ref; activeTeacherData = docSnap.data();
+
+                document.getElementById('update-login-div').classList.add('hidden');
+                document.getElementById('update-data-div').classList.remove('hidden');
+                document.getElementById('disp-teacher-name').textContent = activeTeacherData.teacherName;
+                document.getElementById('disp-current-score').textContent = activeTeacherData.learnersEnrolled;
+                document.getElementById('new-score').min = activeTeacherData.learnersEnrolled + 1;
+                document.getElementById('new-score').value = activeTeacherData.learnersEnrolled;
+                
+            } catch (err) { console.error(err); showToast('Error', 'System error occurred.', 'error'); } 
+            finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
+        });
+
+        document.getElementById('update-data-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newTotal = parseInt(document.getElementById('new-score').value, 10);
+            
+            if (newTotal <= activeTeacherData.learnersEnrolled) return showToast('Error', 'Count must increase.', 'error');
+            const btn = document.getElementById('btn-save-update');
+            const spinner = document.getElementById('update-submit-spinner');
+            btn.disabled = true; spinner.classList.remove('hidden');
+
+            try {
+                const batch = writeBatch(db);
+                batch.update(activeTeacherRef, { learnersEnrolled: newTotal, lastUpdated: serverTimestamp() });
+                batch.update(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', activeTeacherData.block), { totalEnrolled: increment(newTotal - activeTeacherData.learnersEnrolled) });
+                await batch.commit();
+
+                activeTeacherData = null; activeTeacherRef = null;
+                document.getElementById('update-data-form').reset();
+                document.getElementById('update-login-form').reset();
+                document.getElementById('update-data-div').classList.add('hidden');
+                document.getElementById('update-login-div').classList.remove('hidden');
+                
+                hideAllSections(); sections.success.classList.remove('hidden');
+                showToast('Success', 'Score updated successfully!', 'success');
+
+            } catch (err) { console.error(err); showToast('Error', 'Could not save score.', 'error'); } 
+            finally { btn.disabled = false; spinner.classList.add('hidden'); }
+        });
+
+        // --- CERTIFICATE LOGIC (Tiered Image System) ---
+        document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-cert-login');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ଯାଞ୍ଚ ହେଉଛି...`; btn.disabled = true;
+
+            try {
+                const phone = document.getElementById('cert-phone').value.trim();
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+
+                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+                const data = snap.docs[0].data();
+                if (data.securityPin !== document.getElementById('cert-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+
+                certTeacherName = data.teacherName;
+                certTeacherScore = data.learnersEnrolled;
+                
+                document.getElementById('cert-disp-name').textContent = certTeacherName;
+
+                // Adjust UI badge for Tier
+                const tierIcon = document.getElementById('cert-tier-icon');
+                const tierText = document.getElementById('cert-disp-tier');
+                
+                if (certTeacherScore >= 100) {
+                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-blue-200 bg-blue-100 text-blue-500";
+                    tierIcon.innerHTML = `<i class="fa-solid fa-gem text-4xl"></i>`;
+                    tierText.textContent = "Diamond Tier Achieved";
+                } else if (certTeacherScore >= 50) {
+                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-yellow-200 bg-yellow-100 text-yellow-500";
+                    tierIcon.innerHTML = `<i class="fa-solid fa-medal text-4xl"></i>`;
+                    tierText.textContent = "Gold Tier Achieved";
+                } else {
+                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-slate-200 bg-slate-100 text-slate-500";
+                    tierIcon.innerHTML = `<i class="fa-solid fa-award text-4xl"></i>`;
+                    tierText.textContent = "Silver Tier Achieved";
+                }
+
+                document.getElementById('cert-login-div').classList.add('hidden');
+                document.getElementById('cert-download-div').classList.remove('hidden');
+
+            } catch (err) { console.error(err); showToast('Error', 'System error.', 'error'); } 
+            finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
+        });
+
+        function generateCertificateImage(nameToPrint, score, btnElement) {
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+            btnElement.disabled = true;
+            
+            const canvas = document.getElementById('cert-canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            
+            // Dynamic Background based on score
+            if (score >= 100) {
+                img.src = 'certificate_diamond.png';
+            } else if (score >= 50) {
+                img.src = 'certificate_gold.png';
+            } else {
+                img.src = 'certificate_silver.png';
+            }
+            
+            img.onload = () => {
+                canvas.width = 1600; canvas.height = 1066;
+                ctx.drawImage(img, 0, 0, 1600, 1066);
+                ctx.font = "bold 38px 'Inter', sans-serif"; ctx.fillStyle = "#1e293b"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                ctx.fillText(nameToPrint.toUpperCase(), 787, 513);
+                
+                try {
+                    const link = document.createElement('a');
+                    let tierName = score >= 100 ? 'Diamond' : (score >= 50 ? 'Gold' : 'Silver');
+                    link.download = `NILP_${tierName}_${nameToPrint.replace(/\s+/g, '_')}.png`;
+                    link.href = canvas.toDataURL('image/png'); link.click();
+                    showToast('Success', 'Certificate downloaded!', 'success');
+                } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
+                btnElement.innerHTML = originalText; btnElement.disabled = false;
+            };
+
+            img.onerror = () => {
+                showToast('Error', `Could not load ${img.src}. Please ensure images are uploaded.`, 'error');
+                btnElement.innerHTML = originalText; btnElement.disabled = false;
+            };
+        }
+
+        document.getElementById('btn-success-to-cert').addEventListener('click', function() {
+            if (newlyRegisteredTeacherName) generateCertificateImage(newlyRegisteredTeacherName, newlyRegisteredScore, this);
+            else document.getElementById('btn-show-certificate').click();
+        });
+
+        document.getElementById('btn-download-cert').addEventListener('click', function() {
+            generateCertificateImage(certTeacherName, certTeacherScore, this);
+        });
+
+        // --- LEADERBOARD LOGIC (With Cluster Filter) ---
+        document.getElementById('btn-back-blocks').addEventListener('click', loadOverallLeaderboard);
+
+        async function loadOverallLeaderboard() {
+            if (!isFirebaseReady) return;
+            document.getElementById('lb-loading').classList.remove('hidden');
+            document.getElementById('view-blocks').classList.add('hidden');
+            document.getElementById('view-schools').classList.add('hidden');
+
+            try {
+                const snap = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'lb_blocks'));
+                let blocks = []; let overallTeachers = 0;
+                
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    if ((d.teacherCount || 0) > 0) { blocks.push(d); overallTeachers += d.teacherCount; }
+                });
+                blocks.sort((a,b) => (b.teacherCount || 0) - (a.teacherCount || 0));
+                
+                document.getElementById('lb-total-teachers').textContent = overallTeachers.toLocaleString();
+                const tbody = document.getElementById('tbody-blocks');
+                tbody.innerHTML = '';
+                
+                if(blocks.length === 0) tbody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-slate-500 font-medium">ଆରମ୍ଭ କରିବାକୁ ପ୍ରଥମ ହୁଅନ୍ତୁ! (Be the first!)</td></tr>`;
+                else {
+                    blocks.forEach((d, i) => {
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-indigo-50/50 transition-colors cursor-pointer group";
+                        tr.onclick = () => loadSchoolLeaderboard(d.blockId);
+                        tr.innerHTML = `
+                            <td class="p-4 text-center font-bold text-slate-500">${i+1}</td>
+                            <td class="p-4 font-bold text-slate-800 flex items-center gap-2">
+                                ${koraputBlocks[d.blockId] || d.blockId} 
+                                <i class="fa-solid fa-arrow-right text-xs text-indigo-400 opacity-0 group-hover:opacity-100 transition-all transform -translate-x-2 group-hover:translate-x-0"></i>
+                            </td>
+                            <td class="p-4 text-center">
+                                <span class="bg-indigo-100 text-indigo-800 font-bold px-4 py-1.5 rounded-full text-sm">${(d.teacherCount||0).toLocaleString()}</span>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+                document.getElementById('view-blocks').classList.remove('hidden');
+            } catch (err) { console.error(err); showToast('Fetch Error', 'Could not load leaderboard.', 'error'); } 
+            finally { document.getElementById('lb-loading').classList.add('hidden'); }
+        }
+
+        async function loadSchoolLeaderboard(blockId) {
+            document.getElementById('lb-loading').classList.remove('hidden');
+            document.getElementById('view-blocks').classList.add('hidden');
+            document.getElementById('view-schools').classList.add('hidden');
+
+            try {
+                // Fetch up to 100 teachers for the block to allow decent cluster filtering
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('block', '==', blockId), orderBy('learnersEnrolled', 'desc'), limit(100))); 
+                
+                currentBlockTeachers = []; 
+                let uniqueClusters = new Set();
+
+                snap.forEach(doc => { 
+                    const data = doc.data();
+                    currentBlockTeachers.push(data); 
+                    if(data.cluster) uniqueClusters.add(data.cluster.toUpperCase());
+                });
+                
+                document.getElementById('badge-current-block').textContent = koraputBlocks[blockId] || blockId;
+                
+                // Populate Cluster Dropdown
+                const clusterFilter = document.getElementById('filter-cluster');
+                clusterFilter.innerHTML = '<option value="ALL">All Clusters</option>';
+                Array.from(uniqueClusters).sort().forEach(cluster => {
+                    clusterFilter.add(new Option(cluster, cluster));
+                });
+
+                renderTeacherTable('ALL');
+                document.getElementById('view-schools').classList.remove('hidden');
+            } catch (err) { console.error(err); showToast('Fetch Error', 'Could not load data.', 'error'); } 
+            finally { document.getElementById('lb-loading').classList.add('hidden'); }
+        }
+
+        function renderTeacherTable(clusterName) {
+            const tbody = document.getElementById('tbody-schools');
+            tbody.innerHTML = '';
+
+            let filteredTeachers = currentBlockTeachers;
+            if (clusterName !== 'ALL') {
+                filteredTeachers = currentBlockTeachers.filter(t => (t.cluster || '').toUpperCase() === clusterName);
+            }
+
+            if(filteredTeachers.length === 0) tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500 font-medium">No teachers found in this selection.</td></tr>`;
+            else {
+                filteredTeachers.forEach((t, i) => {
+                    const rank = i+1;
+                    let badge = `<span class="w-7 h-7 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 font-bold text-xs mx-auto">${rank}</span>`;
+                    if(rank === 1) badge = `<span class="w-7 h-7 flex items-center justify-center rounded-full bg-yellow-100 text-yellow-700 font-bold text-xs mx-auto ring-2 ring-yellow-300"><i class="fa-solid fa-crown text-[10px]"></i></span>`;
+                    
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-emerald-50/30 transition-colors";
+                    tr.innerHTML = `
+                        <td class="p-4 text-center">${badge}</td>
+                        <td class="p-4 flex items-center gap-3">
+                            <img src="${t.photoUrl}" class="w-10 h-10 rounded-full object-cover border border-slate-200 shadow-sm" onerror="this.src='https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo'">
+                            <div>
+                                <div class="font-bold text-slate-800">${t.teacherName}</div>
+                                <div class="text-[11px] text-slate-500 max-w-[150px] truncate" title="${t.schoolName}">${t.schoolName}</div>
+                            </div>
+                        </td>
+                        <td class="p-4"><div class="font-medium text-slate-700 text-sm">${t.cluster}</div></td>
+                        <td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs shadow-inner">${(t.learnersEnrolled||0).toLocaleString()}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        document.getElementById('filter-cluster').addEventListener('change', (e) => {
+            renderTeacherTable(e.target.value);
+        });
+
+        window.addEventListener('DOMContentLoaded', initApp);
+        setInterval(() => {
+            const next = document.querySelector('.slide.active').nextElementSibling;
+            if(next && next.classList.contains('slide')) next.classList.add('active');
+            else document.querySelector('.slide').classList.add('active');
+            document.querySelector('.slide.active').previousElementSibling?.classList.remove('active');
+        }, 5000);
+    </script>
+</body>
+</html>

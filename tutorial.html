@@ -6,6 +6,9 @@
     <title>Koraput NILP - Automated Tutorial</title>
     <script src="tailwind.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- TONE.JS FOR SYNTHESIZED SOUND EFFECTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0f172a; margin: 0; padding: 0; overflow: hidden; }
@@ -61,22 +64,49 @@
     <script>
         const frame = document.getElementById('app-frame');
         
-        // Automation Helpers
+        // Sound Effect Synthesizers
+        let typeSynth, clickSynth, successSynth;
+
+        function initAudio() {
+            // High-pitched short tap for typing
+            typeSynth = new Tone.MembraneSynth({ pitchDecay: 0.01, octaves: 1, oscillator: { type: "square" }, envelope: { attack: 0.001, decay: 0.1, sustain: 0, release: 0.1 } }).toDestination();
+            typeSynth.volume.value = -15;
+
+            // Deep mechanical click for buttons
+            clickSynth = new Tone.MembraneSynth({ pitchDecay: 0.05, octaves: 4, oscillator: { type: "sine" }, envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.2 } }).toDestination();
+            clickSynth.volume.value = -10;
+
+            // Pleasant chime for phase changes/success
+            successSynth = new Tone.PolySynth(Tone.Synth, { oscillator: { type: "triangle" }, envelope: { attack: 0.05, decay: 0.2, sustain: 0.4, release: 1.5 } }).toDestination();
+            successSynth.volume.value = -12;
+        }
+
+        // Optional: Function to play real MP3 voiceovers if you record them later
+        function playVoiceover(stepFileName) {
+            // Example: const audio = new Audio(stepFileName + '.mp3');
+            // audio.play();
+        }
+
+        // --- STREAMING_CHUNK:Defining Automation Helpers ---
         const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         
-        const updateText = async (step, title, desc) => {
+        const updateText = async (step, title, desc, audioFile = null) => {
             const elStep = document.getElementById('tut-step');
             const elTitle = document.getElementById('tut-title');
             const elDesc = document.getElementById('tut-desc');
             
             elTitle.style.opacity = 0; elDesc.style.opacity = 0;
-            await wait(600); // Smooth fade out
+            await wait(600); 
             
             elStep.innerText = step;
             elTitle.innerText = title;
             elDesc.innerText = desc;
             
             elTitle.style.opacity = 1; elDesc.style.opacity = 1;
+
+            // Play transition chime & Optional Voiceover
+            if (successSynth) successSynth.triggerAttackRelease(["C5", "E5", "G5"], "8n");
+            if (audioFile) playVoiceover(audioFile);
         };
 
         const simulateTyping = async (inputId, text, speed = 250) => {
@@ -88,7 +118,10 @@
             for (let i = 0; i < text.length; i++) {
                 input.value += text[i];
                 input.dispatchEvent(new Event('input', { bubbles: true }));
-                await wait(speed); // Deliberate, human-like typing
+                // Play typing sound
+                if (typeSynth) typeSynth.triggerAttackRelease("C6", "64n");
+                // Randomize speed slightly for human feel
+                await wait(speed + (Math.random() * 50 - 25)); 
             }
             input.blur();
         };
@@ -98,13 +131,14 @@
             const el = doc.getElementById(id);
             if(el) {
                 el.style.transform = "scale(0.95)";
+                // Play click sound
+                if (clickSynth) clickSynth.triggerAttackRelease("G2", "16n");
                 await wait(250);
                 el.style.transform = "scale(1)";
                 el.click();
             }
         };
 
-        // NEW: Scroll exactly to the CENTER to avoid hiding under the sticky navbar
         const smoothScrollTo = async (id, blockPosition = 'center') => {
             const doc = frame.contentWindow.document;
             const el = doc.getElementById(id);
@@ -112,11 +146,14 @@
             await wait(1500); 
         };
 
-        // THE MASTER AUTOMATION SCRIPT
+        // --- STREAMING_CHUNK:Executing Master Automation Sequence ---
         async function startTutorial() {
             document.getElementById('start-btn').classList.add('hidden');
             
-            // Smart Demo Data Generator
+            // Required by browsers: Start Audio Context on user click
+            await Tone.start();
+            initAudio();
+            
             const randomPhone = "98" + Math.floor(10000000 + Math.random() * 90000000); 
             const baseScore = Math.floor(25 + Math.random() * 15);
             const upgradedScore = baseScore + 20;
@@ -124,8 +161,9 @@
             await wait(2500);
 
             // ================= PHASE 1: REGISTRATION ================= //
-            await updateText("ପଦକ୍ଷେପ ୧ (Step 1)", "ଶିକ୍ଷକ ପଞ୍ଜିକରଣ", "ନୂଆ ଆବେଦନ କରିବା ପାଇଁ ଶିକ୍ଷକମାନେ 'ପଞ୍ଜିକରଣ' (Registration) ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।");
-            await wait(4000); 
+            // Example of where you would link an MP3 file if you recorded it:
+            await updateText("ପଦକ୍ଷେପ ୧ (Step 1)", "ଶିକ୍ଷକ ପଞ୍ଜିକରଣ", "ନୂଆ ଆବେଦନ କରିବା ପାଇଁ ଶିକ୍ଷକମାନେ 'ପଞ୍ଜିକରଣ' (Registration) ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।", "audio_step1");
+            await wait(5000); 
             
             await smoothScrollTo('btn-show-form', 'center');
             await clickElement('btn-show-form');
@@ -136,30 +174,30 @@
             await wait(1000);
             
             await simulateTyping('teacher-name', 'Rajesh Kumar', 180);
-            await wait(1000);
+            await wait(1500);
             
             await smoothScrollTo('teacher-phone', 'center');
             await simulateTyping('teacher-phone', randomPhone, 180);
-            await wait(1000);
+            await wait(1500);
             
             await smoothScrollTo('teacher-pin', 'center');
             await simulateTyping('teacher-pin', '1234', 300); 
             await simulateTyping('teacher-pin-confirm', '1234', 300);
-            await wait(3000); 
+            await wait(4000); 
 
             await updateText("ପଦକ୍ଷେପ ୩ (Step 3)", "ମ୍ୟାଜିକ୍ UDISE ଟେକ୍ନୋଲୋଜି", "କେବଳ ୧୧-ଅଙ୍କ ବିଶିଷ୍ଟ ସ୍କୁଲ୍ UDISE କୋଡ୍ ଟାଇପ୍ କରନ୍ତୁ, ବିଦ୍ୟାଳୟର ସମସ୍ତ ତଥ୍ୟ ସରକାରୀ ଡାଟାବେସ୍ ରୁ ଆପେ ଆପେ ଆସିଯିବ। (100% ସୁରକ୍ଷିତ)");
-            await smoothScrollTo('school-udise', 'center'); // Perfectly centers the UDISE box
+            await smoothScrollTo('school-udise', 'center'); 
             await wait(1000);
             
             await simulateTyping('school-udise', '21290100104', 350); 
-            await wait(4500); 
+            await wait(5000); 
 
             await updateText("ପଦକ୍ଷେପ ୪ (Step 4)", "ସ୍କୋର୍ ଦାଖଲ", "ବର୍ତ୍ତମାନ ଆପଣ ନାମାଙ୍କନ କରିଥିବା ମୋଟ ଶିକ୍ଷାର୍ଥୀଙ୍କ ସଂଖ୍ୟା ଲେଖି ଫର୍ମ୍ ଦାଖଲ କରନ୍ତୁ।");
-            await smoothScrollTo('learners-enrolled', 'center'); // Perfectly centers the submit area
+            await smoothScrollTo('learners-enrolled', 'center'); 
             await wait(1000);
             
             await simulateTyping('learners-enrolled', baseScore.toString(), 300);
-            await wait(1500);
+            await wait(2500);
             
             await smoothScrollTo('submit-btn', 'center');
             await clickElement('submit-btn');
@@ -176,7 +214,7 @@
 
             // ================= PHASE 2: UPDATE SCORE ================= //
             await updateText("ପଦକ୍ଷେପ ୬ (Step 6)", "ସ୍କୋର୍ ଅପଡେଟ୍ (Update Score)", "ଭବିଷ୍ୟତରେ ଆପଣଙ୍କର ନାମାଙ୍କନ ସଂଖ୍ୟା ବଢିଲେ, 'ସ୍କୋର୍ ଅପଡେଟ୍' ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ। ନୂଆ କରି ଫର୍ମ୍ ପୂରଣ କରିବା ଦରକାର ନାହିଁ।");
-            await wait(4000);
+            await wait(5000);
             
             await smoothScrollTo('btn-show-update', 'center');
             await clickElement('btn-show-update');
@@ -186,7 +224,7 @@
             await smoothScrollTo('up-phone', 'center');
             await simulateTyping('up-phone', randomPhone, 180);
             await simulateTyping('up-pin', '1234', 300);
-            await wait(1500);
+            await wait(2000);
             
             await smoothScrollTo('btn-up-login', 'center');
             await clickElement('btn-up-login');
@@ -195,7 +233,7 @@
             await updateText("ଅପଡେଟ୍ ସେଭ୍", "ନୂଆ ମୋଟ ସଂଖ୍ୟା (New Total)", "ଆପଣଙ୍କର ପୁରୁଣା ସ୍କୋର୍ ସେଠାରେ ଦେଖାଇବ। କେବଳ ନୂଆ ବର୍ଦ୍ଧିତ ମୋଟ ସଂଖ୍ୟା ଟାଇପ୍ କରି ସେଭ୍ କରନ୍ତୁ।");
             await smoothScrollTo('new-score', 'center');
             await simulateTyping('new-score', upgradedScore.toString(), 300);
-            await wait(2000);
+            await wait(2500);
             
             await smoothScrollTo('btn-save-update', 'center');
             await clickElement('btn-save-update');
@@ -216,19 +254,23 @@
             await wait(5000); 
 
             await updateText("ବ୍ଲକ୍ ରାଙ୍କିଙ୍ଗ୍", "ଲାଇଭ୍ ଡାଟା ଟ୍ରାକିଂ", "ଆପଣ କୌଣସି ବି ବ୍ଲକ୍ ଉପରେ କ୍ଲିକ୍ କରି ସେହି ବ୍ଲକର ଶ୍ରେଷ୍ଠ ୧୦୦ ଜଣ ଶିକ୍ଷକଙ୍କ ତାଲିକା ଦେଖିପାରିବେ।");
-            await wait(3000);
+            await wait(4000);
             
             const doc3 = frame.contentWindow.document;
             const firstBlock = doc3.querySelector('#tbody-blocks tr');
             if(firstBlock) {
                 firstBlock.style.backgroundColor = "#e0e7ff";
+                if(clickSynth) clickSynth.triggerAttackRelease("G2", "16n");
                 await wait(400);
                 firstBlock.click();
             }
             await wait(6000); 
             
             const backBtn = doc3.getElementById('btn-back-blocks');
-            if(backBtn) backBtn.click();
+            if(backBtn) {
+                if(clickSynth) clickSynth.triggerAttackRelease("G2", "16n");
+                backBtn.click();
+            }
             await wait(3000);
             
             const closeBtnLb = doc3.querySelector('#section-leaderboard .close-section');
@@ -248,7 +290,7 @@
             await smoothScrollTo('cert-phone', 'center');
             await simulateTyping('cert-phone', randomPhone, 180);
             await simulateTyping('cert-pin', '1234', 300);
-            await wait(1500);
+            await wait(2000);
             
             await smoothScrollTo('btn-cert-login', 'center');
             await clickElement('btn-cert-login');
@@ -261,6 +303,7 @@
             const certCloseBtn = doc4.querySelector('#section-certificate .close-section');
             if(certCloseBtn) {
                 certCloseBtn.style.transform = "scale(0.95)";
+                if(clickSynth) clickSynth.triggerAttackRelease("G2", "16n");
                 await wait(250);
                 certCloseBtn.style.transform = "scale(1)";
                 certCloseBtn.click();

@@ -238,11 +238,21 @@
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">ପୂରା ନାମ (Full Name) *</label>
                                 <input type="text" id="teacher-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white">
                             </div>
+                            
+                            <!-- SMART PHONE NUMBER INPUT -->
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+91</span>
-                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide transition-all" placeholder="9876543210">
+                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide transition-all" placeholder="9876543210">
+                                    
+                                    <!-- Dynamic Icons -->
+                                    <div id="phone-loader" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-indigo-500">
+                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                    </div>
+                                    <div id="phone-valid" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-emerald-500">
+                                        <i class="fa-solid fa-check-circle text-lg"></i>
+                                    </div>
                                 </div>
                                 <!-- WARNING BOX -->
                                 <div id="phone-duplicate-error" class="hidden mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700 font-bold leading-relaxed shadow-inner">
@@ -472,12 +482,12 @@
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6" id="cert-disp-tier">Level</p>
                     
                     <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600 w-full max-w-[280px]">
-                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ (Download)
+                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍
                     </button>
                     
-                    <button id="btn-whatsapp-share" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
-                        <i class="fa-brands fa-whatsapp text-2xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
-                    </button>
+                    <a id="btn-whatsapp-share" href="#" target="_blank" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
+                    </a>
 
                     <canvas id="cert-canvas" class="hidden"></canvas>
                 </div>
@@ -608,6 +618,10 @@
         let newlyRegisteredTeacherName = ""; 
         let newlyRegisteredScore = 0;
         let currentBlockTeachers = []; 
+        
+        // NEW: Form Validation Flags
+        let isPhoneValid = false;
+        let isUdiseValid = false;
 
         const koraputBlocks = {
             "BANDHUGAON": "Bandhugaon (ବନ୍ଧୁଗାଁ)", "BOIPARIGUDA": "Boipariguda (ବୋଇପାରିଗୁଡ଼ା)", 
@@ -651,7 +665,7 @@
                     if (user) {
                         currentUser = user; isFirebaseReady = true;
                         
-                        // NEW: Clean green dot connection status
+                        // ONLY GREEN DOT
                         const authDot = document.getElementById('auth-status');
                         authDot.className = "w-3 h-3 rounded-full bg-green-500 shadow-sm border border-slate-200 ml-1";
                         authDot.title = "Connected Securely";
@@ -696,7 +710,7 @@
         buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView(); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
         buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView(); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
         
-        // FIXED: OPEN PROFILE SECTION AND AUTO-SCROLL
+        // AUTO-SCROLL FIX FOR PROFILE
         document.getElementById('btn-nav-profile').addEventListener('click', () => { 
             hideAllSections(); 
             sections.profile.classList.remove('hidden'); 
@@ -720,14 +734,55 @@
         setupPinToggle('toggle-cert-pin', 'cert-pin');
         setupPinToggle('toggle-prof-pin', 'prof-pin');
 
-        // Clear phone error when user types a new number
-        document.getElementById('teacher-phone').addEventListener('input', function() {
-            document.getElementById('phone-duplicate-error').classList.add('hidden');
-            this.classList.remove('border-red-500', 'bg-red-50');
-        });
-
         const submitBtn = document.getElementById('submit-btn');
         const learnersInput = document.getElementById('learners-enrolled');
+
+        // FORM VALIDITY CHECKER
+        function evaluateSubmitButton() {
+             if (isPhoneValid && isUdiseValid) {
+                  submitBtn.disabled = false;
+                  submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
+             } else {
+                  submitBtn.disabled = true;
+                  submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
+             }
+        }
+
+        // NEW: SMART PHONE CHECKER
+        document.getElementById('teacher-phone').addEventListener('input', async function(e) {
+            const val = e.target.value.trim();
+            const errBox = document.getElementById('phone-duplicate-error');
+            const loader = document.getElementById('phone-loader');
+            const validIcon = document.getElementById('phone-valid');
+            
+            errBox.classList.add('hidden');
+            this.classList.remove('border-red-500', 'bg-red-50', 'border-emerald-500', 'bg-emerald-50');
+            validIcon.classList.add('hidden');
+            isPhoneValid = false;
+            evaluateSubmitButton();
+
+            if(val.length === 10) {
+                loader.classList.remove('hidden');
+                try {
+                    const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
+                    loader.classList.add('hidden');
+                    
+                    if (!dupSnap.empty) {
+                        errBox.classList.remove('hidden');
+                        this.classList.add('border-red-500', 'bg-red-50');
+                        isPhoneValid = false;
+                    } else {
+                        this.classList.add('border-emerald-500', 'bg-emerald-50');
+                        validIcon.classList.remove('hidden');
+                        isPhoneValid = true;
+                    }
+                } catch (err) {
+                    console.error("Phone check error:", err);
+                    loader.classList.add('hidden');
+                }
+                evaluateSubmitButton();
+            }
+        });
 
         document.getElementById('school-udise').addEventListener('input', function(e) {
             const val = e.target.value.trim();
@@ -735,14 +790,15 @@
             const err = document.getElementById('udise-error');
             const loader = document.getElementById('udise-loader');
 
+            isUdiseValid = false;
+            evaluateSubmitButton();
+
             if(val.length === 11) {
                 loader.classList.remove('hidden');
                 err.classList.add('hidden');
                 panel.classList.add('hidden');
                 
                 learnersInput.disabled = true;
-                submitBtn.disabled = true;
-                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
                 learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
                 
                 setTimeout(() => {
@@ -759,8 +815,8 @@
                         learnersInput.className = "w-full px-4 py-3 border-2 border-indigo-300 rounded-xl focus:ring-4 focus:ring-indigo-100 bg-white font-black text-indigo-700 text-center text-xl transition-all shadow-inner";
                         learnersInput.placeholder = "Minimum 20";
                         
-                        submitBtn.disabled = false;
-                        submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
+                        isUdiseValid = true;
+                        evaluateSubmitButton();
                     } else {
                         err.classList.remove('hidden');
                     }
@@ -771,8 +827,6 @@
                 loader.classList.add('hidden');
                 
                 learnersInput.disabled = true;
-                submitBtn.disabled = true;
-                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
                 learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
                 learnersInput.placeholder = "ଲକ୍ଡ୍ (Locked)";
             }
@@ -837,11 +891,10 @@
                 const phone = document.getElementById('teacher-phone').value.trim();
                 const learners = parseInt(document.getElementById('learners-enrolled').value, 10);
 
+                // Double check just in case
                 const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
                 if (!dupSnap.empty) {
-                    document.getElementById('phone-duplicate-error').classList.remove('hidden');
-                    document.getElementById('teacher-phone').classList.add('border-red-500', 'bg-red-50');
-                    showToast('Already Registered', 'Please go to Update Score or My Profile.', 'error');
+                    showToast('Duplicate Phone', 'Phone Number already registered.', 'error');
                     submitBtn.disabled = false; spinner.classList.add('hidden'); return;
                 }
 
@@ -879,6 +932,13 @@
                 document.getElementById('nomination-form').reset();
                 document.getElementById('verified-school-panel').classList.add('hidden');
                 learnersInput.disabled = true;
+                
+                // Reset flags
+                isPhoneValid = false;
+                isUdiseValid = false;
+                evaluateSubmitButton();
+                document.getElementById('phone-valid').classList.add('hidden');
+                document.getElementById('teacher-phone').classList.remove('border-emerald-500', 'bg-emerald-50');
                 
                 hideAllSections(); sections.success.classList.remove('hidden');
                 
@@ -962,6 +1022,7 @@
                 document.getElementById('profile-login-div').classList.add('hidden');
                 document.getElementById('profile-view-div').classList.remove('hidden');
                 
+                // Populate Edit View
                 document.getElementById('prof-disp-name').value = activeProfileData.teacherName;
                 document.getElementById('prof-disp-photo').src = activeProfileData.photoUrl || "https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo";
                 document.getElementById('prof-disp-school').textContent = activeProfileData.schoolName;
@@ -975,6 +1036,7 @@
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
+        // Handle profile photo re-upload preview
         document.getElementById('prof-file-photo').addEventListener('change', async (e) => {
             if(e.target.files.length > 0) {
                 const file = e.target.files[0];
@@ -983,6 +1045,7 @@
             }
         });
 
+        // Save Profile Edits
         document.getElementById('profile-edit-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-prof-save');
@@ -1011,7 +1074,7 @@
                     updatePayload.lastUpdated = serverTimestamp();
                     await updateDoc(activeProfileRef, updatePayload);
                     showToast('Success', 'Profile updated successfully!', 'success');
-                    activeProfileData = { ...activeProfileData, ...updatePayload }; 
+                    activeProfileData = { ...activeProfileData, ...updatePayload }; // update local cache
                 } else {
                     showToast('Info', 'No changes made.', 'success');
                 }
@@ -1020,6 +1083,7 @@
             finally { btn.innerHTML = originalText; btn.disabled = false; }
         });
 
+        // Profile Logout
         document.getElementById('btn-prof-logout').addEventListener('click', () => {
             activeProfileRef = null;
             activeProfileData = null;
@@ -1049,6 +1113,7 @@
             img.onerror = () => { callback(null); };
         }
 
+        // WHATSAPP SHARE IMAGE + TEXT FUNCTION (Web Share API)
         async function shareToWhatsApp(name, score, btnElement) {
             const originalText = btnElement.innerHTML;
             btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i> ଅପେକ୍ଷା କରନ୍ତୁ...`;
@@ -1085,14 +1150,17 @@
             });
         }
 
+        // ATTACH TO WHATSAPP BUTTON ON SUCCESS PAGE
         document.getElementById('btn-success-whatsapp').addEventListener('click', function() {
             if(newlyRegisteredTeacherName) { shareToWhatsApp(newlyRegisteredTeacherName, newlyRegisteredScore, this); }
         });
 
+        // ATTACH TO WHATSAPP BUTTON ON CERTIFICATE PAGE
         document.getElementById('btn-whatsapp-share').addEventListener('click', function() {
             shareToWhatsApp(certTeacherName, certTeacherScore, this);
         });
 
+        // ATTACH TO DOWNLOAD BUTTON ON SUCCESS PAGE
         document.getElementById('btn-success-to-cert').addEventListener('click', function() {
             if (newlyRegisteredTeacherName) {
                 const btnElement = this;
@@ -1117,6 +1185,7 @@
             }
         });
 
+        // --- CERTIFICATE LOGIN LOGIC ---
         document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-cert-login');
@@ -1159,6 +1228,7 @@
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
+        // STANDARD DOWNLOAD BUTTON (Certificate Page)
         document.getElementById('btn-download-cert').addEventListener('click', function() {
             const btnElement = this;
             const originalText = btnElement.innerHTML;

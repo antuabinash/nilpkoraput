@@ -33,13 +33,17 @@
                         <span class="text-[10px] uppercase font-bold text-orange-600 tracking-wider">କୋରାପୁଟ ଉଲ୍ଲାସ ଇନିସିଏଟିଭ</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-4">
-                    <button id="btn-nav-profile" class="text-slate-500 hover:text-indigo-600 transition-colors w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200 shadow-sm" title="My Profile">
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <!-- PROFILE BUTTON -->
+                    <button id="btn-nav-profile" class="text-slate-500 hover:text-indigo-600 transition-colors w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-sm" title="My Profile">
                         <i class="fa-solid fa-user text-sm sm:text-base"></i>
                     </button>
                     <img src="ullas_logo.png" alt="ULLAS" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/ea580c?text=ULLAS'">
-                    <!-- Minimalist Security Dot -->
-                    <div id="auth-status-dot" class="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-amber-400 animate-pulse ml-1" title="Connecting..."></div>
+                    
+                    <!-- MINIMALIST SECURITY DOT -->
+                    <div class="ml-1 flex items-center justify-center h-full">
+                        <span id="auth-status" class="w-3 h-3 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.8)]" title="Connecting..."></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -158,10 +162,9 @@
                             <button type="submit" id="btn-prof-login" class="w-full py-3 mt-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-bold shadow flex justify-center items-center gap-2">
                                 ଲଗ୍ ଇନ୍ (Login)
                             </button>
-                            <!-- Forgot PIN Link -->
-                            <div class="text-center mt-3">
-                                <button type="button" class="btn-forgot-pin text-indigo-500 hover:text-indigo-700 text-xs font-bold underline transition-colors">ପିନ୍ ଭୁଲିଯାଇଛନ୍ତି କି? (Forgot PIN?)</button>
-                            </div>
+                            <button type="button" class="btn-open-forgot w-full text-center text-sm font-bold text-indigo-600 mt-3 hover:text-indigo-800 transition-colors">
+                                <i class="fa-solid fa-key mr-1"></i> Forgot PIN?
+                            </button>
                         </form>
                     </div>
 
@@ -238,18 +241,8 @@
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+91</span>
-                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide transition-all outline-none" placeholder="9876543210">
-                                    
-                                    <!-- Dynamic Icons -->
-                                    <div id="phone-check-loader" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
-                                        <i class="fa-solid fa-spinner fa-spin text-indigo-500"></i>
-                                    </div>
-                                    <div id="phone-success-icon" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
-                                        <i class="fa-solid fa-circle-check text-green-500 text-lg"></i>
-                                    </div>
+                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide transition-all" placeholder="9876543210">
                                 </div>
-                                
-                                <!-- Duplicate Warning Box -->
                                 <div id="phone-duplicate-error" class="hidden mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700 font-bold leading-relaxed shadow-inner">
                                     <i class="fa-solid fa-circle-exclamation mr-1"></i> ଏହି ନମ୍ବରଟି ପୂର୍ବରୁ ପଞ୍ଜିକୃତ! <br>
                                     <span class="font-medium text-slate-600 mt-1 block">
@@ -297,6 +290,7 @@
                                 <p id="udise-error" class="hidden mt-3 text-center text-red-500 text-sm font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i> ଭୁଲ୍ କୋଡ୍ (Invalid Koraput UDISE)</p>
                             </div>
 
+                            <!-- Verified School Panel -->
                             <div id="verified-school-panel" class="hidden bg-emerald-50 border-2 border-emerald-400 rounded-xl p-4 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-16 h-16 bg-emerald-100 rounded-bl-full z-0"></div>
                                 <div class="relative z-10 flex items-start gap-3">
@@ -378,10 +372,9 @@
                             <button type="submit" id="btn-up-login" class="w-full py-3 mt-2 bg-cyan-600 text-white rounded-xl hover:bg-cyan-700 font-bold shadow flex justify-center items-center gap-2">
                                 ଲଗ୍ ଇନ୍ (Login)
                             </button>
-                            <!-- Forgot PIN Link -->
-                            <div class="text-center mt-3">
-                                <button type="button" class="btn-forgot-pin text-cyan-600 hover:text-cyan-800 text-xs font-bold underline transition-colors">ପିନ୍ ଭୁଲିଯାଇଛନ୍ତି କି? (Forgot PIN?)</button>
-                            </div>
+                            <button type="button" class="btn-open-forgot w-full text-center text-sm font-bold text-cyan-600 mt-3 hover:text-cyan-800 transition-colors">
+                                <i class="fa-solid fa-key mr-1"></i> Forgot PIN?
+                            </button>
                         </form>
                     </div>
 
@@ -415,11 +408,10 @@
         <section id="section-success" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-xl border-t-4 border-green-500 overflow-hidden mb-12 p-10 md:p-16 flex flex-col items-center justify-center text-center">
                 <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-inner border-4 border-white"><i class="fa-solid fa-check text-5xl text-green-600"></i></div>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-4">ଆବେଦନ ସଫଳ ହେଲା!</h2>
-                <h3 class="text-xl font-bold text-slate-600 mb-6">(Application Successful)</h3>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-4">ସଫଳ ହେଲା! (Success)</h2>
                 
                 <p class="text-slate-700 font-medium mb-8 leading-relaxed bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm max-w-2xl text-lg">
-                    ଲିଡରବୋର୍ଡରେ ଶୀର୍ଷରେ ରହିବା ପାଇଁ ଦୟାକରି ଅଧିକରୁ ଅଧିକ ନାମଲେଖା (Enrollment) ଯୋଡନ୍ତୁ, ଏହି ସୁଯୋଗ ହାତଛଡ଼ା କରନ୍ତୁ ନାହିଁ! ଏହାସହିତ ଆପଣଙ୍କର ଅଂଶଗ୍ରହଣ ପ୍ରମାଣପତ୍ର ମଧ୍ୟ ଏଠାରୁ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ।
+                    ଲିଡରବୋର୍ଡରେ ଶୀର୍ଷରେ ରହିବା ପାଇଁ ଦୟାକରି ଅଧିକରୁ ଅଧିକ ନାମଲେଖା (Enrollment) ଯୋଡନ୍ତୁ। ଏହାସହିତ ଆପଣଙ୍କର ଅଂଶଗ୍ରହଣ ପ୍ରମାଣପତ୍ର ମଧ୍ୟ ଏଠାରୁ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ।
                 </p>
 
                 <div class="flex flex-col gap-4 w-full justify-center max-w-sm mx-auto">
@@ -467,10 +459,9 @@
                         <button type="submit" id="btn-cert-login" class="w-full py-3 mt-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-lg flex justify-center items-center gap-2 transition-all">
                             ଲଗ୍ ଇନ୍ (Login)
                         </button>
-                        <!-- Forgot PIN Link -->
-                        <div class="text-center mt-3">
-                            <button type="button" class="btn-forgot-pin text-amber-600 hover:text-amber-800 text-xs font-bold underline transition-colors">ପିନ୍ ଭୁଲିଯାଇଛନ୍ତି କି? (Forgot PIN?)</button>
-                        </div>
+                        <button type="button" class="btn-open-forgot w-full text-center text-sm font-bold text-amber-600 mt-3 hover:text-amber-800 transition-colors">
+                            <i class="fa-solid fa-key mr-1"></i> Forgot PIN?
+                        </button>
                     </form>
                 </div>
 
@@ -561,47 +552,44 @@
         </section>
     </main>
 
-    <div id="modal-forgot-pin" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-300">
-            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-indigo-500"></i> ପିନ୍ ପରିବର୍ତ୍ତନ (Reset PIN)</h3>
-                <button id="close-forgot-pin" class="text-slate-400 hover:text-red-500 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+    <div id="modal-forgot-pin" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden flex flex-col transform transition-all">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-indigo-50">
+                <h3 class="font-bold text-indigo-900 flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole"></i> Reset PIN</h3>
+                <button class="close-forgot-pin text-indigo-400 hover:text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center bg-white shadow-sm">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <form id="forgot-pin-form" class="p-6 space-y-4">
-                <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-2 text-center">ନୂଆ ପିନ୍ ସେଟ୍ କରିବା ପାଇଁ ଆପଣଙ୍କର ପଞ୍ଜୀକୃତ ଫୋନ୍ ନମ୍ବର ଏବଂ ବିଦ୍ୟାଳୟର UDISE କୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ।</p>
+            
+            <form id="forgot-pin-form" class="p-6 space-y-4 bg-white">
+                <p class="text-xs text-slate-500 font-medium mb-2 leading-relaxed">ନିଜର ପରିଚୟ ପ୍ରମାଣ କରିବା ପାଇଁ ଫୋନ୍ ନମ୍ବର ସହ ବିଦ୍ୟାଳୟର UDISE କୋଡ୍ ପ୍ରଦାନ କରନ୍ତୁ।</p>
+                
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number (ଫୋନ୍ ନମ୍ବର) *</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 font-medium text-sm">+91</span>
-                        <input type="tel" id="reset-phone" pattern="[0-9]{10}" maxlength="10" required class="w-full pl-10 pr-10 py-2.5 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-sm font-bold tracking-widest text-center" placeholder="9876543210">
-                        <!-- Dynamic Icons -->
-                        <div id="reset-phone-loader" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i class="fa-solid fa-spinner fa-spin text-indigo-500"></i>
-                        </div>
-                        <div id="reset-phone-success" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i class="fa-solid fa-circle-check text-green-500 text-lg"></i>
-                        </div>
+                        <input type="tel" id="forgot-phone" pattern="[0-9]{10}" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl bg-slate-50 tracking-widest font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-colors">
+                        <div id="forgot-phone-status" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"></div>
                     </div>
-                    <p id="reset-phone-error" class="hidden mt-1 text-center text-red-500 text-xs font-bold">ଏହି ନମ୍ବରଟି ପଞ୍ଜିକୃତ ନୁହେଁ (Not registered)</p>
                 </div>
+
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">UDISE କୋଡ୍ (UDISE Code) *</label>
-                    <input type="text" id="reset-udise" pattern="[0-9]{11}" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-sm font-bold tracking-widest text-center">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">School UDISE Code *</label>
+                    <input type="text" id="forgot-udise" pattern="[0-9]{11}" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl bg-slate-50 tracking-[0.2em] font-bold focus:ring-2 focus:ring-indigo-500 outline-none text-center">
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                
+                <div class="grid grid-cols-2 gap-3 pt-2">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">ନୂଆ ପିନ୍ *</label>
-                        <input type="password" id="reset-pin" pattern="[0-9]{4}" maxlength="4" required class="w-full px-2 py-2 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-center text-lg font-black tracking-widest" placeholder="••••">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">New PIN *</label>
+                        <input type="password" id="forgot-pin" pattern="[0-9]{4}" maxlength="4" required class="w-full py-2.5 border border-slate-300 rounded-xl text-center tracking-widest font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">ନିଶ୍ଚିତ କରନ୍ତୁ *</label>
-                        <input type="password" id="reset-pin-confirm" pattern="[0-9]{4}" maxlength="4" required class="w-full px-2 py-2 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-center text-lg font-black tracking-widest" placeholder="••••">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Confirm PIN *</label>
+                        <input type="password" id="forgot-pin-confirm" pattern="[0-9]{4}" maxlength="4" required class="w-full py-2.5 border border-slate-300 rounded-xl text-center tracking-widest font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                 </div>
-                <button type="submit" id="btn-reset-submit" disabled class="w-full py-3 mt-4 bg-slate-300 text-slate-500 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm cursor-not-allowed">
-                    ପିନ୍ ଅପଡେଟ୍ କରନ୍ତୁ (Reset)
+
+                <button type="submit" id="btn-forgot-submit" class="w-full py-3 mt-4 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-bold shadow-lg flex justify-center items-center transition-all disabled:opacity-50">
+                    ପିନ୍ ସେଟ୍ କରନ୍ତୁ (Reset PIN)
                 </button>
             </form>
         </div>
@@ -649,10 +637,8 @@
         let isFirebaseReady = false;
         
         let schoolMasterData = {};
-
         let activeTeacherRef = null;
         let activeTeacherData = null;
-        
         let activeProfileRef = null;
         let activeProfileData = null;
         let newProfilePhotoData = null;
@@ -662,7 +648,6 @@
         let newlyRegisteredTeacherName = ""; 
         let newlyRegisteredScore = 0;
         let currentBlockTeachers = []; 
-        let isPhoneValidForRegistration = false;
 
         const koraputBlocks = {
             "BANDHUGAON": "Bandhugaon (ବନ୍ଧୁଗାଁ)", "BOIPARIGUDA": "Boipariguda (ବୋଇପାରିଗୁଡ଼ା)", 
@@ -686,9 +671,11 @@
             form: document.getElementById('btn-show-form'),
             leaderboard: document.getElementById('btn-show-leaderboard'),
             certificate: document.getElementById('btn-show-certificate'),
-            update: document.getElementById('btn-show-update')
+            update: document.getElementById('btn-show-update'),
+            profile: document.getElementById('btn-nav-profile')
         };
 
+        // --- STREAMING_CHUNK:Initialization and Setup Logic ---
         async function initApp() {
             try {
                 fetch('schools.json').then(res => res.json()).then(data => {
@@ -706,10 +693,9 @@
                     if (user) {
                         currentUser = user; isFirebaseReady = true;
                         
-                        // Security Dot becomes Solid Green
-                        const dot = document.getElementById('auth-status-dot');
-                        dot.classList.remove('bg-amber-400', 'animate-pulse');
-                        dot.classList.add('bg-emerald-500', 'shadow-[0_0_8px_rgba(16,185,129,0.8)]');
+                        // SECURE DOT UI
+                        const dot = document.getElementById('auth-status');
+                        dot.className = "w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]";
                         dot.title = "Secured";
                         
                         const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
@@ -742,24 +728,27 @@
             } catch (err) { console.error("Init Error:", err); }
         }
 
-        // --- STREAMING_CHUNK:Section Toggling & Inputs ---
         function hideAllSections() {
             Object.values(sections).forEach(sec => sec.classList.add('hidden'));
-            Object.values(buttons).forEach(btn => btn.classList.remove('ring-4', 'ring-blue-100', 'ring-emerald-100', 'ring-amber-100', 'ring-cyan-100'));
+            Object.values(buttons).forEach(btn => {
+                if(btn.id !== 'btn-nav-profile') {
+                    btn.classList.remove('ring-4', 'ring-blue-100', 'ring-emerald-100', 'ring-amber-100', 'ring-cyan-100');
+                }
+            });
         }
 
-        buttons.form.addEventListener('click', () => { hideAllSections(); sections.form.classList.remove('hidden'); sections.form.scrollIntoView(); buttons.form.classList.add('ring-4', 'ring-blue-100'); });
-        buttons.leaderboard.addEventListener('click', () => { hideAllSections(); sections.leaderboard.classList.remove('hidden'); sections.leaderboard.scrollIntoView(); buttons.leaderboard.classList.add('ring-4', 'ring-emerald-100'); loadOverallLeaderboard(); });
-        buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView(); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
-        buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView(); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
+        buttons.form.addEventListener('click', () => { hideAllSections(); sections.form.classList.remove('hidden'); sections.form.scrollIntoView({behavior: 'smooth'}); buttons.form.classList.add('ring-4', 'ring-blue-100'); });
+        buttons.leaderboard.addEventListener('click', () => { hideAllSections(); sections.leaderboard.classList.remove('hidden'); sections.leaderboard.scrollIntoView({behavior: 'smooth'}); buttons.leaderboard.classList.add('ring-4', 'ring-emerald-100'); loadOverallLeaderboard(); });
+        buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView({behavior: 'smooth'}); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
+        buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView({behavior: 'smooth'}); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
         
-        document.getElementById('btn-nav-profile').addEventListener('click', () => { 
+        buttons.profile.addEventListener('click', () => { 
             hideAllSections(); 
             sections.profile.classList.remove('hidden'); 
-            sections.profile.scrollIntoView(); 
+            sections.profile.scrollIntoView({behavior: 'smooth'}); 
         });
 
-        document.querySelectorAll('.close-section').forEach(btn => btn.addEventListener('click', () => { hideAllSections(); window.scrollTo({top:0}); }));
+        document.querySelectorAll('.close-section').forEach(btn => btn.addEventListener('click', () => { hideAllSections(); window.scrollTo({top:0, behavior: 'smooth'}); }));
 
         const setupPinToggle = (btnId, inputId) => {
             const btn = document.getElementById(btnId);
@@ -776,55 +765,61 @@
         setupPinToggle('toggle-cert-pin', 'cert-pin');
         setupPinToggle('toggle-prof-pin', 'prof-pin');
 
-        // --- STREAMING_CHUNK:Smart Phone & UDISE Validation Logic ---
-        const submitBtn = document.getElementById('submit-btn');
-        const learnersInput = document.getElementById('learners-enrolled');
-        const teacherPhoneInput = document.getElementById('teacher-phone');
-
-        // Smart Phone Check
-        teacherPhoneInput.addEventListener('input', async function(e) {
+        // --- STREAMING_CHUNK:Smart Phone Validation Logic ---
+        document.getElementById('teacher-phone').addEventListener('input', async function(e) {
             const val = e.target.value.trim();
-            const loader = document.getElementById('phone-check-loader');
-            const successIcon = document.getElementById('phone-success-icon');
-            const dupError = document.getElementById('phone-duplicate-error');
+            const errBox = document.getElementById('phone-duplicate-error');
             
-            dupError.classList.add('hidden');
-            this.classList.remove('border-red-500', 'bg-red-50');
-            successIcon.classList.add('hidden');
-            isPhoneValidForRegistration = false;
-            updateSubmitButtonState();
-
-            if(val.length === 10) {
-                if (!isFirebaseReady) return;
-                loader.classList.remove('hidden');
-                
-                try {
-                    const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
-                    loader.classList.add('hidden');
-                    
-                    if (!dupSnap.empty) {
-                        dupError.classList.remove('hidden');
-                        this.classList.add('border-red-500', 'bg-red-50');
-                    } else {
-                        successIcon.classList.remove('hidden');
-                        isPhoneValidForRegistration = true;
-                        updateSubmitButtonState();
-                    }
-                } catch (err) {
-                    console.error("Phone check error", err);
-                    loader.classList.add('hidden');
+            if(val.length === 10 && isFirebaseReady) {
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
+                if(!snap.empty) {
+                    errBox.classList.remove('hidden');
+                    this.classList.add('border-red-500', 'bg-red-50');
+                    document.getElementById('submit-btn').disabled = true;
+                } else {
+                    errBox.classList.add('hidden');
+                    this.classList.remove('border-red-500', 'bg-red-50');
+                    document.getElementById('submit-btn').disabled = false;
                 }
             } else {
-                loader.classList.add('hidden');
+                errBox.classList.add('hidden');
+                this.classList.remove('border-red-500', 'bg-red-50');
             }
         });
 
-        // UDISE Smart Auto-Fill
+        // LIVE CHECK FOR FORGOT PIN MODAL
+        document.getElementById('forgot-phone').addEventListener('input', async function(e) {
+            const val = e.target.value.trim();
+            const statusIcon = document.getElementById('forgot-phone-status');
+            
+            if(val.length === 10 && isFirebaseReady) {
+                statusIcon.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-amber-500"></i>`;
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
+                if(!snap.empty) {
+                    statusIcon.innerHTML = `<i class="fa-solid fa-check-circle text-green-500"></i>`;
+                    this.classList.remove('border-red-500', 'bg-red-50');
+                    this.classList.add('border-green-500', 'bg-green-50');
+                } else {
+                    statusIcon.innerHTML = `<i class="fa-solid fa-times-circle text-red-500"></i>`;
+                    this.classList.add('border-red-500', 'bg-red-50');
+                    this.classList.remove('border-green-500', 'bg-green-50');
+                }
+            } else {
+                statusIcon.innerHTML = '';
+                this.classList.remove('border-red-500', 'bg-red-50', 'border-green-500', 'bg-green-50');
+            }
+        });
+
+        // --- STREAMING_CHUNK:UDISE Auto-Fill Logic ---
+        const submitBtn = document.getElementById('submit-btn');
+        const learnersInput = document.getElementById('learners-enrolled');
+
         document.getElementById('school-udise').addEventListener('input', function(e) {
             const val = e.target.value.trim();
             const panel = document.getElementById('verified-school-panel');
             const err = document.getElementById('udise-error');
             const loader = document.getElementById('udise-loader');
+            const phoneErrHidden = document.getElementById('phone-duplicate-error').classList.contains('hidden');
 
             if(val.length === 11) {
                 loader.classList.remove('hidden');
@@ -832,8 +827,9 @@
                 panel.classList.add('hidden');
                 
                 learnersInput.disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
                 learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
-                updateSubmitButtonState();
                 
                 setTimeout(() => {
                     loader.classList.add('hidden');
@@ -842,12 +838,17 @@
                         document.getElementById('v-school-name').textContent = s.n;
                         document.getElementById('v-block').textContent = koraputBlocks[s.b] || s.b;
                         document.getElementById('v-cluster').textContent = s.c;
+                        
                         panel.classList.remove('hidden');
                         
                         learnersInput.disabled = false;
                         learnersInput.className = "w-full px-4 py-3 border-2 border-indigo-300 rounded-xl focus:ring-4 focus:ring-indigo-100 bg-white font-black text-indigo-700 text-center text-xl transition-all shadow-inner";
                         learnersInput.placeholder = "Minimum 20";
-                        updateSubmitButtonState();
+                        
+                        if(phoneErrHidden) {
+                            submitBtn.disabled = false;
+                            submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
+                        }
                     } else {
                         err.classList.remove('hidden');
                     }
@@ -858,25 +859,14 @@
                 loader.classList.add('hidden');
                 
                 learnersInput.disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
                 learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
                 learnersInput.placeholder = "ଲକ୍ଡ୍ (Locked)";
-                updateSubmitButtonState();
             }
         });
 
-        // Master unlock function for Submit Button
-        function updateSubmitButtonState() {
-            const isUdisePanelVisible = !document.getElementById('verified-school-panel').classList.contains('hidden');
-            if (isPhoneValidForRegistration && isUdisePanelVisible) {
-                submitBtn.disabled = false;
-                submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
-            } else {
-                submitBtn.disabled = true;
-                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
-            }
-        }
-
-        // --- STREAMING_CHUNK:Image processing & Forgot PIN logic ---
+        // --- STREAMING_CHUNK:Image Compression & Registration Submission ---
         function compressImage(file, isAvatar = false) {
             return new Promise((resolve, reject) => {
                 if (!file) return resolve(null);
@@ -917,132 +907,6 @@
             }
         });
 
-        // Global Forgot PIN Modal Logic
-        const forgotPinModal = document.getElementById('modal-forgot-pin');
-        document.querySelectorAll('.btn-forgot-pin').forEach(btn => {
-            btn.addEventListener('click', () => {
-                forgotPinModal.classList.remove('hidden');
-                setTimeout(() => {
-                    forgotPinModal.classList.remove('opacity-0');
-                    forgotPinModal.querySelector('div').classList.remove('scale-95');
-                }, 10);
-            });
-        });
-
-        document.getElementById('close-forgot-pin').addEventListener('click', () => {
-            forgotPinModal.classList.add('opacity-0');
-            forgotPinModal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => {
-                forgotPinModal.classList.add('hidden');
-                document.getElementById('forgot-pin-form').reset();
-                
-                // Reset live validation states
-                isResetPhoneValid = false;
-                updateResetButtonState();
-                const resetPhoneInput = document.getElementById('reset-phone');
-                resetPhoneInput.classList.remove('border-red-500', 'bg-red-50', 'border-green-500', 'bg-green-50');
-                document.getElementById('reset-phone-error').classList.add('hidden');
-                document.getElementById('reset-phone-success').classList.add('hidden');
-            }, 300);
-        });
-
-        // Live Phone Validation for Forgot PIN
-        let isResetPhoneValid = false;
-        const btnResetSubmit = document.getElementById('btn-reset-submit');
-
-        function updateResetButtonState() {
-            if (isResetPhoneValid) {
-                btnResetSubmit.disabled = false;
-                btnResetSubmit.className = "w-full py-3 mt-4 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm";
-            } else {
-                btnResetSubmit.disabled = true;
-                btnResetSubmit.className = "w-full py-3 mt-4 bg-slate-300 text-slate-500 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm cursor-not-allowed";
-            }
-        }
-
-        document.getElementById('reset-phone').addEventListener('input', async function(e) {
-            const val = e.target.value.trim();
-            const loader = document.getElementById('reset-phone-loader');
-            const successIcon = document.getElementById('reset-phone-success');
-            const errText = document.getElementById('reset-phone-error');
-            
-            errText.classList.add('hidden');
-            this.classList.remove('border-red-500', 'bg-red-50', 'border-green-500', 'bg-green-50');
-            successIcon.classList.add('hidden');
-            isResetPhoneValid = false;
-            updateResetButtonState();
-
-            if(val.length === 10) {
-                if (!isFirebaseReady) return;
-                loader.classList.remove('hidden');
-                
-                try {
-                    const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
-                    loader.classList.add('hidden');
-                    
-                    if (snap.empty) {
-                        errText.classList.remove('hidden');
-                        this.classList.add('border-red-500', 'bg-red-50');
-                    } else {
-                        successIcon.classList.remove('hidden');
-                        this.classList.add('border-green-500', 'bg-green-50');
-                        isResetPhoneValid = true;
-                        updateResetButtonState();
-                    }
-                } catch (err) {
-                    console.error("Phone check error", err);
-                    loader.classList.add('hidden');
-                }
-            } else {
-                loader.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('forgot-pin-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btn-reset-submit');
-            
-            const phone = document.getElementById('reset-phone').value.trim();
-            const udise = document.getElementById('reset-udise').value.trim();
-            const newPin = document.getElementById('reset-pin').value.trim();
-            const confirmPin = document.getElementById('reset-pin-confirm').value.trim();
-
-            if (newPin !== confirmPin) return showToast('Error', 'PINs do not match.', 'error');
-            
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ଯାଞ୍ଚ ହେଉଛି...`; 
-            btn.disabled = true;
-
-            try {
-                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
-                
-                if (snap.empty) {
-                    showToast('Error', 'Phone Number not registered.', 'error');
-                    btn.innerHTML = originalText; btn.disabled = false; return;
-                }
-
-                const docSnap = snap.docs[0];
-                const data = docSnap.data();
-
-                if (data.udiseCode !== udise) {
-                    showToast('Error', 'Incorrect UDISE Code for this account.', 'error');
-                    btn.innerHTML = originalText; btn.disabled = false; return;
-                }
-
-                await updateDoc(docSnap.ref, { securityPin: newPin, lastUpdated: serverTimestamp() });
-
-                showToast('Success', 'PIN reset successfully! You can now login.', 'success');
-                document.getElementById('close-forgot-pin').click();
-
-            } catch (err) { 
-                console.error(err); 
-                showToast('Error', 'System error occurred.', 'error'); 
-            } finally { 
-                btn.innerHTML = originalText; btn.disabled = false; 
-            }
-        });
-
-        // --- STREAMING_CHUNK:Form Submission & Update Score Logic ---
         document.getElementById('nomination-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isFirebaseReady || !currentUser) return showToast('Error', 'Database offline.', 'error');
@@ -1060,6 +924,14 @@
             try {
                 const phone = document.getElementById('teacher-phone').value.trim();
                 const learners = parseInt(document.getElementById('learners-enrolled').value, 10);
+
+                const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+                if (!dupSnap.empty) {
+                    document.getElementById('phone-duplicate-error').classList.remove('hidden');
+                    document.getElementById('teacher-phone').classList.add('border-red-500', 'bg-red-50');
+                    showToast('Already Registered', 'Please go to Update Score or My Profile.', 'error');
+                    submitBtn.disabled = false; spinner.classList.add('hidden'); return;
+                }
 
                 const ts = Date.now();
                 let photoUrl = "https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo";
@@ -1094,8 +966,6 @@
 
                 document.getElementById('nomination-form').reset();
                 document.getElementById('verified-school-panel').classList.add('hidden');
-                document.getElementById('phone-success-icon').classList.add('hidden');
-                isPhoneValidForRegistration = false;
                 learnersInput.disabled = true;
                 
                 hideAllSections(); sections.success.classList.remove('hidden');
@@ -1104,6 +974,7 @@
             finally { submitBtn.disabled = false; spinner.classList.add('hidden'); }
         });
 
+        // --- STREAMING_CHUNK:Update Score Logic ---
         document.getElementById('update-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-up-login');
@@ -1146,6 +1017,10 @@
                 batch.update(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', activeTeacherData.block), { totalEnrolled: increment(newTotal - activeTeacherData.learnersEnrolled) });
                 await batch.commit();
 
+                // BUG FIX: Set variables so WhatsApp/Download buttons work on success screen
+                newlyRegisteredTeacherName = activeTeacherData.teacherName;
+                newlyRegisteredScore = newTotal;
+
                 activeTeacherData = null; activeTeacherRef = null;
                 document.getElementById('update-data-form').reset();
                 document.getElementById('update-login-form').reset();
@@ -1159,7 +1034,7 @@
             finally { btn.disabled = false; spinner.classList.add('hidden'); }
         });
 
-        // --- STREAMING_CHUNK:Profile & Certificate Actions... ---
+        // --- STREAMING_CHUNK:My Profile Editing Logic ---
         document.getElementById('profile-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-prof-login');
@@ -1228,7 +1103,7 @@
                     updatePayload.lastUpdated = serverTimestamp();
                     await updateDoc(activeProfileRef, updatePayload);
                     showToast('Success', 'Profile updated successfully!', 'success');
-                    activeProfileData = { ...activeProfileData, ...updatePayload };
+                    activeProfileData = { ...activeProfileData, ...updatePayload }; 
                 } else {
                     showToast('Info', 'No changes made.', 'success');
                 }
@@ -1243,6 +1118,94 @@
             document.getElementById('profile-login-form').reset();
             document.getElementById('profile-view-div').classList.add('hidden');
             document.getElementById('profile-login-div').classList.remove('hidden');
+        });
+
+        // --- STREAMING_CHUNK:Global Forgot PIN Logic ---
+        document.querySelectorAll('.btn-open-forgot').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('modal-forgot-pin').classList.remove('hidden');
+            });
+        });
+        
+        document.querySelector('.close-forgot-pin').addEventListener('click', () => {
+            document.getElementById('modal-forgot-pin').classList.add('hidden');
+        });
+
+        document.getElementById('forgot-pin-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('forgot-phone').value.trim();
+            const udise = document.getElementById('forgot-udise').value.trim();
+            const pin1 = document.getElementById('forgot-pin').value.trim();
+            const pin2 = document.getElementById('forgot-pin-confirm').value.trim();
+
+            if (pin1 !== pin2) return showToast('Error', 'PINs do not match.', 'error');
+
+            const btn = document.getElementById('btn-forgot-submit');
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+
+            try {
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+                if(snap.empty) {
+                    showToast('Error', 'Phone number not found.', 'error');
+                } else {
+                    const docSnap = snap.docs[0];
+                    if(docSnap.data().udiseCode !== udise) {
+                        showToast('Error', 'Incorrect UDISE Code for this account.', 'error');
+                    } else {
+                        await updateDoc(docSnap.ref, { securityPin: pin1 });
+                        showToast('Success', 'PIN updated! You can now log in.', 'success');
+                        document.getElementById('modal-forgot-pin').classList.add('hidden');
+                        document.getElementById('forgot-pin-form').reset();
+                        document.getElementById('forgot-phone-status').innerHTML = '';
+                        document.getElementById('forgot-phone').className = "w-full px-4 py-2.5 border border-slate-300 rounded-xl bg-slate-50 tracking-widest font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-colors";
+                    }
+                }
+            } catch(e) { console.error(e); showToast('Error', 'System error occurred.', 'error'); }
+            finally { btn.disabled = false; btn.innerHTML = 'ପିନ୍ ସେଟ୍ କରନ୍ତୁ (Reset PIN)'; }
+        });
+
+
+        // --- STREAMING_CHUNK:Certificate Generation & WhatsApp Web Share API ---
+        document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-cert-login');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ଯାଞ୍ଚ ହେଉଛି...`; btn.disabled = true;
+
+            try {
+                const phone = document.getElementById('cert-phone').value.trim();
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+
+                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+                const data = snap.docs[0].data();
+                if (data.securityPin !== document.getElementById('cert-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+
+                certTeacherName = data.teacherName;
+                certTeacherScore = data.learnersEnrolled;
+                
+                document.getElementById('cert-disp-name').textContent = certTeacherName;
+
+                const tierIcon = document.getElementById('cert-tier-icon');
+                const tierText = document.getElementById('cert-disp-tier');
+                
+                if (certTeacherScore >= 100) {
+                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-blue-200 bg-blue-100 text-blue-500";
+                    tierIcon.innerHTML = `<i class="fa-solid fa-gem text-4xl"></i>`;
+                    tierText.textContent = "Diamond Tier Achieved";
+                } else if (certTeacherScore >= 50) {
+                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-yellow-200 bg-yellow-100 text-yellow-500";
+                    tierIcon.innerHTML = `<i class="fa-solid fa-medal text-4xl"></i>`;
+                    tierText.textContent = "Gold Tier Achieved";
+                } else {
+                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-slate-200 bg-slate-100 text-slate-500";
+                    tierIcon.innerHTML = `<i class="fa-solid fa-award text-4xl"></i>`;
+                    tierText.textContent = "Silver Tier Achieved";
+                }
+
+                document.getElementById('cert-login-div').classList.add('hidden');
+                document.getElementById('cert-download-div').classList.remove('hidden');
+
+            } catch (err) { console.error(err); showToast('Error', 'System error.', 'error'); } 
+            finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
         function getGeneratedCertificateCanvas(nameToPrint, score, callback) {
@@ -1301,14 +1264,15 @@
             });
         }
 
+        // WhatsApp Buttons
         document.getElementById('btn-success-whatsapp').addEventListener('click', function() {
             if(newlyRegisteredTeacherName) { shareToWhatsApp(newlyRegisteredTeacherName, newlyRegisteredScore, this); }
         });
-
         document.getElementById('btn-whatsapp-share').addEventListener('click', function() {
             shareToWhatsApp(certTeacherName, certTeacherScore, this);
         });
 
+        // Download Buttons
         document.getElementById('btn-success-to-cert').addEventListener('click', function() {
             if (newlyRegisteredTeacherName) {
                 const btnElement = this;
@@ -1333,48 +1297,6 @@
             }
         });
 
-        document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btn-cert-login');
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ଯାଞ୍ଚ ହେଉଛି...`; btn.disabled = true;
-
-            try {
-                const phone = document.getElementById('cert-phone').value.trim();
-                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
-
-                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
-                const data = snap.docs[0].data();
-                if (data.securityPin !== document.getElementById('cert-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
-
-                certTeacherName = data.teacherName;
-                certTeacherScore = data.learnersEnrolled;
-                
-                document.getElementById('cert-disp-name').textContent = certTeacherName;
-
-                const tierIcon = document.getElementById('cert-tier-icon');
-                const tierText = document.getElementById('cert-disp-tier');
-                
-                if (certTeacherScore >= 100) {
-                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-blue-200 bg-blue-100 text-blue-500";
-                    tierIcon.innerHTML = `<i class="fa-solid fa-gem text-4xl"></i>`;
-                    tierText.textContent = "Diamond Tier Achieved";
-                } else if (certTeacherScore >= 50) {
-                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-yellow-200 bg-yellow-100 text-yellow-500";
-                    tierIcon.innerHTML = `<i class="fa-solid fa-medal text-4xl"></i>`;
-                    tierText.textContent = "Gold Tier Achieved";
-                } else {
-                    tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-slate-200 bg-slate-100 text-slate-500";
-                    tierIcon.innerHTML = `<i class="fa-solid fa-award text-4xl"></i>`;
-                    tierText.textContent = "Silver Tier Achieved";
-                }
-
-                document.getElementById('cert-login-div').classList.add('hidden');
-                document.getElementById('cert-download-div').classList.remove('hidden');
-
-            } catch (err) { console.error(err); showToast('Error', 'System error.', 'error'); } 
-            finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
-        });
-
         document.getElementById('btn-download-cert').addEventListener('click', function() {
             const btnElement = this;
             const originalText = btnElement.innerHTML;
@@ -1395,7 +1317,7 @@
             });
         });
 
-        // --- STREAMING_CHUNK:Leaderboard Fetching... ---
+        // --- STREAMING_CHUNK:Leaderboard Filtering Logic ---
         document.getElementById('btn-back-blocks').addEventListener('click', loadOverallLeaderboard);
 
         async function loadOverallLeaderboard() {
@@ -1512,6 +1434,7 @@
             renderTeacherTable(e.target.value);
         });
 
+        // --- TOAST UI LOGIC ---
         function showToast(title, msg, type = 'success') {
             const t = document.getElementById('custom-toast');
             document.getElementById('toast-title').textContent = title;

@@ -147,11 +147,10 @@
                 <p class="text-[10px] font-medium text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> Total Enrollments</p>
             </div>
 
-            <!-- Map Legend -->
+            <!-- Map Legend (Simplified Binary) -->
             <div class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur px-4 py-3 rounded-xl shadow-xl border border-slate-200 text-[11px] font-bold text-slate-600 flex flex-col gap-2">
-                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600"></span> 1,000+ Enrolled (High)</div>
-                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-amber-400 shadow-sm border border-amber-500"></span> 200+ Enrolled (Med)</div>
-                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-red-500 shadow-sm border border-red-600"></span> Low / Pending Saturation</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600"></span> Active (Enrolled)</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-red-500 shadow-sm border border-red-600"></span> Zero Saturation</div>
             </div>
 
             <div id="district-map" class="w-full h-full z-0 bg-slate-100"></div>
@@ -507,7 +506,7 @@
                     <p class="text-slate-500 font-medium mb-2">Your participation certificate is ready!</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6" id="cert-disp-tier">Level</p>
                     
-                    <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600 w-full max-w-[280px]">
+                    <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600 w-full max-w-[280px]">
                         <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ (Download)
                     </button>
                     
@@ -717,7 +716,7 @@
 
         async function initApp() {
             try {
-                // 1. Init Leaflet Map
+                // 1. Init Leaflet Map with OpenStreetMap instead of CARTO to fix API Key Watermark
                 districtMap = L.map('district-map', { zoomControl: false, scrollWheelZoom: false }).setView([18.8135, 82.7123], 9);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', 
@@ -729,7 +728,8 @@
                 fetch('schools.json').then(res => res.json()).then(data => {
                     schoolMasterData = data;
                     if(districtMap) {
-                        Object.values(schoolMasterData).forEach(s => {
+                        Object.keys(schoolMasterData).forEach(udise => {
+                            const s = schoolMasterData[udise];
                             if(s.lt && s.ln && s.lt !== 0 && s.ln !== 0) {
                                 const marker = L.circleMarker([s.lt, s.ln], {
                                     radius: 3.5, fillColor: "#ef4444", color: "#ffffff", weight: 1, opacity: 1, fillOpacity: 0.8
@@ -737,8 +737,8 @@
                                 
                                 marker.bindTooltip(`<b>${s.n}</b><br/><span class="text-[10px] text-slate-500 font-bold uppercase">${s.c} | ${koraputBlocks[s.b]||s.b}</span>`, { className: 'shadow-lg border-0 rounded-lg', direction: 'top' });
                                 
-                                if(!schoolMarkers[s.b]) schoolMarkers[s.b] = [];
-                                schoolMarkers[s.b].push(marker);
+                                // Store by UDISE instead of block for precise coloring
+                                schoolMarkers[udise] = marker;
                             }
                         });
                     }
@@ -757,23 +757,13 @@
                         currentUser = user; isFirebaseReady = true;
                         document.getElementById('auth-status').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>`;
                         
-                        // 4. Live Map Hook (14 Reads only!)
+                        // Live Counter Hook
                         const lbRef = collection(db, 'artifacts', appId, 'public', 'data', 'lb_blocks');
                         onSnapshot(lbRef, (snap) => {
                             let totalDistrictEnrolled = 0;
                             snap.forEach(doc => {
                                 const d = doc.data();
-                                const blockId = d.blockId;
-                                const enrolled = d.totalEnrolled || 0;
-                                totalDistrictEnrolled += enrolled;
-                                
-                                let color = "#ef4444"; 
-                                if(enrolled >= 1000) color = "#10b981"; 
-                                else if(enrolled >= 200) color = "#facc15"; 
-
-                                if(schoolMarkers[blockId]) {
-                                    schoolMarkers[blockId].forEach(m => m.setStyle({ fillColor: color }));
-                                }
+                                totalDistrictEnrolled += (d.totalEnrolled || 0);
                             });
                             document.getElementById('map-live-counter').textContent = totalDistrictEnrolled.toLocaleString();
                         });
@@ -1429,15 +1419,25 @@
             document.getElementById('view-schools').classList.add('hidden');
 
             try {
+                // Fetch up to 100 teachers
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('block', '==', blockId), orderBy('learnersEnrolled', 'desc'), limit(100))); 
                 
                 currentBlockTeachers = []; 
                 let uniqueClusters = new Set();
+                
+                // NEW: Turn active schools Green on the map!
+                Object.values(schoolMarkers).forEach(m => m.setStyle({ fillColor: '#ef4444' })); // Reset all to Red first
 
                 snap.forEach(doc => { 
                     const data = doc.data();
                     currentBlockTeachers.push(data); 
                     if(data.cluster) uniqueClusters.add(data.cluster.toUpperCase());
+                    
+                    // If this school has a marker, turn it Green
+                    if(data.udiseCode && schoolMarkers[data.udiseCode]) {
+                        schoolMarkers[data.udiseCode].setStyle({ fillColor: '#10b981' }); 
+                        schoolMarkers[data.udiseCode].bringToFront();
+                    }
                 });
                 
                 document.getElementById('badge-current-block').textContent = koraputBlocks[blockId] || blockId;

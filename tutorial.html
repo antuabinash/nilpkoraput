@@ -104,69 +104,70 @@
             }
         };
 
-        const smoothScrollTo = async (id) => {
+        // NEW: Scroll exactly to the CENTER to avoid hiding under the sticky navbar
+        const smoothScrollTo = async (id, blockPosition = 'center') => {
             const doc = frame.contentWindow.document;
             const el = doc.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            await wait(1500); // Give user ample time to see the scroll happen
+            if(el) el.scrollIntoView({ behavior: 'smooth', block: blockPosition });
+            await wait(1500); 
         };
 
         // THE MASTER AUTOMATION SCRIPT
         async function startTutorial() {
             document.getElementById('start-btn').classList.add('hidden');
             
-            // Smart Demo Data Generator (Prevents duplication errors forever)
+            // Smart Demo Data Generator
             const randomPhone = "98" + Math.floor(10000000 + Math.random() * 90000000); 
             const baseScore = Math.floor(25 + Math.random() * 15);
             const upgradedScore = baseScore + 20;
 
-            // Wait a moment before starting to let user prepare
             await wait(2500);
 
             // ================= PHASE 1: REGISTRATION ================= //
             await updateText("ପଦକ୍ଷେପ ୧ (Step 1)", "ଶିକ୍ଷକ ପଞ୍ଜିକରଣ", "ନୂଆ ଆବେଦନ କରିବା ପାଇଁ ଶିକ୍ଷକମାନେ 'ପଞ୍ଜିକରଣ' (Registration) ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।");
-            await wait(5000); // Time to read intro
+            await wait(4000); 
             
-            await smoothScrollTo('btn-show-form');
+            await smoothScrollTo('btn-show-form', 'center');
             await clickElement('btn-show-form');
-            await wait(3500); // Wait for form to open and user to digest
+            await wait(3500); 
 
             await updateText("ପଦକ୍ଷେପ ୨ (Step 2)", "ବ୍ୟକ୍ତିଗତ ବିବରଣୀ", "ନିଜର ସଠିକ୍ ନାମ, ଫୋନ୍ ନମ୍ବର ଏବଂ ଏକ ୪-ଅଙ୍କ ବିଶିଷ୍ଟ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ। ଏହି ପିନ୍ ଆପଣଙ୍କୁ ପରେ ଦରକାର ହେବ।");
-            await smoothScrollTo('teacher-name');
+            await smoothScrollTo('teacher-name', 'center');
             await wait(1000);
             
             await simulateTyping('teacher-name', 'Rajesh Kumar', 180);
-            await wait(1500);
-            
-            await simulateTyping('teacher-phone', randomPhone, 180);
-            await wait(1500);
-            
-            await simulateTyping('teacher-pin', '1234', 300); // Slow pin typing
-            await simulateTyping('teacher-pin-confirm', '1234', 300);
-            await wait(4000); // Longer pause to let viewer see the filled personal details
-
-            await updateText("ପଦକ୍ଷେପ ୩ (Step 3)", "ମ୍ୟାଜିକ୍ UDISE ଟେକ୍ନୋଲୋଜି", "କେବଳ ୧୧-ଅଙ୍କ ବିଶିଷ୍ଟ ସ୍କୁଲ୍ UDISE କୋଡ୍ ଟାଇପ୍ କରନ୍ତୁ, ବିଦ୍ୟାଳୟର ସମସ୍ତ ତଥ୍ୟ ସରକାରୀ ଡାଟାବେସ୍ ରୁ ଆପେ ଆପେ ଆସିଯିବ। (100% ସୁରକ୍ଷିତ)");
-            await smoothScrollTo('school-udise');
             await wait(1000);
             
-            await simulateTyping('school-udise', '21290100104', 350); // Very slow for dramatic effect
-            await wait(5000); // Plenty of time to see the Magic Verification Box pop up!
+            await smoothScrollTo('teacher-phone', 'center');
+            await simulateTyping('teacher-phone', randomPhone, 180);
+            await wait(1000);
+            
+            await smoothScrollTo('teacher-pin', 'center');
+            await simulateTyping('teacher-pin', '1234', 300); 
+            await simulateTyping('teacher-pin-confirm', '1234', 300);
+            await wait(3000); 
+
+            await updateText("ପଦକ୍ଷେପ ୩ (Step 3)", "ମ୍ୟାଜିକ୍ UDISE ଟେକ୍ନୋଲୋଜି", "କେବଳ ୧୧-ଅଙ୍କ ବିଶିଷ୍ଟ ସ୍କୁଲ୍ UDISE କୋଡ୍ ଟାଇପ୍ କରନ୍ତୁ, ବିଦ୍ୟାଳୟର ସମସ୍ତ ତଥ୍ୟ ସରକାରୀ ଡାଟାବେସ୍ ରୁ ଆପେ ଆପେ ଆସିଯିବ। (100% ସୁରକ୍ଷିତ)");
+            await smoothScrollTo('school-udise', 'center'); // Perfectly centers the UDISE box
+            await wait(1000);
+            
+            await simulateTyping('school-udise', '21290100104', 350); 
+            await wait(4500); 
 
             await updateText("ପଦକ୍ଷେପ ୪ (Step 4)", "ସ୍କୋର୍ ଦାଖଲ", "ବର୍ତ୍ତମାନ ଆପଣ ନାମାଙ୍କନ କରିଥିବା ମୋଟ ଶିକ୍ଷାର୍ଥୀଙ୍କ ସଂଖ୍ୟା ଲେଖି ଫର୍ମ୍ ଦାଖଲ କରନ୍ତୁ।");
-            await smoothScrollTo('learners-enrolled');
+            await smoothScrollTo('learners-enrolled', 'center'); // Perfectly centers the submit area
             await wait(1000);
             
             await simulateTyping('learners-enrolled', baseScore.toString(), 300);
-            await wait(2500);
+            await wait(1500);
             
+            await smoothScrollTo('submit-btn', 'center');
             await clickElement('submit-btn');
-            await wait(6000); // Wait for submission success page to fully load
+            await wait(6000); 
 
-            // WhatsApp Share Info
             await updateText("ପଦକ୍ଷେପ ୫ (Step 5)", "ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ କରନ୍ତୁ", "ଫର୍ମ୍ ଦାଖଲ ସଫଳ ହେବା ପରେ, ଆପଣ ସିଧାସଳଖ ନିଜର ପ୍ରମାଣପତ୍ର ହ୍ୱାଟସ୍ଆପ୍ (WhatsApp) ମାଧ୍ୟମରେ ସାଙ୍ଗମାନଙ୍କ ସହ ସେୟାର୍ କରିପାରିବେ।");
-            await wait(7000); // Plenty of time to read about WhatsApp share
+            await wait(7000); 
 
-            // Return to Home for next feature
             const doc = frame.contentWindow.document;
             const homeBtn = doc.querySelector('#section-success .close-section');
             if(homeBtn) homeBtn.click();
@@ -175,26 +176,31 @@
 
             // ================= PHASE 2: UPDATE SCORE ================= //
             await updateText("ପଦକ୍ଷେପ ୬ (Step 6)", "ସ୍କୋର୍ ଅପଡେଟ୍ (Update Score)", "ଭବିଷ୍ୟତରେ ଆପଣଙ୍କର ନାମାଙ୍କନ ସଂଖ୍ୟା ବଢିଲେ, 'ସ୍କୋର୍ ଅପଡେଟ୍' ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ। ନୂଆ କରି ଫର୍ମ୍ ପୂରଣ କରିବା ଦରକାର ନାହିଁ।");
-            await wait(5000);
+            await wait(4000);
             
-            await smoothScrollTo('btn-show-update');
+            await smoothScrollTo('btn-show-update', 'center');
             await clickElement('btn-show-update');
             await wait(3000);
 
             await updateText("ଲଗ୍-ଇନ୍ (Login)", "ସୁରକ୍ଷିତ ଲଗ୍-ଇନ୍", "କେବଳ ନିଜର ପଞ୍ଜୀକୃତ ଫୋନ୍ ନମ୍ବର ଏବଂ ସେହି ୪-ଅଙ୍କ ପିନ୍ ବ୍ୟବହାର କରି ଲଗ୍ ଇନ୍ କରନ୍ତୁ।");
+            await smoothScrollTo('up-phone', 'center');
             await simulateTyping('up-phone', randomPhone, 180);
             await simulateTyping('up-pin', '1234', 300);
-            await wait(2000);
+            await wait(1500);
+            
+            await smoothScrollTo('btn-up-login', 'center');
             await clickElement('btn-up-login');
-            await wait(5000); // Give time for login to process and dashboard to open
+            await wait(5000); 
 
             await updateText("ଅପଡେଟ୍ ସେଭ୍", "ନୂଆ ମୋଟ ସଂଖ୍ୟା (New Total)", "ଆପଣଙ୍କର ପୁରୁଣା ସ୍କୋର୍ ସେଠାରେ ଦେଖାଇବ। କେବଳ ନୂଆ ବର୍ଦ୍ଧିତ ମୋଟ ସଂଖ୍ୟା ଟାଇପ୍ କରି ସେଭ୍ କରନ୍ତୁ।");
+            await smoothScrollTo('new-score', 'center');
             await simulateTyping('new-score', upgradedScore.toString(), 300);
-            await wait(2500);
+            await wait(2000);
+            
+            await smoothScrollTo('btn-save-update', 'center');
             await clickElement('btn-save-update');
-            await wait(6000); // Read success message
+            await wait(6000); 
 
-            // Return to Home
             const doc2 = frame.contentWindow.document;
             const homeBtn2 = doc2.querySelector('#section-success .close-section');
             if(homeBtn2) homeBtn2.click();
@@ -205,14 +211,13 @@
             await updateText("ପଦକ୍ଷେପ ୭ (Step 7)", "ଲିଡରବୋର୍ଡ (Live Leaderboard)", "ଜିଲ୍ଲା ସ୍ତରରେ ଆପଣଙ୍କ ବ୍ଲକ୍ ଏବଂ ସ୍କୁଲର ପ୍ରଦର୍ଶନ ଏବଂ ରାଙ୍କ୍ (Rank) ଟ୍ରାକ୍ କରନ୍ତୁ।");
             await wait(5000);
             
-            await smoothScrollTo('btn-show-leaderboard');
+            await smoothScrollTo('btn-show-leaderboard', 'center');
             await clickElement('btn-show-leaderboard');
-            await wait(5000); // Let leaderboard load
+            await wait(5000); 
 
             await updateText("ବ୍ଲକ୍ ରାଙ୍କିଙ୍ଗ୍", "ଲାଇଭ୍ ଡାଟା ଟ୍ରାକିଂ", "ଆପଣ କୌଣସି ବି ବ୍ଲକ୍ ଉପରେ କ୍ଲିକ୍ କରି ସେହି ବ୍ଲକର ଶ୍ରେଷ୍ଠ ୧୦୦ ଜଣ ଶିକ୍ଷକଙ୍କ ତାଲିକା ଦେଖିପାରିବେ।");
-            await wait(4000);
+            await wait(3000);
             
-            // Simulate clicking the first block in the leaderboard table
             const doc3 = frame.contentWindow.document;
             const firstBlock = doc3.querySelector('#tbody-blocks tr');
             if(firstBlock) {
@@ -220,14 +225,12 @@
                 await wait(400);
                 firstBlock.click();
             }
-            await wait(6000); // Look at the school rankings longer
+            await wait(6000); 
             
-            // Go back
             const backBtn = doc3.getElementById('btn-back-blocks');
             if(backBtn) backBtn.click();
             await wait(3000);
             
-            // Close Leaderboard
             const closeBtnLb = doc3.querySelector('#section-leaderboard .close-section');
             if(closeBtnLb) closeBtnLb.click();
             await wait(3000);
@@ -237,22 +240,23 @@
             await updateText("ପଦକ୍ଷେପ ୮ (Step 8)", "ପ୍ରମାଣପତ୍ର ସେୟାର୍", "ସାର୍ଟିଫିକେଟ୍ ଟାଇଲ୍ ଉପରେ କ୍ଲିକ୍ କରି, ଆପଣ ଯେକୌଣସି ସମୟରେ ନିଜର ପ୍ରମାଣପତ୍ର ଡାଉନଲୋଡ୍ କିମ୍ବା ସେୟାର୍ କରିପାରିବେ।");
             await wait(5000);
             
-            await smoothScrollTo('btn-show-certificate');
+            await smoothScrollTo('btn-show-certificate', 'center');
             await clickElement('btn-show-certificate');
             await wait(3000);
 
             await updateText("ସାର୍ଟିଫିକେଟ୍", "ଡାଉନଲୋଡ୍ କରନ୍ତୁ", "ନିଜର ନମ୍ବର ଏବଂ ପିନ୍ ଦେଇ ନିଜର ସିଲଭର, ଗୋଲ୍ଡ, କିମ୍ବା ଡାଇମଣ୍ଡ ବ୍ୟାଜ୍ ସାର୍ଟିଫିକେଟ୍ ପ୍ରାପ୍ତ କରନ୍ତୁ।");
+            await smoothScrollTo('cert-phone', 'center');
             await simulateTyping('cert-phone', randomPhone, 180);
             await simulateTyping('cert-pin', '1234', 300);
-            await wait(2000);
+            await wait(1500);
             
+            await smoothScrollTo('btn-cert-login', 'center');
             await clickElement('btn-cert-login');
-            await wait(7000); // Admire the certificate download page
+            await wait(7000); 
 
             // ================= END: RETURN TO HOME ================= //
             await updateText("ସମ୍ପୂର୍ଣ୍ଣ (Complete)", "କୋରାପୁଟ ପ୍ରସ୍ତୁତ ଅଛି", "ଡେମୋ ସରିଲା | ଆଜି ହିଁ ଯୋଗଦାନ କରନ୍ତୁ ଏବଂ କୋରାପୁଟକୁ ୧୦୦% ସାକ୍ଷର କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ | \n\nଧନ୍ୟବାଦ (Thank You).");
             
-            // Close the certificate modal and return to home page
             const doc4 = frame.contentWindow.document;
             const certCloseBtn = doc4.querySelector('#section-certificate .close-section');
             if(certCloseBtn) {
@@ -262,7 +266,6 @@
                 certCloseBtn.click();
             }
             
-            // Smoothly scroll back to the very top of the home page
             await wait(1000);
             frame.contentWindow.scrollTo({ top: 0, behavior: 'smooth' });
         }

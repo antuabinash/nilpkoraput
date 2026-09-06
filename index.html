@@ -321,11 +321,17 @@
                     ଲିଡରବୋର୍ଡରେ ଶୀର୍ଷରେ ରହିବା ପାଇଁ ଦୟାକରି ଅଧିକରୁ ଅଧିକ ନାମଲେଖା (Enrollment) ଯୋଡନ୍ତୁ, ଏହି ସୁଯୋଗ ହାତଛଡ଼ା କରନ୍ତୁ ନାହିଁ! ଏହାସହିତ ଆପଣଙ୍କର ଅଂଶଗ୍ରହଣ ପ୍ରମାଣପତ୍ର ମଧ୍ୟ ଏଠାରୁ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ।
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                    <button id="btn-success-to-cert" class="px-8 py-3.5 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-amber-600">
-                        <i class="fa-solid fa-award"></i> ସାର୍ଟିଫିକେଟ୍ (Get Certificate)
+                <div class="flex flex-col gap-4 w-full justify-center max-w-sm mx-auto">
+                    <!-- NEW WHATSAPP SHARE BUTTON ON SUCCESS PAGE -->
+                    <button id="btn-success-whatsapp" class="px-8 py-3.5 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-green-600 w-full">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ (Share)
                     </button>
-                    <button class="close-section px-8 py-3.5 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-slate-900">
+                    
+                    <button id="btn-success-to-cert" class="px-8 py-3.5 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-amber-600 w-full">
+                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ (Download)
+                    </button>
+                    
+                    <button class="close-section px-8 py-3.5 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-lg transition-all flex items-center justify-center gap-2 border-2 border-slate-900 w-full">
                         ହୋମ୍ କୁ ଫେରନ୍ତୁ (Home)
                     </button>
                 </div>
@@ -372,13 +378,13 @@
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6" id="cert-disp-tier">Level</p>
                     
                     <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600 w-full max-w-[280px]">
-                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍
+                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ (Download)
                     </button>
                     
                     <!-- WHATSAPP SHARE BUTTON -->
-                    <a id="btn-whatsapp-share" href="#" target="_blank" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
-                        <i class="fa-brands fa-whatsapp text-xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
-                    </a>
+                    <button id="btn-whatsapp-share" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
+                    </button>
 
                     <canvas id="cert-canvas" class="hidden"></canvas>
                 </div>
@@ -495,7 +501,6 @@
         let currentUser = null;
         let isFirebaseReady = false;
         
-        // NEW: Global array to hold the schools.json data
         let schoolMasterData = {};
 
         let activeTeacherRef = null;
@@ -533,7 +538,6 @@
 
         async function initApp() {
             try {
-                // Fetch the master school data silently in the background
                 fetch('schools.json').then(res => res.json()).then(data => {
                     schoolMasterData = data;
                 }).catch(err => console.error("Error loading schools.json", err));
@@ -607,7 +611,6 @@
         setupPinToggle('toggle-up-pin', 'up-pin');
         setupPinToggle('toggle-cert-pin', 'cert-pin');
 
-        // NEW: "MAGIC" UDISE AUTO-FILL LOGIC
         const submitBtn = document.getElementById('submit-btn');
         const learnersInput = document.getElementById('learners-enrolled');
 
@@ -622,7 +625,6 @@
                 err.classList.add('hidden');
                 panel.classList.add('hidden');
                 
-                // Disable inputs while checking
                 learnersInput.disabled = true;
                 submitBtn.disabled = true;
                 submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
@@ -638,7 +640,6 @@
                         
                         panel.classList.remove('hidden');
                         
-                        // Unlock Form
                         learnersInput.disabled = false;
                         learnersInput.className = "w-full px-4 py-3 border-2 border-indigo-300 rounded-xl focus:ring-4 focus:ring-indigo-100 bg-white font-black text-indigo-700 text-center text-xl transition-all shadow-inner";
                         learnersInput.placeholder = "Minimum 20";
@@ -648,13 +649,12 @@
                     } else {
                         err.classList.remove('hidden');
                     }
-                }, 600); // 600ms delay to create a visual "verification" effect
+                }, 600); 
             } else {
                 panel.classList.add('hidden');
                 err.classList.add('hidden');
                 loader.classList.add('hidden');
                 
-                // Lock Form
                 learnersInput.disabled = true;
                 submitBtn.disabled = true;
                 submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
@@ -845,28 +845,20 @@
 
                 const tierIcon = document.getElementById('cert-tier-icon');
                 const tierText = document.getElementById('cert-disp-tier');
-                let tierNameOdia = '';
                 
                 if (certTeacherScore >= 100) {
                     tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-blue-200 bg-blue-100 text-blue-500";
                     tierIcon.innerHTML = `<i class="fa-solid fa-gem text-4xl"></i>`;
                     tierText.textContent = "Diamond Tier Achieved";
-                    tierNameOdia = "ଡାଇମଣ୍ଡ";
                 } else if (certTeacherScore >= 50) {
                     tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-yellow-200 bg-yellow-100 text-yellow-500";
                     tierIcon.innerHTML = `<i class="fa-solid fa-medal text-4xl"></i>`;
                     tierText.textContent = "Gold Tier Achieved";
-                    tierNameOdia = "ଗୋଲ୍ଡ";
                 } else {
                     tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-slate-200 bg-slate-100 text-slate-500";
                     tierIcon.innerHTML = `<i class="fa-solid fa-award text-4xl"></i>`;
                     tierText.textContent = "Silver Tier Achieved";
-                    tierNameOdia = "ସିଲଭର";
                 }
-
-                // NEW: Dynamic WhatsApp Message Generation
-                let waMessage = `ମୁଁ ନବ ଭାରତ ସାକ୍ଷରତା କାର୍ଯ୍ୟକ୍ରମ (NILP) ରେ ${certTeacherScore} ଜଣଙ୍କୁ ଯୋଡି ଜିଲ୍ଲାରେ '${tierNameOdia} ବ୍ୟାଜ୍' ହାସଲ କରିଛି! \n\nଆପଣ ବି ନିଜ ସ୍କୁଲ୍ ପାଇଁ ଆବେଦନ କରନ୍ତୁ: https://koraputnilp.com`;
-                document.getElementById('btn-whatsapp-share').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
 
                 document.getElementById('cert-login-div').classList.add('hidden');
                 document.getElementById('cert-download-div').classList.remove('hidden');
@@ -875,54 +867,123 @@
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
-        function generateCertificateImage(nameToPrint, score, btnElement) {
-            const originalText = btnElement.innerHTML;
-            btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
-            btnElement.disabled = true;
-            
+        // CORE IMAGE GENERATOR 
+        function getGeneratedCertificateCanvas(nameToPrint, score, callback) {
             const canvas = document.getElementById('cert-canvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
             img.crossOrigin = "Anonymous";
             
-            if (score >= 100) {
-                img.src = 'certificate_diamond.png';
-            } else if (score >= 50) {
-                img.src = 'certificate_gold.png';
-            } else {
-                img.src = 'certificate_silver.png';
-            }
+            if (score >= 100) { img.src = 'certificate_diamond.png'; } 
+            else if (score >= 50) { img.src = 'certificate_gold.png'; } 
+            else { img.src = 'certificate_silver.png'; }
             
             img.onload = () => {
                 canvas.width = 1600; canvas.height = 1066;
                 ctx.drawImage(img, 0, 0, 1600, 1066);
                 ctx.font = "bold 38px 'Inter', sans-serif"; ctx.fillStyle = "#1e293b"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
                 ctx.fillText(nameToPrint.toUpperCase(), 787, 513);
-                
-                try {
-                    const link = document.createElement('a');
-                    let tierName = score >= 100 ? 'Diamond' : (score >= 50 ? 'Gold' : 'Silver');
-                    link.download = `NILP_${tierName}_${nameToPrint.replace(/\s+/g, '_')}.png`;
-                    link.href = canvas.toDataURL('image/png'); link.click();
-                    showToast('Success', 'Certificate downloaded!', 'success');
-                } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
-                btnElement.innerHTML = originalText; btnElement.disabled = false;
+                callback(canvas);
             };
-
-            img.onerror = () => {
-                showToast('Error', `Could not load ${img.src}. Please ensure images are uploaded.`, 'error');
-                btnElement.innerHTML = originalText; btnElement.disabled = false;
-            };
+            img.onerror = () => { callback(null); };
         }
 
-        document.getElementById('btn-success-to-cert').addEventListener('click', function() {
-            if (newlyRegisteredTeacherName) generateCertificateImage(newlyRegisteredTeacherName, newlyRegisteredScore, this);
-            else document.getElementById('btn-show-certificate').click();
+        // STANDARD DOWNLOAD BUTTON
+        document.getElementById('btn-download-cert').addEventListener('click', function() {
+            const btnElement = this;
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+            btnElement.disabled = true;
+
+            getGeneratedCertificateCanvas(certTeacherName, certTeacherScore, (canvas) => {
+                if(canvas) {
+                    try {
+                        const link = document.createElement('a');
+                        let tierName = certTeacherScore >= 100 ? 'Diamond' : (certTeacherScore >= 50 ? 'Gold' : 'Silver');
+                        link.download = `NILP_${tierName}_${certTeacherName.replace(/\s+/g, '_')}.png`;
+                        link.href = canvas.toDataURL('image/png'); link.click();
+                        showToast('Success', 'Certificate downloaded!', 'success');
+                    } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
+                } else {
+                    showToast('Error', `Could not load background image.`, 'error');
+                }
+                btnElement.innerHTML = originalText; btnElement.disabled = false;
+            });
         });
 
-        document.getElementById('btn-download-cert').addEventListener('click', function() {
-            generateCertificateImage(certTeacherName, certTeacherScore, this);
+        // WHATSAPP SHARE IMAGE + TEXT FUNCTION
+        async function shareToWhatsApp(name, score, btnElement) {
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i> ଅପେକ୍ଷା କରନ୍ତୁ...`;
+            btnElement.disabled = true;
+
+            getGeneratedCertificateCanvas(name, score, async (canvas) => {
+                if(canvas) {
+                    let tierNameOdia = score >= 100 ? "ଡାଇମଣ୍ଡ" : (score >= 50 ? "ଗୋଲ୍ଡ" : "ସିଲଭର");
+                    let waMessage = `ମୁଁ ନବ ଭାରତ ସାକ୍ଷରତା କାର୍ଯ୍ୟକ୍ରମ (NILP) ରେ ${score} ଜଣଙ୍କୁ ଯୋଡି ଜିଲ୍ଲାରେ '${tierNameOdia} ବ୍ୟାଜ୍' ହାସଲ କରିଛି! \n\nଆପଣ ବି ନିଜ ସ୍କୁଲ୍ ପାଇଁ ଆବେଦନ କରନ୍ତୁ: https://koraputnilp.com`;
+                    
+                    // Attempt to use modern Web Share API (Works perfectly on Android/iOS to attach image + text)
+                    if (navigator.share && navigator.canShare) {
+                        canvas.toBlob(async (blob) => {
+                            const file = new File([blob], "NILP_Certificate.png", { type: "image/png" });
+                            if (navigator.canShare({ files: [file] })) {
+                                try {
+                                    await navigator.share({
+                                        text: waMessage,
+                                        files: [file]
+                                    });
+                                } catch (error) { console.log('Share canceled or failed', error); }
+                            } else {
+                                // Fallback for browsers that don't support file sharing
+                                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`, '_blank');
+                            }
+                            btnElement.innerHTML = originalText; btnElement.disabled = false;
+                        }, "image/png");
+                    } else {
+                        // Fallback for Desktop / old browsers (Text only)
+                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`, '_blank');
+                        btnElement.innerHTML = originalText; btnElement.disabled = false;
+                    }
+                } else {
+                    showToast('Error', 'Image generation failed.', 'error');
+                    btnElement.innerHTML = originalText; btnElement.disabled = false;
+                }
+            });
+        }
+
+        // ATTACH TO WHATSAPP BUTTON ON SUCCESS PAGE
+        document.getElementById('btn-success-whatsapp').addEventListener('click', function() {
+            if(newlyRegisteredTeacherName) { shareToWhatsApp(newlyRegisteredTeacherName, newlyRegisteredScore, this); }
         });
+
+        // ATTACH TO WHATSAPP BUTTON ON CERTIFICATE PAGE
+        document.getElementById('btn-whatsapp-share').addEventListener('click', function() {
+            shareToWhatsApp(certTeacherName, certTeacherScore, this);
+        });
+
+        // ATTACH TO DOWNLOAD BUTTON ON SUCCESS PAGE
+        document.getElementById('btn-success-to-cert').addEventListener('click', function() {
+            if (newlyRegisteredTeacherName) {
+                const btnElement = this;
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+                btnElement.disabled = true;
+
+                getGeneratedCertificateCanvas(newlyRegisteredTeacherName, newlyRegisteredScore, (canvas) => {
+                    if(canvas) {
+                        const link = document.createElement('a');
+                        let tierName = newlyRegisteredScore >= 100 ? 'Diamond' : (newlyRegisteredScore >= 50 ? 'Gold' : 'Silver');
+                        link.download = `NILP_${tierName}_${newlyRegisteredTeacherName.replace(/\s+/g, '_')}.png`;
+                        link.href = canvas.toDataURL('image/png'); link.click();
+                        showToast('Success', 'Certificate downloaded!', 'success');
+                    }
+                    btnElement.innerHTML = originalText; btnElement.disabled = false;
+                });
+            } else {
+                document.getElementById('btn-show-certificate').click();
+            }
+        });
+
 
         // --- LEADERBOARD LOGIC ---
         document.getElementById('btn-back-blocks').addEventListener('click', loadOverallLeaderboard);
@@ -1039,24 +1100,6 @@
 
         document.getElementById('filter-cluster').addEventListener('change', (e) => {
             renderTeacherTable(e.target.value);
-        });
-
-        // --- TOAST NOTIFICATION FUNCTION ---
-        function showToast(title, msg, type = 'success') {
-            const t = document.getElementById('custom-toast');
-            document.getElementById('toast-title').textContent = title;
-            document.getElementById('toast-message').textContent = msg;
-            const icon = document.getElementById('toast-icon');
-            
-            t.className = `fixed bottom-6 right-6 max-w-sm w-full bg-white rounded-xl shadow-2xl border-l-4 p-4 z-50 flex items-start gap-3 toast-enter-active ${type==='success'?'border-green-500':'border-red-500'}`;
-            icon.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check text-green-500':'fa-circle-xmark text-red-500'} text-xl"></i>`;
-            
-            clearTimeout(window.toastTimer);
-            window.toastTimer = setTimeout(() => t.classList.replace('toast-enter-active', 'toast-exit-active'), 4000);
-        }
-        
-        document.getElementById('close-toast').addEventListener('click', () => {
-            document.getElementById('custom-toast').classList.replace('toast-enter-active', 'toast-exit-active');
         });
 
         window.addEventListener('DOMContentLoaded', initApp);

@@ -29,7 +29,7 @@
                     <img src="india_govt_logo.png" alt="Govt of India" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/1e3a8a?text=India'">
                     <img src="odisha_govt_logo.png" alt="Govt of Odisha" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/1e3a8a?text=Odisha'">
                     <div class="hidden md:flex flex-col border-l-2 border-slate-200 pl-4 ml-2">
-                        <span class="font-extrabold text-xl text-blue-900 leading-tight">KORAPUT ULLAS INTIATIVE</span>
+                        <span class="font-extrabold text-xl text-blue-900 leading-tight">KORAPUT ULLAS INITIATIVE</span>
                         <span class="text-[10px] uppercase font-bold text-orange-600 tracking-wider">କୋରାପୁଟ ଉଲ୍ଲାସ ଇନିସିଏଟିଭ</span>
                     </div>
                 </div>
@@ -180,40 +180,46 @@
                             </div>
                         </div>
 
+                        <!-- AUTO FILL SCHOOL SECTION -->
                         <div class="space-y-5">
-                            <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-solid fa-school text-indigo-500"></i> ବିଦ୍ୟାଳୟ ତଥ୍ୟ</h4>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">ବ୍ଲକ୍ (Block) *</label>
-                                    <div class="relative">
-                                        <select id="loc-block" required class="w-full pl-4 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white appearance-none cursor-pointer">
-                                            <option value="" disabled selected>ବାଛନ୍ତୁ...</option>
-                                        </select>
-                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+                            <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-solid fa-school text-indigo-500"></i> ବିଦ୍ୟାଳୟ ତଥ୍ୟ (School Data)</h4>
+                            
+                            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-3 text-xs text-indigo-800 font-medium mb-2 flex gap-2">
+                                <i class="fa-solid fa-magic text-indigo-500 mt-0.5"></i>
+                                <span>କେବଳ ୧୧-ଅଙ୍କ ବିଶିଷ୍ଟ UDISE କୋଡ୍ ଟାଇପ୍ କରନ୍ତୁ, ବିଦ୍ୟାଳୟର ନାମ ଆପେ ଆପେ ଆସିଯିବ। (Auto-fill)</span>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">UDISE କୋଡ୍ (UDISE Code) *</label>
+                                <input type="text" id="school-udise" pattern="[0-9]{11}" title="Must be exactly 11 digits" maxlength="11" required class="w-full px-4 py-3 border-2 border-indigo-200 rounded-xl focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 bg-white tracking-[0.5em] font-black text-center text-xl transition-all shadow-inner text-indigo-900" placeholder="•••••••••••">
+                                
+                                <div id="udise-loader" class="hidden mt-3 text-center text-indigo-500 text-sm font-bold animate-pulse"><i class="fa-solid fa-spinner fa-spin mr-1"></i> ଯାଞ୍ଚ ହେଉଛି... (Verifying...)</div>
+                                <p id="udise-error" class="hidden mt-3 text-center text-red-500 text-sm font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i> ଭୁଲ୍ କୋଡ୍ (Invalid Koraput UDISE)</p>
+                            </div>
+
+                            <!-- Verified School Panel -->
+                            <div id="verified-school-panel" class="hidden bg-emerald-50 border-2 border-emerald-400 rounded-xl p-4 shadow-sm relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-16 h-16 bg-emerald-100 rounded-bl-full z-0"></div>
+                                <div class="relative z-10 flex items-start gap-3">
+                                    <div class="mt-1 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md"><i class="fa-solid fa-check"></i></div>
+                                    <div class="flex-grow">
+                                        <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-0.5">ଯାଞ୍ଚ ସଫଳ (Verified)</p>
+                                        <h5 class="font-black text-slate-800 text-[15px] leading-tight mb-2" id="v-school-name">School Name</h5>
+                                        <div class="grid grid-cols-2 gap-2 text-xs font-semibold text-slate-600 bg-white/60 p-2 rounded-lg border border-emerald-100">
+                                            <div>ବ୍ଲକ୍: <span id="v-block" class="text-slate-800 block truncate"></span></div>
+                                            <div>କ୍ଲଷ୍ଟର: <span id="v-cluster" class="text-slate-800 block truncate"></span></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">କ୍ଲଷ୍ଟର (Cluster) *</label>
-                                    <input type="text" id="loc-cluster" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white" placeholder="Type Cluster Name">
-                                </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">UDISE କୋଡ୍ *</label>
-                                    <input type="text" id="school-udise" pattern="[0-9]{11}" title="UDISE code must be exactly 11 digits" maxlength="11" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-widest" placeholder="11-digit code">
-                                </div>
-                            </div>
+
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ବିଦ୍ୟାଳୟ ନାମ (School Name) *</label>
-                                <input type="text" id="school-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଆପଣଙ୍କ ଦ୍ୱାରା ନାମାଙ୍କିତ ଶିକ୍ଷାର୍ଥୀ (Learners Enrolled) *</label>
-                                <input type="number" id="learners-enrolled" min="20" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white font-bold text-indigo-700" placeholder="Minimum 20">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ନାମାଙ୍କିତ ଶିକ୍ଷାର୍ଥୀ (Learners Enrolled) *</label>
+                                <input type="number" id="learners-enrolled" min="20" required disabled class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed transition-colors text-center text-lg" placeholder="ଲକ୍ଡ୍ (Locked)">
                             </div>
                         </div>
 
-                        <!-- Optional Profile Photo (Proof removed) -->
+                        <!-- Optional Profile Photo -->
                         <div class="space-y-5 md:col-span-2 mt-2">
                             <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> ପ୍ରୋଫାଇଲ୍ ଫଟୋ (Profile Photo)</h4>
                             <div class="relative group max-w-sm mx-auto">
@@ -231,7 +237,8 @@
 
                     <div class="mt-8 pt-6 border-t border-slate-200 flex justify-end gap-3">
                         <button type="button" class="close-section px-6 py-3 border-2 border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-bold transition-colors">ବାତିଲ୍ (Cancel)</button>
-                        <button type="submit" id="submit-btn" class="px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 group relative overflow-hidden">
+                        
+                        <button type="submit" id="submit-btn" disabled class="px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden">
                             <span class="relative z-10">ଦାଖଲ କରନ୍ତୁ (Submit)</span>
                             <div id="submit-spinner" class="hidden relative z-10 w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                         </button>
@@ -359,14 +366,20 @@
                 </div>
 
                 <div id="cert-download-div" class="hidden w-full text-center">
-                    <!-- Badge Icon updates dynamically -->
                     <div id="cert-tier-icon" class="w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-white"><i class="fa-solid fa-award text-4xl"></i></div>
                     <h2 class="text-2xl font-black text-slate-800 mb-1" id="cert-disp-name">Teacher Name</h2>
                     <p class="text-slate-500 font-medium mb-2">Your participation certificate is ready!</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8" id="cert-disp-tier">Level</p>
-                    <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600">
-                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ 
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6" id="cert-disp-tier">Level</p>
+                    
+                    <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600 w-full max-w-[280px]">
+                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍
                     </button>
+                    
+                    <!-- WHATSAPP SHARE BUTTON -->
+                    <a id="btn-whatsapp-share" href="#" target="_blank" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
+                    </a>
+
                     <canvas id="cert-canvas" class="hidden"></canvas>
                 </div>
             </div>
@@ -409,8 +422,6 @@
                     </div>
 
                     <div id="view-schools" class="hidden overflow-x-auto bg-white md:rounded-xl shadow-sm border border-slate-200 no-scrollbar">
-                        
-                        <!-- CLUSTER FILTER ADDED HERE -->
                         <div class="bg-slate-100 p-3 text-sm font-semibold text-slate-600 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3">
                             <button id="btn-back-blocks" class="hover:text-indigo-600 transition-colors flex items-center gap-2 px-3 py-1 bg-white rounded shadow-sm w-full sm:w-auto text-center justify-center">
                                 <i class="fa-solid fa-arrow-left"></i> Back to Blocks
@@ -443,8 +454,6 @@
         </section>
     </main>
 
-    </main>
-
     <!-- OFFICIAL FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t-4 border-slate-800 mt-auto w-full relative z-30">
         <p class="font-medium text-slate-300 mb-2">© 2026 NILP Koraput District Administration. All Rights Reserved.</p>
@@ -464,8 +473,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, getDoc, updateDoc, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         const appId = 'nilp-koraput'; 
@@ -485,6 +494,9 @@
         let app, db, auth, storage;
         let currentUser = null;
         let isFirebaseReady = false;
+        
+        // NEW: Global array to hold the schools.json data
+        let schoolMasterData = {};
 
         let activeTeacherRef = null;
         let activeTeacherData = null;
@@ -493,8 +505,7 @@
         let certTeacherScore = 0;
         let newlyRegisteredTeacherName = ""; 
         let newlyRegisteredScore = 0;
-
-        let currentBlockTeachers = []; // Holds the fetched teachers for cluster filtering
+        let currentBlockTeachers = []; 
 
         const koraputBlocks = {
             "BANDHUGAON": "Bandhugaon (ବନ୍ଧୁଗାଁ)", "BOIPARIGUDA": "Boipariguda (ବୋଇପାରିଗୁଡ଼ା)", 
@@ -522,12 +533,16 @@
 
         async function initApp() {
             try {
+                // Fetch the master school data silently in the background
+                fetch('schools.json').then(res => res.json()).then(data => {
+                    schoolMasterData = data;
+                }).catch(err => console.error("Error loading schools.json", err));
+
                 app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = initializeFirestore(app, { localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()}) });
                 storage = getStorage(app); 
 
-                populateBlockDropdown();
                 signInAnonymously(auth).catch(e => console.error(e));
 
                 onAuthStateChanged(auth, (user) => {
@@ -566,11 +581,6 @@
             } catch (err) { console.error("Init Error:", err); }
         }
 
-        function populateBlockDropdown() {
-            const select = document.getElementById('loc-block');
-            Object.keys(koraputBlocks).sort().forEach(key => { select.add(new Option(koraputBlocks[key], key)); });
-        }
-
         function hideAllSections() {
             Object.values(sections).forEach(sec => sec.classList.add('hidden'));
             Object.values(buttons).forEach(btn => btn.classList.remove('ring-4', 'ring-blue-100', 'ring-emerald-100', 'ring-amber-100', 'ring-cyan-100'));
@@ -596,6 +606,62 @@
         setupPinToggle('toggle-pin-confirm', 'teacher-pin-confirm');
         setupPinToggle('toggle-up-pin', 'up-pin');
         setupPinToggle('toggle-cert-pin', 'cert-pin');
+
+        // NEW: "MAGIC" UDISE AUTO-FILL LOGIC
+        const submitBtn = document.getElementById('submit-btn');
+        const learnersInput = document.getElementById('learners-enrolled');
+
+        document.getElementById('school-udise').addEventListener('input', function(e) {
+            const val = e.target.value.trim();
+            const panel = document.getElementById('verified-school-panel');
+            const err = document.getElementById('udise-error');
+            const loader = document.getElementById('udise-loader');
+
+            if(val.length === 11) {
+                loader.classList.remove('hidden');
+                err.classList.add('hidden');
+                panel.classList.add('hidden');
+                
+                // Disable inputs while checking
+                learnersInput.disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
+                learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
+                
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    if(schoolMasterData && schoolMasterData[val]) {
+                        const s = schoolMasterData[val];
+                        document.getElementById('v-school-name').textContent = s.n;
+                        document.getElementById('v-block').textContent = koraputBlocks[s.b] || s.b;
+                        document.getElementById('v-cluster').textContent = s.c;
+                        
+                        panel.classList.remove('hidden');
+                        
+                        // Unlock Form
+                        learnersInput.disabled = false;
+                        learnersInput.className = "w-full px-4 py-3 border-2 border-indigo-300 rounded-xl focus:ring-4 focus:ring-indigo-100 bg-white font-black text-indigo-700 text-center text-xl transition-all shadow-inner";
+                        learnersInput.placeholder = "Minimum 20";
+                        
+                        submitBtn.disabled = false;
+                        submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
+                    } else {
+                        err.classList.remove('hidden');
+                    }
+                }, 600); // 600ms delay to create a visual "verification" effect
+            } else {
+                panel.classList.add('hidden');
+                err.classList.add('hidden');
+                loader.classList.add('hidden');
+                
+                // Lock Form
+                learnersInput.disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
+                learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
+                learnersInput.placeholder = "ଲକ୍ଡ୍ (Locked)";
+            }
+        });
 
         function compressImage(file, isAvatar = false) {
             return new Promise((resolve, reject) => {
@@ -637,7 +703,7 @@
             }
         });
 
-        // --- SUBMISSION LOGIC (Removed Proof) ---
+        // --- SUBMISSION LOGIC ---
         document.getElementById('nomination-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isFirebaseReady || !currentUser) return showToast('Error', 'Database offline.', 'error');
@@ -645,19 +711,21 @@
             const pin = document.getElementById('teacher-pin').value.trim();
             if (pin !== document.getElementById('teacher-pin-confirm').value.trim()) return showToast('Error', 'PINs do not match.', 'error');
 
-            const btn = document.getElementById('submit-btn');
+            const udiseVal = document.getElementById('school-udise').value.trim();
+            const schoolData = schoolMasterData[udiseVal];
+            if(!schoolData) return showToast('Error', 'Invalid UDISE Code.', 'error');
+
             const spinner = document.getElementById('submit-spinner');
-            btn.disabled = true; spinner.classList.remove('hidden');
+            submitBtn.disabled = true; spinner.classList.remove('hidden');
 
             try {
-                const blockVal = document.getElementById('loc-block').value;
                 const phone = document.getElementById('teacher-phone').value.trim();
                 const learners = parseInt(document.getElementById('learners-enrolled').value, 10);
 
                 const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
                 if (!dupSnap.empty) {
                     showToast('Duplicate Phone', 'Phone Number already registered.', 'error');
-                    btn.disabled = false; spinner.classList.add('hidden'); return;
+                    submitBtn.disabled = false; spinner.classList.add('hidden'); return;
                 }
 
                 const ts = Date.now();
@@ -677,27 +745,31 @@
                     phone: phone,
                     securityPin: pin,
                     district: "KORAPUT",
-                    block: blockVal,
-                    cluster: document.getElementById('loc-cluster').value.trim().toUpperCase(),
-                    udiseCode: document.getElementById('school-udise').value.trim(),
-                    schoolName: document.getElementById('school-name').value.trim().toUpperCase(),
+                    block: schoolData.b,
+                    cluster: schoolData.c,
+                    gp: schoolData.g, 
+                    udiseCode: udiseVal,
+                    schoolName: schoolData.n,
                     learnersEnrolled: learners,
                     photoUrl: photoUrl,
                     userId: currentUser.uid,
                     createdAt: serverTimestamp()
                 });
 
-                batch.set(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', blockVal), { blockId: blockVal, totalEnrolled: increment(learners), teacherCount: increment(1), lastUpdated: serverTimestamp() }, { merge: true });
+                batch.set(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', schoolData.b), { blockId: schoolData.b, totalEnrolled: increment(learners), teacherCount: increment(1), lastUpdated: serverTimestamp() }, { merge: true });
                 await batch.commit();
 
                 document.getElementById('nomination-form').reset();
+                document.getElementById('verified-school-panel').classList.add('hidden');
+                learnersInput.disabled = true;
+                
                 hideAllSections(); sections.success.classList.remove('hidden');
                 
             } catch (err) { console.error(err); showToast('Upload Failed', err.message, 'error'); } 
-            finally { btn.disabled = false; spinner.classList.add('hidden'); }
+            finally { submitBtn.disabled = false; spinner.classList.add('hidden'); }
         });
 
-        // --- UPDATE LOGIC (Removed Proof) ---
+        // --- UPDATE LOGIC ---
         document.getElementById('update-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-up-login');
@@ -752,7 +824,7 @@
             finally { btn.disabled = false; spinner.classList.add('hidden'); }
         });
 
-        // --- CERTIFICATE LOGIC (Tiered Image System) ---
+        // --- CERTIFICATE & WHATSAPP LOGIC ---
         document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-cert-login');
@@ -771,23 +843,30 @@
                 
                 document.getElementById('cert-disp-name').textContent = certTeacherName;
 
-                // Adjust UI badge for Tier
                 const tierIcon = document.getElementById('cert-tier-icon');
                 const tierText = document.getElementById('cert-disp-tier');
+                let tierNameOdia = '';
                 
                 if (certTeacherScore >= 100) {
                     tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-blue-200 bg-blue-100 text-blue-500";
                     tierIcon.innerHTML = `<i class="fa-solid fa-gem text-4xl"></i>`;
                     tierText.textContent = "Diamond Tier Achieved";
+                    tierNameOdia = "ଡାଇମଣ୍ଡ";
                 } else if (certTeacherScore >= 50) {
                     tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-yellow-200 bg-yellow-100 text-yellow-500";
                     tierIcon.innerHTML = `<i class="fa-solid fa-medal text-4xl"></i>`;
                     tierText.textContent = "Gold Tier Achieved";
+                    tierNameOdia = "ଗୋଲ୍ଡ";
                 } else {
                     tierIcon.className = "w-20 h-20 rounded-full flex items-center justify-center mb-4 mx-auto shadow-inner border-4 border-slate-200 bg-slate-100 text-slate-500";
                     tierIcon.innerHTML = `<i class="fa-solid fa-award text-4xl"></i>`;
                     tierText.textContent = "Silver Tier Achieved";
+                    tierNameOdia = "ସିଲଭର";
                 }
+
+                // NEW: Dynamic WhatsApp Message Generation
+                let waMessage = `ମୁଁ ନବ ଭାରତ ସାକ୍ଷରତା କାର୍ଯ୍ୟକ୍ରମ (NILP) ରେ ${certTeacherScore} ଜଣଙ୍କୁ ଯୋଡି ଜିଲ୍ଲାରେ '${tierNameOdia} ବ୍ୟାଜ୍' ହାସଲ କରିଛି! \n\nଆପଣ ବି ନିଜ ସ୍କୁଲ୍ ପାଇଁ ଆବେଦନ କରନ୍ତୁ: https://koraputnilp.com`;
+                document.getElementById('btn-whatsapp-share').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
 
                 document.getElementById('cert-login-div').classList.add('hidden');
                 document.getElementById('cert-download-div').classList.remove('hidden');
@@ -806,7 +885,6 @@
             const img = new Image();
             img.crossOrigin = "Anonymous";
             
-            // Dynamic Background based on score
             if (score >= 100) {
                 img.src = 'certificate_diamond.png';
             } else if (score >= 50) {
@@ -846,7 +924,7 @@
             generateCertificateImage(certTeacherName, certTeacherScore, this);
         });
 
-        // --- LEADERBOARD LOGIC (With Cluster Filter) ---
+        // --- LEADERBOARD LOGIC ---
         document.getElementById('btn-back-blocks').addEventListener('click', loadOverallLeaderboard);
 
         async function loadOverallLeaderboard() {
@@ -899,7 +977,6 @@
             document.getElementById('view-schools').classList.add('hidden');
 
             try {
-                // Fetch up to 100 teachers for the block to allow decent cluster filtering
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('block', '==', blockId), orderBy('learnersEnrolled', 'desc'), limit(100))); 
                 
                 currentBlockTeachers = []; 
@@ -913,7 +990,6 @@
                 
                 document.getElementById('badge-current-block').textContent = koraputBlocks[blockId] || blockId;
                 
-                // Populate Cluster Dropdown
                 const clusterFilter = document.getElementById('filter-cluster');
                 clusterFilter.innerHTML = '<option value="ALL">All Clusters</option>';
                 Array.from(uniqueClusters).sort().forEach(cluster => {

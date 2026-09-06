@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koraput Admin | NILP Portal</title>
-    <!-- BSNL FIX: Using local tailwind.js instead of the blocked CDN -->
     <script src="tailwind.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -120,7 +119,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, onSnapshot, doc, writeBatch, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, onSnapshot, doc, writeBatch, increment, getDocs, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = 'nilp-koraput';
         
@@ -251,7 +250,6 @@
             let count = 0;
 
             blockNominations.forEach(nom => {
-                // NEW: Search now includes Gram Panchayat
                 const searchString = `${nom.schoolName} ${nom.cluster} ${nom.gp || ''} ${nom.udiseCode} ${nom.teacherName}`.toLowerCase();
                 if (searchTerms && !searchString.includes(searchTerms)) return;
 
@@ -307,21 +305,32 @@
         };
         document.querySelector('.close-details').onclick = () => document.getElementById('modal-details').classList.add('hidden');
 
+        // NEW: Fixed map sync logic when deleting an entry
         window.del = async (id) => {
-            if(confirm("Permanently delete this entry? This will also reverse the scoreboard counts.")) {
+            if(confirm("Permanently delete this entry? This will reverse the scoreboard counts.")) {
                 try {
                     const nom = blockNominations.find(n => n.id === id);
                     if (!nom) return;
 
+                    // Check if other teachers exist from the same school
+                    const sameSchoolSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('udiseCode', '==', nom.udiseCode)));
+                    
                     const batch = writeBatch(db);
                     batch.delete(doc(db, 'artifacts', appId, 'public', 'data', 'nominations', id));
 
                     const blockRef = doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', nom.block);
-                    batch.update(blockRef, {
+                    
+                    let blockUpdates = {
                         teacherCount: increment(-1),
                         totalEnrolled: increment(-nom.learnersEnrolled)
-                    });
+                    };
 
+                    // If this was the last teacher, turn the map dot back to red!
+                    if (sameSchoolSnap.size <= 1) {
+                        blockUpdates.activeSchools = arrayRemove(nom.udiseCode);
+                    }
+
+                    batch.update(blockRef, blockUpdates);
                     await batch.commit();
                 } catch (err) {
                     console.error("Deletion error: ", err);
@@ -330,7 +339,6 @@
             }
         };
 
-        // NEW: CSV Export now includes the Gram Panchayat Column
         document.getElementById('btn-export-csv').addEventListener('click', () => {
             if(blockNominations.length === 0) { alert("No data to export."); return; }
             

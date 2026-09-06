@@ -33,7 +33,11 @@
                         <span class="text-[10px] uppercase font-bold text-orange-600 tracking-wider">କୋରାପୁଟ ଉଲ୍ଲାସ ଇନିସିଏଟିଭ</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-5">
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <!-- NEW PROFILE BUTTON -->
+                    <button id="btn-nav-profile" class="text-slate-500 hover:text-indigo-600 transition-colors w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-sm" title="My Profile">
+                        <i class="fa-solid fa-user text-sm sm:text-base"></i>
+                    </button>
                     <img src="ullas_logo.png" alt="ULLAS" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/ea580c?text=ULLAS'">
                     <span id="auth-status" class="text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full flex items-center gap-1 sm:gap-2 border border-amber-200 shadow-sm whitespace-nowrap">
                         <i class="fa-solid fa-circle-notch fa-spin"></i> <span class="hidden sm:inline">ସଂଯୋଗ ହେଉଛି...</span>
@@ -123,6 +127,89 @@
                 </div>
             </button>
         </div>
+
+        <!-- USER PROFILE SECTION -->
+        <section id="section-profile" class="hidden animate-fade-in-up">
+            <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-indigo-500 max-w-2xl mx-auto">
+                <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <div class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa-solid fa-user"></i></div>
+                        ମୋ ପ୍ରୋଫାଇଲ୍ (My Profile)
+                    </h3>
+                    <button class="close-section text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6 md:p-8 bg-slate-50/50">
+                    <!-- Login State -->
+                    <div id="profile-login-div" class="block">
+                        <p class="text-slate-600 mb-6 font-medium text-center">ଲଗ୍ ଇନ୍ କରିବାକୁ ଆପଣଙ୍କର ଫୋନ୍ ନମ୍ବର ଏବଂ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ |</p>
+                        <form id="profile-login-form" class="space-y-4 max-w-sm mx-auto">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
+                                <input type="tel" id="prof-phone" pattern="[0-9]{10}" required class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-center tracking-widest font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">୪-ଅଙ୍କ ପିନ୍ (4-Digit PIN) *</label>
+                                <div class="relative">
+                                    <input type="password" id="prof-pin" pattern="[0-9]{4}" required class="w-full pl-4 pr-10 py-3 border border-slate-300 rounded-xl bg-white text-center tracking-[1em] font-bold text-xl" placeholder="••••">
+                                    <button type="button" id="toggle-prof-pin" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" id="btn-prof-login" class="w-full py-3 mt-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-bold shadow flex justify-center items-center gap-2">
+                                ଲଗ୍ ଇନ୍ (Login)
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- View/Edit State -->
+                    <div id="profile-view-div" class="hidden">
+                        <form id="profile-edit-form">
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6 text-center relative">
+                                <!-- Photo Edit -->
+                                <div class="relative w-28 h-28 mx-auto mb-4 group cursor-pointer">
+                                    <img id="prof-disp-photo" src="" class="w-28 h-28 rounded-full object-cover border-4 border-slate-100 shadow-md">
+                                    <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <i class="fa-solid fa-camera text-white text-2xl"></i>
+                                    </div>
+                                    <input type="file" id="prof-file-photo" accept="image/jpeg, image/png, image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                </div>
+
+                                <!-- Name Edit -->
+                                <div class="mb-5 relative w-max mx-auto">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Teacher Name</label>
+                                    <div class="flex items-center justify-center border-b-2 border-dashed border-slate-300 hover:border-indigo-400 focus-within:border-indigo-500 transition-colors px-2 pb-1">
+                                        <input type="text" id="prof-disp-name" required class="text-center font-black text-xl text-slate-800 bg-transparent focus:outline-none min-w-[200px]">
+                                        <i class="fa-solid fa-pen text-xs text-indigo-400 ml-2"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Static Info -->
+                                <div class="grid grid-cols-2 gap-3 text-sm text-left bg-slate-50 p-4 rounded-lg border border-slate-100">
+                                    <div class="col-span-2"><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">School</span> <span id="prof-disp-school" class="font-bold text-slate-800"></span></div>
+                                    <div><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">Block</span> <span id="prof-disp-block" class="font-bold text-slate-800"></span></div>
+                                    <div><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">Cluster</span> <span id="prof-disp-cluster" class="font-bold text-slate-800"></span></div>
+                                    <div><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">UDISE</span> <span id="prof-disp-udise" class="font-bold text-slate-800 font-mono tracking-widest"></span></div>
+                                    <div><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">Enrolled</span> <span id="prof-disp-enrolled" class="font-black text-emerald-600 text-lg"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button type="button" id="btn-prof-logout" class="w-1/3 py-3 border-2 border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 font-bold transition-colors">
+                                    ଲଗ୍ ଆଉଟ୍
+                                </button>
+                                <button type="submit" id="btn-prof-save" class="w-2/3 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-black shadow-lg text-lg flex items-center justify-center gap-2 transition-all">
+                                    <i class="fa-solid fa-floppy-disk"></i> ସେଭ୍ କରନ୍ତୁ (Save)
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- NOMINATION FORM SECTION -->
         <section id="section-form" class="hidden animate-fade-in-up">
@@ -286,7 +373,7 @@
                     <div id="update-data-div" class="hidden">
                         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm mb-6 text-center">
                             <div class="w-16 h-16 mx-auto bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-user-tie"></i></div>
-                            <h4 class="font-black text-xl text-slate-800" id="disp-teacher-name">Teacher Name</h4>
+                            <h4 class="font-black text-xl text-slate-800" id="disp-teacher-name-update">Teacher Name</h4>
                             <p class="text-sm text-slate-500 font-medium" id="disp-school-name">School Name</p>
                             <div class="mt-4 flex justify-center gap-4">
                                 <div class="bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
@@ -480,7 +567,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, onSnapshot, limit, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         const appId = 'nilp-koraput'; 
@@ -506,6 +593,11 @@
         let activeTeacherRef = null;
         let activeTeacherData = null;
         
+        // NEW: Profile Management Variables
+        let activeProfileRef = null;
+        let activeProfileData = null;
+        let newProfilePhotoData = null;
+        
         let certTeacherName = "";
         let certTeacherScore = 0;
         let newlyRegisteredTeacherName = ""; 
@@ -527,7 +619,8 @@
             leaderboard: document.getElementById('section-leaderboard'),
             success: document.getElementById('section-success'),
             certificate: document.getElementById('section-certificate'),
-            update: document.getElementById('section-update')
+            update: document.getElementById('section-update'),
+            profile: document.getElementById('section-profile')
         };
         const buttons = {
             form: document.getElementById('btn-show-form'),
@@ -594,6 +687,13 @@
         buttons.leaderboard.addEventListener('click', () => { hideAllSections(); sections.leaderboard.classList.remove('hidden'); sections.leaderboard.scrollIntoView(); buttons.leaderboard.classList.add('ring-4', 'ring-emerald-100'); loadOverallLeaderboard(); });
         buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView(); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
         buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView(); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
+        
+        // OPEN PROFILE SECTION
+        document.getElementById('btn-nav-profile').addEventListener('click', () => { 
+            hideAllSections(); 
+            sections.profile.classList.remove('hidden'); 
+            window.scrollTo({top:0}); 
+        });
 
         document.querySelectorAll('.close-section').forEach(btn => btn.addEventListener('click', () => { hideAllSections(); window.scrollTo({top:0}); }));
 
@@ -610,6 +710,7 @@
         setupPinToggle('toggle-pin-confirm', 'teacher-pin-confirm');
         setupPinToggle('toggle-up-pin', 'up-pin');
         setupPinToggle('toggle-cert-pin', 'cert-pin');
+        setupPinToggle('toggle-prof-pin', 'prof-pin'); // For Profile Login
 
         const submitBtn = document.getElementById('submit-btn');
         const learnersInput = document.getElementById('learners-enrolled');
@@ -787,7 +888,8 @@
 
                 document.getElementById('update-login-div').classList.add('hidden');
                 document.getElementById('update-data-div').classList.remove('hidden');
-                document.getElementById('disp-teacher-name').textContent = activeTeacherData.teacherName;
+                document.getElementById('disp-teacher-name-update').textContent = activeTeacherData.teacherName;
+                document.getElementById('disp-school-name').textContent = activeTeacherData.schoolName;
                 document.getElementById('disp-current-score').textContent = activeTeacherData.learnersEnrolled;
                 document.getElementById('new-score').min = activeTeacherData.learnersEnrolled + 1;
                 document.getElementById('new-score').value = activeTeacherData.learnersEnrolled;
@@ -824,7 +926,190 @@
             finally { btn.disabled = false; spinner.classList.add('hidden'); }
         });
 
-        // --- CERTIFICATE & WHATSAPP LOGIC ---
+        // --- MY PROFILE EDITING LOGIC ---
+        document.getElementById('profile-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-prof-login');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`; btn.disabled = true;
+
+            try {
+                const phone = document.getElementById('prof-phone').value.trim();
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+                
+                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+                const docSnap = snap.docs[0];
+                if (docSnap.data().securityPin !== document.getElementById('prof-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+
+                activeProfileRef = docSnap.ref; 
+                activeProfileData = docSnap.data();
+
+                document.getElementById('profile-login-div').classList.add('hidden');
+                document.getElementById('profile-view-div').classList.remove('hidden');
+                
+                // Populate Edit View
+                document.getElementById('prof-disp-name').value = activeProfileData.teacherName;
+                document.getElementById('prof-disp-photo').src = activeProfileData.photoUrl || "https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo";
+                document.getElementById('prof-disp-school').textContent = activeProfileData.schoolName;
+                document.getElementById('prof-disp-block').textContent = koraputBlocks[activeProfileData.block] || activeProfileData.block;
+                document.getElementById('prof-disp-cluster').textContent = activeProfileData.cluster;
+                document.getElementById('prof-disp-udise').textContent = activeProfileData.udiseCode;
+                document.getElementById('prof-disp-enrolled').textContent = activeProfileData.learnersEnrolled;
+                newProfilePhotoData = null;
+
+            } catch (err) { console.error(err); showToast('Error', 'System error occurred.', 'error'); } 
+            finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
+        });
+
+        // Handle profile photo re-upload preview
+        document.getElementById('prof-file-photo').addEventListener('change', async (e) => {
+            if(e.target.files.length > 0) {
+                const file = e.target.files[0];
+                newProfilePhotoData = await compressImage(file, true);
+                document.getElementById('prof-disp-photo').src = newProfilePhotoData;
+            }
+        });
+
+        // Save Profile Edits
+        document.getElementById('profile-edit-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-prof-save');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`; btn.disabled = true;
+
+            try {
+                const newName = document.getElementById('prof-disp-name').value.trim();
+                let updatePayload = {};
+                let needsUpdate = false;
+
+                if (newName !== activeProfileData.teacherName) {
+                    updatePayload.teacherName = newName;
+                    needsUpdate = true;
+                }
+
+                if (newProfilePhotoData) {
+                    const ts = Date.now();
+                    const photoRef = ref(storage, `artifacts/${appId}/public/data/uploads/${ts}_photo.jpg`);
+                    await uploadString(photoRef, newProfilePhotoData, 'data_url');
+                    updatePayload.photoUrl = await getDownloadURL(photoRef);
+                    needsUpdate = true;
+                }
+
+                if (needsUpdate) {
+                    updatePayload.lastUpdated = serverTimestamp();
+                    await updateDoc(activeProfileRef, updatePayload);
+                    showToast('Success', 'Profile updated successfully!', 'success');
+                    activeProfileData = { ...activeProfileData, ...updatePayload }; // update local cache
+                } else {
+                    showToast('Info', 'No changes made.', 'success');
+                }
+
+            } catch (err) { console.error(err); showToast('Error', 'Could not update profile.', 'error'); } 
+            finally { btn.innerHTML = originalText; btn.disabled = false; }
+        });
+
+        // Profile Logout
+        document.getElementById('btn-prof-logout').addEventListener('click', () => {
+            activeProfileRef = null;
+            activeProfileData = null;
+            document.getElementById('profile-login-form').reset();
+            document.getElementById('profile-view-div').classList.add('hidden');
+            document.getElementById('profile-login-div').classList.remove('hidden');
+        });
+
+        // --- CORE IMAGE GENERATOR ---
+        function getGeneratedCertificateCanvas(nameToPrint, score, callback) {
+            const canvas = document.getElementById('cert-canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            
+            if (score >= 100) { img.src = 'certificate_diamond.png'; } 
+            else if (score >= 50) { img.src = 'certificate_gold.png'; } 
+            else { img.src = 'certificate_silver.png'; }
+            
+            img.onload = () => {
+                canvas.width = 1600; canvas.height = 1066;
+                ctx.drawImage(img, 0, 0, 1600, 1066);
+                ctx.font = "bold 38px 'Inter', sans-serif"; ctx.fillStyle = "#1e293b"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                ctx.fillText(nameToPrint.toUpperCase(), 787, 513);
+                callback(canvas);
+            };
+            img.onerror = () => { callback(null); };
+        }
+
+        // WHATSAPP SHARE IMAGE + TEXT FUNCTION (Web Share API)
+        async function shareToWhatsApp(name, score, btnElement) {
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i> ଅପେକ୍ଷା କରନ୍ତୁ...`;
+            btnElement.disabled = true;
+
+            getGeneratedCertificateCanvas(name, score, async (canvas) => {
+                if(canvas) {
+                    let tierNameOdia = score >= 100 ? "ଡାଇମଣ୍ଡ" : (score >= 50 ? "ଗୋଲ୍ଡ" : "ସିଲଭର");
+                    let waMessage = `ମୁଁ ନବ ଭାରତ ସାକ୍ଷରତା କାର୍ଯ୍ୟକ୍ରମ (NILP) ରେ ${score} ଜଣଙ୍କୁ ଯୋଡି ଜିଲ୍ଲାରେ '${tierNameOdia} ବ୍ୟାଜ୍' ହାସଲ କରିଛି! \n\nଆପଣ ବି ନିଜ ସ୍କୁଲ୍ ପାଇଁ ଆବେଦନ କରନ୍ତୁ: https://koraputnilp.com`;
+                    
+                    if (navigator.share && navigator.canShare) {
+                        canvas.toBlob(async (blob) => {
+                            const file = new File([blob], "NILP_Certificate.png", { type: "image/png" });
+                            if (navigator.canShare({ files: [file] })) {
+                                try {
+                                    await navigator.share({
+                                        text: waMessage,
+                                        files: [file]
+                                    });
+                                } catch (error) { console.log('Share canceled or failed', error); }
+                            } else {
+                                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`, '_blank');
+                            }
+                            btnElement.innerHTML = originalText; btnElement.disabled = false;
+                        }, "image/png");
+                    } else {
+                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`, '_blank');
+                        btnElement.innerHTML = originalText; btnElement.disabled = false;
+                    }
+                } else {
+                    showToast('Error', 'Image generation failed.', 'error');
+                    btnElement.innerHTML = originalText; btnElement.disabled = false;
+                }
+            });
+        }
+
+        // ATTACH TO WHATSAPP BUTTON ON SUCCESS PAGE
+        document.getElementById('btn-success-whatsapp').addEventListener('click', function() {
+            if(newlyRegisteredTeacherName) { shareToWhatsApp(newlyRegisteredTeacherName, newlyRegisteredScore, this); }
+        });
+
+        // ATTACH TO WHATSAPP BUTTON ON CERTIFICATE PAGE
+        document.getElementById('btn-whatsapp-share').addEventListener('click', function() {
+            shareToWhatsApp(certTeacherName, certTeacherScore, this);
+        });
+
+        // ATTACH TO DOWNLOAD BUTTON ON SUCCESS PAGE
+        document.getElementById('btn-success-to-cert').addEventListener('click', function() {
+            if (newlyRegisteredTeacherName) {
+                const btnElement = this;
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+                btnElement.disabled = true;
+
+                getGeneratedCertificateCanvas(newlyRegisteredTeacherName, newlyRegisteredScore, (canvas) => {
+                    if(canvas) {
+                        try {
+                            const link = document.createElement('a');
+                            let tierName = newlyRegisteredScore >= 100 ? 'Diamond' : (newlyRegisteredScore >= 50 ? 'Gold' : 'Silver');
+                            link.download = `NILP_${tierName}_${newlyRegisteredTeacherName.replace(/\s+/g, '_')}.png`;
+                            link.href = canvas.toDataURL('image/png'); link.click();
+                            showToast('Success', 'Certificate downloaded!', 'success');
+                        } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
+                    }
+                    btnElement.innerHTML = originalText; btnElement.disabled = false;
+                });
+            } else {
+                document.getElementById('btn-show-certificate').click();
+            }
+        });
+
+        // --- CERTIFICATE LOGIN LOGIC ---
         document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-cert-login');
@@ -867,28 +1152,7 @@
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
-        // CORE IMAGE GENERATOR 
-        function getGeneratedCertificateCanvas(nameToPrint, score, callback) {
-            const canvas = document.getElementById('cert-canvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            img.crossOrigin = "Anonymous";
-            
-            if (score >= 100) { img.src = 'certificate_diamond.png'; } 
-            else if (score >= 50) { img.src = 'certificate_gold.png'; } 
-            else { img.src = 'certificate_silver.png'; }
-            
-            img.onload = () => {
-                canvas.width = 1600; canvas.height = 1066;
-                ctx.drawImage(img, 0, 0, 1600, 1066);
-                ctx.font = "bold 38px 'Inter', sans-serif"; ctx.fillStyle = "#1e293b"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-                ctx.fillText(nameToPrint.toUpperCase(), 787, 513);
-                callback(canvas);
-            };
-            img.onerror = () => { callback(null); };
-        }
-
-        // STANDARD DOWNLOAD BUTTON
+        // STANDARD DOWNLOAD BUTTON (Certificate Page)
         document.getElementById('btn-download-cert').addEventListener('click', function() {
             const btnElement = this;
             const originalText = btnElement.innerHTML;
@@ -904,86 +1168,10 @@
                         link.href = canvas.toDataURL('image/png'); link.click();
                         showToast('Success', 'Certificate downloaded!', 'success');
                     } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
-                } else {
-                    showToast('Error', `Could not load background image.`, 'error');
                 }
                 btnElement.innerHTML = originalText; btnElement.disabled = false;
             });
         });
-
-        // WHATSAPP SHARE IMAGE + TEXT FUNCTION
-        async function shareToWhatsApp(name, score, btnElement) {
-            const originalText = btnElement.innerHTML;
-            btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i> ଅପେକ୍ଷା କରନ୍ତୁ...`;
-            btnElement.disabled = true;
-
-            getGeneratedCertificateCanvas(name, score, async (canvas) => {
-                if(canvas) {
-                    let tierNameOdia = score >= 100 ? "ଡାଇମଣ୍ଡ" : (score >= 50 ? "ଗୋଲ୍ଡ" : "ସିଲଭର");
-                    let waMessage = `ମୁଁ ନବ ଭାରତ ସାକ୍ଷରତା କାର୍ଯ୍ୟକ୍ରମ (NILP) ରେ ${score} ଜଣଙ୍କୁ ଯୋଡି ଜିଲ୍ଲାରେ '${tierNameOdia} ବ୍ୟାଜ୍' ହାସଲ କରିଛି! \n\nଆପଣ ବି ନିଜ ସ୍କୁଲ୍ ପାଇଁ ଆବେଦନ କରନ୍ତୁ: https://koraputnilp.com`;
-                    
-                    // Attempt to use modern Web Share API (Works perfectly on Android/iOS to attach image + text)
-                    if (navigator.share && navigator.canShare) {
-                        canvas.toBlob(async (blob) => {
-                            const file = new File([blob], "NILP_Certificate.png", { type: "image/png" });
-                            if (navigator.canShare({ files: [file] })) {
-                                try {
-                                    await navigator.share({
-                                        text: waMessage,
-                                        files: [file]
-                                    });
-                                } catch (error) { console.log('Share canceled or failed', error); }
-                            } else {
-                                // Fallback for browsers that don't support file sharing
-                                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`, '_blank');
-                            }
-                            btnElement.innerHTML = originalText; btnElement.disabled = false;
-                        }, "image/png");
-                    } else {
-                        // Fallback for Desktop / old browsers (Text only)
-                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`, '_blank');
-                        btnElement.innerHTML = originalText; btnElement.disabled = false;
-                    }
-                } else {
-                    showToast('Error', 'Image generation failed.', 'error');
-                    btnElement.innerHTML = originalText; btnElement.disabled = false;
-                }
-            });
-        }
-
-        // ATTACH TO WHATSAPP BUTTON ON SUCCESS PAGE
-        document.getElementById('btn-success-whatsapp').addEventListener('click', function() {
-            if(newlyRegisteredTeacherName) { shareToWhatsApp(newlyRegisteredTeacherName, newlyRegisteredScore, this); }
-        });
-
-        // ATTACH TO WHATSAPP BUTTON ON CERTIFICATE PAGE
-        document.getElementById('btn-whatsapp-share').addEventListener('click', function() {
-            shareToWhatsApp(certTeacherName, certTeacherScore, this);
-        });
-
-        // ATTACH TO DOWNLOAD BUTTON ON SUCCESS PAGE
-        document.getElementById('btn-success-to-cert').addEventListener('click', function() {
-            if (newlyRegisteredTeacherName) {
-                const btnElement = this;
-                const originalText = btnElement.innerHTML;
-                btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
-                btnElement.disabled = true;
-
-                getGeneratedCertificateCanvas(newlyRegisteredTeacherName, newlyRegisteredScore, (canvas) => {
-                    if(canvas) {
-                        const link = document.createElement('a');
-                        let tierName = newlyRegisteredScore >= 100 ? 'Diamond' : (newlyRegisteredScore >= 50 ? 'Gold' : 'Silver');
-                        link.download = `NILP_${tierName}_${newlyRegisteredTeacherName.replace(/\s+/g, '_')}.png`;
-                        link.href = canvas.toDataURL('image/png'); link.click();
-                        showToast('Success', 'Certificate downloaded!', 'success');
-                    }
-                    btnElement.innerHTML = originalText; btnElement.disabled = false;
-                });
-            } else {
-                document.getElementById('btn-show-certificate').click();
-            }
-        });
-
 
         // --- LEADERBOARD LOGIC ---
         document.getElementById('btn-back-blocks').addEventListener('click', loadOverallLeaderboard);

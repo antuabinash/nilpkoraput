@@ -137,7 +137,6 @@
 
         <!-- LIVE SATURATION MAP RADAR -->
         <div id="section-map" class="glass-panel rounded-2xl shadow-xl border-t-4 border-slate-800 overflow-hidden mb-12 relative h-[400px] md:h-[500px] animate-fade-in-up">
-            <!-- Live Counter Overlay -->
             <div class="absolute top-4 left-4 z-[400] bg-slate-900/90 backdrop-blur px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 transition-all hover:scale-105">
                 <h3 class="text-[10px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-2 mb-1">
                     <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span> 
@@ -147,7 +146,6 @@
                 <p class="text-[10px] font-medium text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> Total Enrollments</p>
             </div>
 
-            <!-- Map Legend (Simplified Binary) -->
             <div class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur px-4 py-3 rounded-xl shadow-xl border border-slate-200 text-[11px] font-bold text-slate-600 flex flex-col gap-2">
                 <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600"></span> Active (Enrolled)</div>
                 <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-red-500 shadow-sm border border-red-600"></span> Zero Saturation</div>
@@ -170,7 +168,6 @@
                 </div>
                 
                 <div class="p-6 md:p-8 bg-slate-50/50">
-                    <!-- Login State -->
                     <div id="profile-login-div" class="block">
                         <p class="text-slate-600 mb-6 font-medium text-center">ଲଗ୍ ଇନ୍ କରିବାକୁ ଆପଣଙ୍କର ଫୋନ୍ ନମ୍ବର ଏବଂ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ |</p>
                         <form id="profile-login-form" class="space-y-4 max-w-sm mx-auto">
@@ -196,11 +193,9 @@
                         </form>
                     </div>
 
-                    <!-- View/Edit State -->
                     <div id="profile-view-div" class="hidden">
                         <form id="profile-edit-form">
                             <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6 text-center relative">
-                                <!-- Photo Edit -->
                                 <div class="relative w-28 h-28 mx-auto mb-4 group cursor-pointer">
                                     <img id="prof-disp-photo" src="" class="w-28 h-28 rounded-full object-cover border-4 border-slate-100 shadow-md">
                                     <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -209,7 +204,6 @@
                                     <input type="file" id="prof-file-photo" accept="image/jpeg, image/png, image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                                 </div>
 
-                                <!-- Name Edit -->
                                 <div class="mb-5 relative w-max mx-auto">
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Teacher Name</label>
                                     <div class="flex items-center justify-center border-b-2 border-dashed border-slate-300 hover:border-indigo-400 focus-within:border-indigo-500 transition-colors px-2 pb-1">
@@ -218,7 +212,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Static Info -->
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left bg-slate-50 p-4 rounded-lg border border-slate-100">
                                     <div class="col-span-2"><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">School</span> <span id="prof-disp-school" class="font-bold text-slate-800"></span></div>
                                     <div><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">Block</span> <span id="prof-disp-block" class="font-bold text-slate-800"></span></div>
@@ -305,7 +298,6 @@
                             </div>
                         </div>
 
-                        <!-- AUTO FILL SCHOOL SECTION -->
                         <div class="space-y-5">
                             <h4 class="font-bold text-slate-800 border-b-2 border-slate-100 pb-2 flex items-center gap-2"><i class="fa-solid fa-school text-indigo-500"></i> ବିଦ୍ୟାଳୟ ତଥ୍ୟ (School Data)</h4>
                             
@@ -651,7 +643,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, onSnapshot, limit, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, writeBatch, getDocs, query, where, orderBy, increment, serverTimestamp, onSnapshot, limit, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         const appId = 'nilp-koraput'; 
@@ -716,7 +708,7 @@
 
         async function initApp() {
             try {
-                // 1. Init Leaflet Map with OpenStreetMap instead of CARTO to fix API Key Watermark
+                // 1. Init Leaflet Map with OpenStreetMap
                 districtMap = L.map('district-map', { zoomControl: false, scrollWheelZoom: false }).setView([18.8135, 82.7123], 9);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', 
@@ -737,7 +729,7 @@
                                 
                                 marker.bindTooltip(`<b>${s.n}</b><br/><span class="text-[10px] text-slate-500 font-bold uppercase">${s.c} | ${koraputBlocks[s.b]||s.b}</span>`, { className: 'shadow-lg border-0 rounded-lg', direction: 'top' });
                                 
-                                // Store by UDISE instead of block for precise coloring
+                                // Store by UDISE for precise coloring
                                 schoolMarkers[udise] = marker;
                             }
                         });
@@ -757,13 +749,27 @@
                         currentUser = user; isFirebaseReady = true;
                         document.getElementById('auth-status').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>`;
                         
-                        // Live Counter Hook
+                        // 4. Live Counter & Live Green Dot Map Hook (14 Reads only!)
                         const lbRef = collection(db, 'artifacts', appId, 'public', 'data', 'lb_blocks');
                         onSnapshot(lbRef, (snap) => {
                             let totalDistrictEnrolled = 0;
+                            
+                            // Reset all markers to red to ensure a clean sync state
+                            Object.values(schoolMarkers).forEach(m => m.setStyle({ fillColor: '#ef4444', weight: 1 }));
+
                             snap.forEach(doc => {
                                 const d = doc.data();
                                 totalDistrictEnrolled += (d.totalEnrolled || 0);
+                                
+                                // NEW: Turn active schools in this block green instantly!
+                                if(d.activeSchools && Array.isArray(d.activeSchools)) {
+                                    d.activeSchools.forEach(udise => {
+                                        if(schoolMarkers[udise]) {
+                                            schoolMarkers[udise].setStyle({ fillColor: '#10b981', color: '#ffffff', weight: 2 });
+                                            schoolMarkers[udise].bringToFront();
+                                        }
+                                    });
+                                }
                             });
                             document.getElementById('map-live-counter').textContent = totalDistrictEnrolled.toLocaleString();
                         });
@@ -1060,7 +1066,14 @@
                     createdAt: serverTimestamp()
                 });
 
-                batch.set(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', schoolData.b), { blockId: schoolData.b, totalEnrolled: increment(learners), teacherCount: increment(1), lastUpdated: serverTimestamp() }, { merge: true });
+                // NEW: Added activeSchools: arrayUnion(udiseVal) to power the live map globally!
+                batch.set(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', schoolData.b), { 
+                    blockId: schoolData.b, 
+                    totalEnrolled: increment(learners), 
+                    teacherCount: increment(1), 
+                    activeSchools: arrayUnion(udiseVal),
+                    lastUpdated: serverTimestamp() 
+                }, { merge: true });
                 await batch.commit();
 
                 document.getElementById('nomination-form').reset();
@@ -1424,20 +1437,11 @@
                 
                 currentBlockTeachers = []; 
                 let uniqueClusters = new Set();
-                
-                // NEW: Turn active schools Green on the map!
-                Object.values(schoolMarkers).forEach(m => m.setStyle({ fillColor: '#ef4444' })); // Reset all to Red first
 
                 snap.forEach(doc => { 
                     const data = doc.data();
                     currentBlockTeachers.push(data); 
                     if(data.cluster) uniqueClusters.add(data.cluster.toUpperCase());
-                    
-                    // If this school has a marker, turn it Green
-                    if(data.udiseCode && schoolMarkers[data.udiseCode]) {
-                        schoolMarkers[data.udiseCode].setStyle({ fillColor: '#10b981' }); 
-                        schoolMarkers[data.udiseCode].bringToFront();
-                    }
                 });
                 
                 document.getElementById('badge-current-block').textContent = koraputBlocks[blockId] || blockId;

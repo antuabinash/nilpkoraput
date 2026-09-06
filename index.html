@@ -7,6 +7,7 @@
     <script src="tailwind.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
+    <!-- LEAFLET MAP CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -22,6 +23,8 @@
         .gov-gradient { background: linear-gradient(90deg, #1e3a8a 0%, #082f49 100%); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Custom Map Tooltip Styling */
         .leaflet-tooltip { font-family: 'Inter', sans-serif; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; }
     </style>
 </head>
@@ -556,9 +559,9 @@
                 </div>
             </div>
         </section>
-        
-        <!-- LIVE SATURATION MAP RADAR (Moved outside so it always stays at the bottom) -->
-        <div id="section-map" class="glass-panel rounded-2xl shadow-xl border-t-4 border-slate-800 overflow-hidden mb-12 mt-8 relative h-[400px] md:h-[500px] animate-fade-in-up">
+
+        <!-- LIVE SATURATION MAP RADAR (Starts Hidden) -->
+        <div id="section-map" class="hidden glass-panel rounded-2xl shadow-xl border-t-4 border-slate-800 overflow-hidden mb-12 mt-8 relative h-[400px] md:h-[500px] animate-fade-in-up">
             <div class="absolute top-4 left-4 z-[400] bg-slate-900/90 backdrop-blur px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 transition-all hover:scale-105">
                 <h3 class="text-[10px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-2 mb-1">
                     <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span> 
@@ -695,8 +698,10 @@
             success: document.getElementById('section-success'),
             certificate: document.getElementById('section-certificate'),
             update: document.getElementById('section-update'),
-            profile: document.getElementById('section-profile')
+            profile: document.getElementById('section-profile'),
+            map: document.getElementById('section-map') // Added Map to sections
         };
+        
         const buttons = {
             form: document.getElementById('btn-show-form'),
             leaderboard: document.getElementById('btn-show-leaderboard'),
@@ -817,7 +822,23 @@
         }
 
         buttons.form.addEventListener('click', () => { hideAllSections(); sections.form.classList.remove('hidden'); sections.form.scrollIntoView(); buttons.form.classList.add('ring-4', 'ring-blue-100'); });
-        buttons.leaderboard.addEventListener('click', () => { hideAllSections(); sections.leaderboard.classList.remove('hidden'); sections.leaderboard.scrollIntoView(); buttons.leaderboard.classList.add('ring-4', 'ring-emerald-100'); loadOverallLeaderboard(); });
+        
+        // LEADERBOARD BUTTON NOW SHOWS MAP
+        buttons.leaderboard.addEventListener('click', () => { 
+            hideAllSections(); 
+            sections.leaderboard.classList.remove('hidden'); 
+            sections.map.classList.remove('hidden'); // UNHIDE MAP
+            
+            // Fix Leaflet hidden render issue
+            if(districtMap) {
+                setTimeout(() => { districtMap.invalidateSize(); }, 200);
+            }
+
+            sections.leaderboard.scrollIntoView(); 
+            buttons.leaderboard.classList.add('ring-4', 'ring-emerald-100'); 
+            loadOverallLeaderboard(); 
+        });
+
         buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView(); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
         buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView(); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
         

@@ -7,7 +7,6 @@
     <script src="tailwind.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- LEAFLET MAP CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -23,8 +22,6 @@
         .gov-gradient { background: linear-gradient(90deg, #1e3a8a 0%, #082f49 100%); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Custom Map Tooltip Styling */
         .leaflet-tooltip { font-family: 'Inter', sans-serif; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; }
     </style>
 </head>
@@ -133,25 +130,6 @@
                     </div>
                 </div>
             </button>
-        </div>
-
-        <!-- LIVE SATURATION MAP RADAR -->
-        <div id="section-map" class="glass-panel rounded-2xl shadow-xl border-t-4 border-slate-800 overflow-hidden mb-12 relative h-[400px] md:h-[500px] animate-fade-in-up">
-            <div class="absolute top-4 left-4 z-[400] bg-slate-900/90 backdrop-blur px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 transition-all hover:scale-105">
-                <h3 class="text-[10px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-2 mb-1">
-                    <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span> 
-                    Live District Radar
-                </h3>
-                <p class="text-3xl font-black text-white" id="map-live-counter">0</p>
-                <p class="text-[10px] font-medium text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> Total Enrollments</p>
-            </div>
-
-            <div class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur px-4 py-3 rounded-xl shadow-xl border border-slate-200 text-[11px] font-bold text-slate-600 flex flex-col gap-2">
-                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600"></span> Active (Enrolled)</div>
-                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-red-500 shadow-sm border border-red-600"></span> Zero Saturation</div>
-            </div>
-
-            <div id="district-map" class="w-full h-full z-0 bg-slate-100"></div>
         </div>
 
         <!-- USER PROFILE SECTION -->
@@ -578,6 +556,26 @@
                 </div>
             </div>
         </section>
+        
+        <!-- LIVE SATURATION MAP RADAR (Moved outside so it always stays at the bottom) -->
+        <div id="section-map" class="glass-panel rounded-2xl shadow-xl border-t-4 border-slate-800 overflow-hidden mb-12 mt-8 relative h-[400px] md:h-[500px] animate-fade-in-up">
+            <div class="absolute top-4 left-4 z-[400] bg-slate-900/90 backdrop-blur px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 transition-all hover:scale-105">
+                <h3 class="text-[10px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-2 mb-1">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span> 
+                    Live District Radar
+                </h3>
+                <p class="text-3xl font-black text-white" id="map-live-counter">0</p>
+                <p class="text-[10px] font-medium text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> Total Enrollments</p>
+            </div>
+
+            <div class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur px-4 py-3 rounded-xl shadow-xl border border-slate-200 text-[11px] font-bold text-slate-600 flex flex-col gap-2">
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600"></span> Active (Enrolled)</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full bg-red-500 shadow-sm border border-red-600"></span> Zero Saturation</div>
+            </div>
+
+            <div id="district-map" class="w-full h-full z-0 bg-slate-100"></div>
+        </div>
+
     </main>
 
     <!-- GLOBAL FORGOT PIN MODAL -->
@@ -706,9 +704,25 @@
             update: document.getElementById('btn-show-update')
         };
 
+        window.showToast = function(title, msg, type = 'success') {
+            const t = document.getElementById('custom-toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-message').textContent = msg;
+            const icon = document.getElementById('toast-icon');
+            
+            t.className = `fixed bottom-6 right-6 max-w-sm w-full bg-white rounded-xl shadow-2xl border-l-4 p-4 z-50 flex items-start gap-3 toast-enter-active ${type==='success'?'border-green-500':'border-red-500'}`;
+            icon.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check text-green-500':'fa-circle-xmark text-red-500'} text-xl"></i>`;
+            
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => t.classList.replace('toast-enter-active', 'toast-exit-active'), 4000);
+        };
+        
+        document.getElementById('close-toast').addEventListener('click', () => {
+            document.getElementById('custom-toast').classList.replace('toast-enter-active', 'toast-exit-active');
+        });
+
         async function initApp() {
             try {
-                // 1. Init Leaflet Map with OpenStreetMap
                 districtMap = L.map('district-map', { zoomControl: false, scrollWheelZoom: false }).setView([18.8135, 82.7123], 9);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', 
@@ -716,7 +730,6 @@
                 }).addTo(districtMap);
                 L.control.zoom({ position: 'topright' }).addTo(districtMap);
 
-                // 2. Fetch School Data and Plot Zero-Cost Dots
                 fetch('schools.json').then(res => res.json()).then(data => {
                     schoolMasterData = data;
                     if(districtMap) {
@@ -728,15 +741,12 @@
                                 }).addTo(districtMap);
                                 
                                 marker.bindTooltip(`<b>${s.n}</b><br/><span class="text-[10px] text-slate-500 font-bold uppercase">${s.c} | ${koraputBlocks[s.b]||s.b}</span>`, { className: 'shadow-lg border-0 rounded-lg', direction: 'top' });
-                                
-                                // Store by UDISE for precise coloring
                                 schoolMarkers[udise] = marker;
                             }
                         });
                     }
                 }).catch(err => console.error("Error loading schools.json", err));
 
-                // 3. Init Firebase
                 app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = initializeFirestore(app, { localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()}) });
@@ -749,19 +759,16 @@
                         currentUser = user; isFirebaseReady = true;
                         document.getElementById('auth-status').innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>`;
                         
-                        // 4. Live Counter & Live Green Dot Map Hook (14 Reads only!)
                         const lbRef = collection(db, 'artifacts', appId, 'public', 'data', 'lb_blocks');
                         onSnapshot(lbRef, (snap) => {
                             let totalDistrictEnrolled = 0;
                             
-                            // Reset all markers to red to ensure a clean sync state
                             Object.values(schoolMarkers).forEach(m => m.setStyle({ fillColor: '#ef4444', weight: 1 }));
 
                             snap.forEach(doc => {
                                 const d = doc.data();
                                 totalDistrictEnrolled += (d.totalEnrolled || 0);
                                 
-                                // NEW: Turn active schools in this block green instantly!
                                 if(d.activeSchools && Array.isArray(d.activeSchools)) {
                                     d.activeSchools.forEach(udise => {
                                         if(schoolMarkers[udise]) {
@@ -875,7 +882,7 @@
             const pin1 = document.getElementById('fp-new-pin').value.trim();
             const pin2 = document.getElementById('fp-new-pin-confirm').value.trim();
 
-            if(pin1 !== pin2) return showToast('Error', 'New PINs do not match.', 'error');
+            if(pin1 !== pin2) return window.showToast('Error', 'New PINs do not match.', 'error');
             
             const btn = document.getElementById('btn-fp-submit');
             const orig = btn.innerHTML;
@@ -883,16 +890,16 @@
 
             try {
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
-                if(snap.empty) { showToast('Error', 'Phone number not registered.', 'error'); return; }
+                if(snap.empty) { window.showToast('Error', 'Phone number not registered.', 'error'); return; }
                 
                 const docSnap = snap.docs[0];
-                if(docSnap.data().udiseCode !== udise) { showToast('Error', 'Incorrect UDISE Code for this account.', 'error'); return; }
+                if(docSnap.data().udiseCode !== udise) { window.showToast('Error', 'Incorrect UDISE Code for this account.', 'error'); return; }
 
                 await updateDoc(docSnap.ref, { securityPin: pin1, lastUpdated: serverTimestamp() });
                 
                 document.getElementById('modal-forgot-pin').classList.add('hidden');
-                showToast('Success', 'PIN Reset Successfully! You can now log in.', 'success');
-            } catch(err) { console.error(err); showToast('Error', 'Failed to reset PIN.', 'error'); }
+                window.showToast('Success', 'PIN Reset Successfully! You can now log in.', 'success');
+            } catch(err) { console.error(err); window.showToast('Error', 'Failed to reset PIN.', 'error'); }
             finally { btn.innerHTML = orig; btn.disabled = false; }
         });
 
@@ -1015,14 +1022,14 @@
 
         document.getElementById('nomination-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!isFirebaseReady || !currentUser) return showToast('Error', 'Database offline.', 'error');
+            if (!isFirebaseReady || !currentUser) return window.showToast('Error', 'Database offline.', 'error');
             
             const pin = document.getElementById('teacher-pin').value.trim();
-            if (pin !== document.getElementById('teacher-pin-confirm').value.trim()) return showToast('Error', 'PINs do not match.', 'error');
+            if (pin !== document.getElementById('teacher-pin-confirm').value.trim()) return window.showToast('Error', 'PINs do not match.', 'error');
 
             const udiseVal = document.getElementById('school-udise').value.trim();
             const schoolData = schoolMasterData[udiseVal];
-            if(!schoolData) return showToast('Error', 'Invalid UDISE Code.', 'error');
+            if(!schoolData) return window.showToast('Error', 'Invalid UDISE Code.', 'error');
 
             const phone = document.getElementById('teacher-phone').value.trim();
             const spinner = document.getElementById('submit-spinner');
@@ -1033,7 +1040,7 @@
                 if (!dupSnap.empty) {
                     document.getElementById('phone-duplicate-error').classList.remove('hidden');
                     document.getElementById('teacher-phone').classList.add('border-red-500', 'bg-red-50');
-                    showToast('Already Registered', 'Please go to Update Score or My Profile.', 'error');
+                    window.showToast('Already Registered', 'Please go to Update Score or My Profile.', 'error');
                     submitBtn.disabled = false; spinner.classList.add('hidden'); return;
                 }
 
@@ -1066,7 +1073,6 @@
                     createdAt: serverTimestamp()
                 });
 
-                // NEW: Added activeSchools: arrayUnion(udiseVal) to power the live map globally!
                 batch.set(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', schoolData.b), { 
                     blockId: schoolData.b, 
                     totalEnrolled: increment(learners), 
@@ -1083,7 +1089,7 @@
                 
                 hideAllSections(); sections.success.classList.remove('hidden');
                 
-            } catch (err) { console.error(err); showToast('Upload Failed', err.message, 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Upload Failed', err.message, 'error'); } 
             finally { submitBtn.disabled = false; spinner.classList.add('hidden'); }
         });
 
@@ -1095,10 +1101,10 @@
             try {
                 const phone = document.getElementById('up-phone').value.trim();
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
-                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+                if (snap.empty) return window.showToast('Error', 'Account not found.', 'error');
 
                 const docSnap = snap.docs[0];
-                if (docSnap.data().securityPin !== document.getElementById('up-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+                if (docSnap.data().securityPin !== document.getElementById('up-pin').value.trim()) return window.showToast('Error', 'Incorrect PIN.', 'error');
 
                 activeTeacherRef = docSnap.ref; activeTeacherData = docSnap.data();
 
@@ -1107,10 +1113,10 @@
                 document.getElementById('disp-teacher-name-update').textContent = activeTeacherData.teacherName;
                 document.getElementById('disp-school-name').textContent = activeTeacherData.schoolName;
                 document.getElementById('disp-current-score').textContent = activeTeacherData.learnersEnrolled;
-                document.getElementById('new-score').min = activeTeacherData.learnersEnrolled + 1;
+                document.getElementById('new-score').min = 1;
                 document.getElementById('new-score').value = activeTeacherData.learnersEnrolled;
                 
-            } catch (err) { console.error(err); showToast('Error', 'System error occurred.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Error', 'System error occurred.', 'error'); } 
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
@@ -1118,15 +1124,18 @@
             e.preventDefault();
             const newTotal = parseInt(document.getElementById('new-score').value, 10);
             
-            if (newTotal <= activeTeacherData.learnersEnrolled) return showToast('Error', 'Count must increase.', 'error');
+            if (newTotal < 20) return window.showToast('Error', 'Minimum enrollment is 20.', 'error');
+
             const btn = document.getElementById('btn-save-update');
             const spinner = document.getElementById('update-submit-spinner');
             btn.disabled = true; spinner.classList.remove('hidden');
 
             try {
+                const diff = newTotal - activeTeacherData.learnersEnrolled;
+
                 const batch = writeBatch(db);
                 batch.update(activeTeacherRef, { learnersEnrolled: newTotal, lastUpdated: serverTimestamp() });
-                batch.update(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', activeTeacherData.block), { totalEnrolled: increment(newTotal - activeTeacherData.learnersEnrolled) });
+                batch.update(doc(db, 'artifacts', appId, 'public', 'data', 'lb_blocks', activeTeacherData.block), { totalEnrolled: increment(diff) });
                 await batch.commit();
 
                 newlyRegisteredTeacherName = activeTeacherData.teacherName;
@@ -1139,9 +1148,9 @@
                 document.getElementById('update-login-div').classList.remove('hidden');
                 
                 hideAllSections(); sections.success.classList.remove('hidden');
-                showToast('Success', 'Score updated successfully!', 'success');
+                window.showToast('Success', 'Score updated successfully!', 'success');
 
-            } catch (err) { console.error(err); showToast('Error', 'Could not save score.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Error', 'Could not save score.', 'error'); } 
             finally { btn.disabled = false; spinner.classList.add('hidden'); }
         });
 
@@ -1154,9 +1163,9 @@
                 const phone = document.getElementById('prof-phone').value.trim();
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
                 
-                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+                if (snap.empty) return window.showToast('Error', 'Account not found.', 'error');
                 const docSnap = snap.docs[0];
-                if (docSnap.data().securityPin !== document.getElementById('prof-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+                if (docSnap.data().securityPin !== document.getElementById('prof-pin').value.trim()) return window.showToast('Error', 'Incorrect PIN.', 'error');
 
                 activeProfileRef = docSnap.ref; 
                 activeProfileData = docSnap.data();
@@ -1173,7 +1182,7 @@
                 document.getElementById('prof-disp-enrolled').textContent = activeProfileData.learnersEnrolled;
                 newProfilePhotoData = null;
 
-            } catch (err) { console.error(err); showToast('Error', 'System error occurred.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Error', 'System error occurred.', 'error'); } 
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
@@ -1212,13 +1221,13 @@
                 if (needsUpdate) {
                     updatePayload.lastUpdated = serverTimestamp();
                     await updateDoc(activeProfileRef, updatePayload);
-                    showToast('Success', 'Profile updated successfully!', 'success');
+                    window.showToast('Success', 'Profile updated successfully!', 'success');
                     activeProfileData = { ...activeProfileData, ...updatePayload }; 
                 } else {
-                    showToast('Info', 'No changes made.', 'success');
+                    window.showToast('Info', 'No changes made.', 'success');
                 }
 
-            } catch (err) { console.error(err); showToast('Error', 'Could not update profile.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Error', 'Could not update profile.', 'error'); } 
             finally { btn.innerHTML = originalText; btn.disabled = false; }
         });
 
@@ -1280,7 +1289,7 @@
                         btnElement.innerHTML = originalText; btnElement.disabled = false;
                     }
                 } else {
-                    showToast('Error', 'Image generation failed.', 'error');
+                    window.showToast('Error', 'Image generation failed.', 'error');
                     btnElement.innerHTML = originalText; btnElement.disabled = false;
                 }
             });
@@ -1308,8 +1317,8 @@
                             let tierName = newlyRegisteredScore >= 100 ? 'Diamond' : (newlyRegisteredScore >= 50 ? 'Gold' : 'Silver');
                             link.download = `NILP_${tierName}_${newlyRegisteredTeacherName.replace(/\s+/g, '_')}.png`;
                             link.href = canvas.toDataURL('image/png'); link.click();
-                            showToast('Success', 'Certificate downloaded!', 'success');
-                        } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
+                            window.showToast('Success', 'Certificate downloaded!', 'success');
+                        } catch(e) { window.showToast('Error', 'Browser blocked download.', 'error'); }
                     }
                     btnElement.innerHTML = originalText; btnElement.disabled = false;
                 });
@@ -1327,9 +1336,9 @@
                 const phone = document.getElementById('cert-phone').value.trim();
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
 
-                if (snap.empty) return showToast('Error', 'Account not found.', 'error');
+                if (snap.empty) return window.showToast('Error', 'Account not found.', 'error');
                 const data = snap.docs[0].data();
-                if (data.securityPin !== document.getElementById('cert-pin').value.trim()) return showToast('Error', 'Incorrect PIN.', 'error');
+                if (data.securityPin !== document.getElementById('cert-pin').value.trim()) return window.showToast('Error', 'Incorrect PIN.', 'error');
 
                 certTeacherName = data.teacherName;
                 certTeacherScore = data.learnersEnrolled;
@@ -1356,7 +1365,7 @@
                 document.getElementById('cert-login-div').classList.add('hidden');
                 document.getElementById('cert-download-div').classList.remove('hidden');
 
-            } catch (err) { console.error(err); showToast('Error', 'System error.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Error', 'System error.', 'error'); } 
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
@@ -1373,8 +1382,8 @@
                         let tierName = certTeacherScore >= 100 ? 'Diamond' : (certTeacherScore >= 50 ? 'Gold' : 'Silver');
                         link.download = `NILP_${tierName}_${certTeacherName.replace(/\s+/g, '_')}.png`;
                         link.href = canvas.toDataURL('image/png'); link.click();
-                        showToast('Success', 'Certificate downloaded!', 'success');
-                    } catch(e) { showToast('Error', 'Browser blocked download.', 'error'); }
+                        window.showToast('Success', 'Certificate downloaded!', 'success');
+                    } catch(e) { window.showToast('Error', 'Browser blocked download.', 'error'); }
                 }
                 btnElement.innerHTML = originalText; btnElement.disabled = false;
             });
@@ -1422,7 +1431,7 @@
                     });
                 }
                 document.getElementById('view-blocks').classList.remove('hidden');
-            } catch (err) { console.error(err); showToast('Fetch Error', 'Could not load leaderboard.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Fetch Error', 'Could not load leaderboard.', 'error'); } 
             finally { document.getElementById('lb-loading').classList.add('hidden'); }
         }
 
@@ -1432,7 +1441,6 @@
             document.getElementById('view-schools').classList.add('hidden');
 
             try {
-                // Fetch up to 100 teachers
                 const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('block', '==', blockId), orderBy('learnersEnrolled', 'desc'), limit(100))); 
                 
                 currentBlockTeachers = []; 
@@ -1454,7 +1462,7 @@
 
                 renderTeacherTable('ALL');
                 document.getElementById('view-schools').classList.remove('hidden');
-            } catch (err) { console.error(err); showToast('Fetch Error', 'Could not load data.', 'error'); } 
+            } catch (err) { console.error(err); window.showToast('Fetch Error', 'Could not load data.', 'error'); } 
             finally { document.getElementById('lb-loading').classList.add('hidden'); }
         }
 

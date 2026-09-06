@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Search Cluster/School</label>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Search GP/Cluster/School</label>
                     <input type="text" id="filter-search" placeholder="Type to search..." class="w-full p-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
 
@@ -88,7 +88,7 @@
                                 <th class="p-4 font-bold border-b border-slate-200">Teacher Name</th>
                                 <th class="p-4 font-bold border-b border-slate-200">Phone</th>
                                 <th class="p-4 font-bold border-b border-slate-200">Block</th>
-                                <th class="p-4 font-bold border-b border-slate-200">Cluster & School (UDISE)</th>
+                                <th class="p-4 font-bold border-b border-slate-200">School Details & UDISE</th>
                                 <th class="p-4 font-bold border-b border-slate-200 text-center">Enrolled</th>
                                 <th class="p-4 font-bold border-b border-slate-200 text-right">Actions</th>
                             </tr>
@@ -102,7 +102,7 @@
         </main>
     </div>
 
-    <!-- Image Preview Modal (Only Profile Photo Now) -->
+    <!-- Image Preview Modal -->
     <div id="modal-details" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden flex flex-col max-h-[90vh]">
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -119,10 +119,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, query, where, onSnapshot, doc, writeBatch, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // KORAPUT NAMESPACE
         const appId = 'nilp-koraput';
         
         const firebaseConfig = typeof __firebase_config !== 'undefined' 
@@ -252,7 +251,8 @@
             let count = 0;
 
             blockNominations.forEach(nom => {
-                const searchString = `${nom.schoolName} ${nom.cluster} ${nom.udiseCode} ${nom.teacherName}`.toLowerCase();
+                // NEW: Search now includes Gram Panchayat
+                const searchString = `${nom.schoolName} ${nom.cluster} ${nom.gp || ''} ${nom.udiseCode} ${nom.teacherName}`.toLowerCase();
                 if (searchTerms && !searchString.includes(searchTerms)) return;
 
                 count++;
@@ -270,6 +270,7 @@
                     </td>
                     <td class="p-4 border-b border-slate-100">
                         <div class="text-sm font-semibold text-slate-700 truncate max-w-[200px]" title="${nom.schoolName}">${nom.schoolName}</div>
+                        <div class="text-[10px] text-emerald-600 font-bold uppercase mt-0.5">GP: ${nom.gp || 'N/A'}</div>
                         <div class="text-[11px] text-slate-500">${nom.cluster} | UDISE: <span class="font-mono">${nom.udiseCode}</span></div>
                     </td>
                     <td class="p-4 border-b border-slate-100 text-center">
@@ -295,7 +296,6 @@
         });
         document.getElementById('filter-search').addEventListener('input', renderTable);
 
-        // MODAL UPDATED TO ONLY SHOW PROFILE PHOTO
         window.view = (id) => {
             const nom = blockNominations.find(n => n.id === id);
             document.getElementById('details-content').innerHTML = `
@@ -330,11 +330,11 @@
             }
         };
 
-        // CSV EXPORT UPDATED TO REMOVE PROOF URL
+        // NEW: CSV Export now includes the Gram Panchayat Column
         document.getElementById('btn-export-csv').addEventListener('click', () => {
             if(blockNominations.length === 0) { alert("No data to export."); return; }
             
-            const headers = ["Teacher Name", "Phone", "Block", "Cluster", "School Name", "UDISE Code", "Learners Enrolled", "Photo URL"];
+            const headers = ["Teacher Name", "Phone", "Block", "Gram Panchayat", "Cluster", "School Name", "UDISE Code", "Learners Enrolled", "Photo URL"];
             let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
             
             blockNominations.forEach(row => {
@@ -342,6 +342,7 @@
                     `"${row.teacherName}"`,
                     `"${row.phone}"`,
                     `"${row.block}"`,
+                    `"${row.gp || 'N/A'}"`,
                     `"${row.cluster}"`,
                     `"${row.schoolName}"`,
                     `"${row.udiseCode}"`,

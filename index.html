@@ -34,15 +34,12 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3 sm:gap-4">
-                    <!-- PROFILE BUTTON -->
-                    <button id="btn-nav-profile" class="text-slate-500 hover:text-indigo-600 transition-colors w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-sm" title="My Profile">
+                    <button id="btn-nav-profile" class="text-slate-500 hover:text-indigo-600 transition-colors w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200 shadow-sm" title="My Profile">
                         <i class="fa-solid fa-user text-sm sm:text-base"></i>
                     </button>
-                    
                     <img src="ullas_logo.png" alt="ULLAS" class="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-sm" onerror="this.src='https://placehold.co/512x512/ffffff/ea580c?text=ULLAS'">
-                    
-                    <!-- NEW: CLEAN DOT STATUS INDICATOR -->
-                    <div id="auth-status" class="w-3 h-3 rounded-full bg-amber-400 animate-pulse shadow-sm border border-slate-200 ml-1" title="Connecting..."></div>
+                    <!-- Minimalist Security Dot -->
+                    <div id="auth-status-dot" class="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-amber-400 animate-pulse ml-1" title="Connecting..."></div>
                 </div>
             </div>
         </div>
@@ -129,7 +126,6 @@
             </button>
         </div>
 
-        <!-- USER PROFILE SECTION -->
         <section id="section-profile" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-indigo-500 max-w-2xl mx-auto">
                 <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
@@ -143,7 +139,6 @@
                 </div>
                 
                 <div class="p-6 md:p-8 bg-slate-50/50">
-                    <!-- Login State -->
                     <div id="profile-login-div" class="block">
                         <p class="text-slate-600 mb-6 font-medium text-center">ଲଗ୍ ଇନ୍ କରିବାକୁ ଆପଣଙ୍କର ଫୋନ୍ ନମ୍ବର ଏବଂ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ |</p>
                         <form id="profile-login-form" class="space-y-4 max-w-sm mx-auto">
@@ -163,14 +158,16 @@
                             <button type="submit" id="btn-prof-login" class="w-full py-3 mt-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-bold shadow flex justify-center items-center gap-2">
                                 ଲଗ୍ ଇନ୍ (Login)
                             </button>
+                            <!-- Forgot PIN Link -->
+                            <div class="text-center mt-3">
+                                <button type="button" class="btn-forgot-pin text-indigo-500 hover:text-indigo-700 text-xs font-bold underline transition-colors">ପିନ୍ ଭୁଲିଯାଇଛନ୍ତି କି? (Forgot PIN?)</button>
+                            </div>
                         </form>
                     </div>
 
-                    <!-- View/Edit State -->
                     <div id="profile-view-div" class="hidden">
                         <form id="profile-edit-form">
                             <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6 text-center relative">
-                                <!-- Photo Edit -->
                                 <div class="relative w-28 h-28 mx-auto mb-4 group cursor-pointer">
                                     <img id="prof-disp-photo" src="" class="w-28 h-28 rounded-full object-cover border-4 border-slate-100 shadow-md">
                                     <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -179,7 +176,6 @@
                                     <input type="file" id="prof-file-photo" accept="image/jpeg, image/png, image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                                 </div>
 
-                                <!-- Name Edit -->
                                 <div class="mb-5 relative w-max mx-auto">
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Teacher Name</label>
                                     <div class="flex items-center justify-center border-b-2 border-dashed border-slate-300 hover:border-indigo-400 focus-within:border-indigo-500 transition-colors px-2 pb-1">
@@ -188,7 +184,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Static Info -->
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left bg-slate-50 p-4 rounded-lg border border-slate-100">
                                     <div class="col-span-2"><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">School</span> <span id="prof-disp-school" class="font-bold text-slate-800"></span></div>
                                     <div><span class="text-slate-500 font-medium text-[11px] uppercase tracking-wider block">Block</span> <span id="prof-disp-block" class="font-bold text-slate-800"></span></div>
@@ -212,7 +207,6 @@
             </div>
         </section>
 
-        <!-- NOMINATION FORM SECTION -->
         <section id="section-form" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-blue-800">
                 <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
@@ -239,22 +233,23 @@
                                 <input type="text" id="teacher-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white">
                             </div>
                             
-                            <!-- SMART PHONE NUMBER INPUT -->
+                            <!-- SMART PHONE VALIDATION -->
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+91</span>
-                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide transition-all" placeholder="9876543210">
+                                    <input type="tel" id="teacher-phone" pattern="[0-9]{10}" title="Must be exactly 10 digits" maxlength="10" required class="w-full pl-12 pr-10 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 bg-white tracking-wide transition-all outline-none" placeholder="9876543210">
                                     
                                     <!-- Dynamic Icons -->
-                                    <div id="phone-loader" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-indigo-500">
-                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                    <div id="phone-check-loader" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        <i class="fa-solid fa-spinner fa-spin text-indigo-500"></i>
                                     </div>
-                                    <div id="phone-valid" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-emerald-500">
-                                        <i class="fa-solid fa-check-circle text-lg"></i>
+                                    <div id="phone-success-icon" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        <i class="fa-solid fa-circle-check text-green-500 text-lg"></i>
                                     </div>
                                 </div>
-                                <!-- WARNING BOX -->
+                                
+                                <!-- Duplicate Warning Box -->
                                 <div id="phone-duplicate-error" class="hidden mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700 font-bold leading-relaxed shadow-inner">
                                     <i class="fa-solid fa-circle-exclamation mr-1"></i> ଏହି ନମ୍ବରଟି ପୂର୍ବରୁ ପଞ୍ଜିକୃତ! <br>
                                     <span class="font-medium text-slate-600 mt-1 block">
@@ -302,7 +297,6 @@
                                 <p id="udise-error" class="hidden mt-3 text-center text-red-500 text-sm font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i> ଭୁଲ୍ କୋଡ୍ (Invalid Koraput UDISE)</p>
                             </div>
 
-                            <!-- Verified School Panel -->
                             <div id="verified-school-panel" class="hidden bg-emerald-50 border-2 border-emerald-400 rounded-xl p-4 shadow-sm relative overflow-hidden">
                                 <div class="absolute top-0 right-0 w-16 h-16 bg-emerald-100 rounded-bl-full z-0"></div>
                                 <div class="relative z-10 flex items-start gap-3">
@@ -352,7 +346,6 @@
             </div>
         </section>
 
-        <!-- UPDATE SCORE SECTION -->
         <section id="section-update" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-cyan-500 max-w-2xl mx-auto">
                 <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
@@ -385,6 +378,10 @@
                             <button type="submit" id="btn-up-login" class="w-full py-3 mt-2 bg-cyan-600 text-white rounded-xl hover:bg-cyan-700 font-bold shadow flex justify-center items-center gap-2">
                                 ଲଗ୍ ଇନ୍ (Login)
                             </button>
+                            <!-- Forgot PIN Link -->
+                            <div class="text-center mt-3">
+                                <button type="button" class="btn-forgot-pin text-cyan-600 hover:text-cyan-800 text-xs font-bold underline transition-colors">ପିନ୍ ଭୁଲିଯାଇଛନ୍ତି କି? (Forgot PIN?)</button>
+                            </div>
                         </form>
                     </div>
 
@@ -415,7 +412,6 @@
             </div>
         </section>
 
-        <!-- SUCCESS SECTION -->
         <section id="section-success" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-xl border-t-4 border-green-500 overflow-hidden mb-12 p-10 md:p-16 flex flex-col items-center justify-center text-center">
                 <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-inner border-4 border-white"><i class="fa-solid fa-check text-5xl text-green-600"></i></div>
@@ -442,7 +438,6 @@
             </div>
         </section>
 
-        <!-- CERTIFICATE SECTION -->
         <section id="section-certificate" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-xl border-t-4 border-amber-500 overflow-hidden mb-12 flex flex-col items-center justify-center p-6 md:p-12 relative max-w-2xl mx-auto">
                 <div id="cert-login-div" class="w-full">
@@ -472,6 +467,10 @@
                         <button type="submit" id="btn-cert-login" class="w-full py-3 mt-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold shadow-lg flex justify-center items-center gap-2 transition-all">
                             ଲଗ୍ ଇନ୍ (Login)
                         </button>
+                        <!-- Forgot PIN Link -->
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn-forgot-pin text-amber-600 hover:text-amber-800 text-xs font-bold underline transition-colors">ପିନ୍ ଭୁଲିଯାଇଛନ୍ତି କି? (Forgot PIN?)</button>
+                        </div>
                     </form>
                 </div>
 
@@ -482,19 +481,18 @@
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6" id="cert-disp-tier">Level</p>
                     
                     <button id="btn-download-cert" class="px-8 py-4 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-black shadow-xl text-lg flex items-center justify-center gap-3 mx-auto transition-transform hover:scale-105 border-2 border-amber-600 w-full max-w-[280px]">
-                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍
+                        <i class="fa-solid fa-download"></i> ସାର୍ଟିଫିକେଟ୍ (Download)
                     </button>
                     
-                    <a id="btn-whatsapp-share" href="#" target="_blank" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
-                        <i class="fa-brands fa-whatsapp text-xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
-                    </a>
+                    <button id="btn-whatsapp-share" class="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 font-bold shadow-lg text-base flex items-center justify-center gap-2 mx-auto mt-4 transition-transform hover:scale-105 border-2 border-green-600 w-full max-w-[280px]">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i> ହ୍ୱାଟସ୍ଆପ୍ ରେ ସେୟାର୍ 
+                    </button>
 
                     <canvas id="cert-canvas" class="hidden"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- LEADERBOARD SECTION -->
         <section id="section-leaderboard" class="hidden animate-fade-in-up">
             <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden mb-12 border-t-4 border-emerald-500">
                 <div class="bg-white px-6 py-5 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -563,6 +561,41 @@
         </section>
     </main>
 
+    <div id="modal-forgot-pin" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-indigo-500"></i> ପିନ୍ ପରିବର୍ତ୍ତନ (Reset PIN)</h3>
+                <button id="close-forgot-pin" class="text-slate-400 hover:text-red-500 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="forgot-pin-form" class="p-6 space-y-4">
+                <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-2 text-center">ନୂଆ ପିନ୍ ସେଟ୍ କରିବା ପାଇଁ ଆପଣଙ୍କର ପଞ୍ଜୀକୃତ ଫୋନ୍ ନମ୍ବର ଏବଂ ବିଦ୍ୟାଳୟର UDISE କୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ।</p>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
+                    <input type="tel" id="reset-phone" pattern="[0-9]{10}" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-sm font-bold tracking-widest text-center">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">UDISE କୋଡ୍ (UDISE Code) *</label>
+                    <input type="text" id="reset-udise" pattern="[0-9]{11}" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-sm font-bold tracking-widest text-center">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ନୂଆ ପିନ୍ *</label>
+                        <input type="password" id="reset-pin" pattern="[0-9]{4}" maxlength="4" required class="w-full px-2 py-2 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-center text-lg font-black tracking-widest" placeholder="••••">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ନିଶ୍ଚିତ କରନ୍ତୁ *</label>
+                        <input type="password" id="reset-pin-confirm" pattern="[0-9]{4}" maxlength="4" required class="w-full px-2 py-2 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-center text-lg font-black tracking-widest" placeholder="••••">
+                    </div>
+                </div>
+                <button type="submit" id="btn-reset-submit" class="w-full py-3 mt-4 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm">
+                    ପିନ୍ ଅପଡେଟ୍ କରନ୍ତୁ (Reset)
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- OFFICIAL FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t-4 border-slate-800 mt-auto w-full relative z-30">
         <p class="font-medium text-slate-300 mb-2">© 2026 NILP Koraput District Administration. All Rights Reserved.</p>
@@ -618,10 +651,7 @@
         let newlyRegisteredTeacherName = ""; 
         let newlyRegisteredScore = 0;
         let currentBlockTeachers = []; 
-        
-        // NEW: Form Validation Flags
-        let isPhoneValid = false;
-        let isUdiseValid = false;
+        let isPhoneValidForRegistration = false;
 
         const koraputBlocks = {
             "BANDHUGAON": "Bandhugaon (ବନ୍ଧୁଗାଁ)", "BOIPARIGUDA": "Boipariguda (ବୋଇପାରିଗୁଡ଼ା)", 
@@ -665,10 +695,11 @@
                     if (user) {
                         currentUser = user; isFirebaseReady = true;
                         
-                        // ONLY GREEN DOT
-                        const authDot = document.getElementById('auth-status');
-                        authDot.className = "w-3 h-3 rounded-full bg-green-500 shadow-sm border border-slate-200 ml-1";
-                        authDot.title = "Connected Securely";
+                        // Security Dot becomes Solid Green
+                        const dot = document.getElementById('auth-status-dot');
+                        dot.classList.remove('bg-amber-400', 'animate-pulse');
+                        dot.classList.add('bg-emerald-500', 'shadow-[0_0_8px_rgba(16,185,129,0.8)]');
+                        dot.title = "Secured";
                         
                         const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
                         onSnapshot(settingsRef, (docSnap) => {
@@ -700,6 +731,7 @@
             } catch (err) { console.error("Init Error:", err); }
         }
 
+        // --- STREAMING_CHUNK:Section Toggling & Inputs ---
         function hideAllSections() {
             Object.values(sections).forEach(sec => sec.classList.add('hidden'));
             Object.values(buttons).forEach(btn => btn.classList.remove('ring-4', 'ring-blue-100', 'ring-emerald-100', 'ring-amber-100', 'ring-cyan-100'));
@@ -710,11 +742,10 @@
         buttons.update.addEventListener('click', () => { hideAllSections(); sections.update.classList.remove('hidden'); sections.update.scrollIntoView(); buttons.update.classList.add('ring-4', 'ring-cyan-100'); });
         buttons.certificate.addEventListener('click', () => { hideAllSections(); sections.certificate.classList.remove('hidden'); sections.certificate.scrollIntoView(); buttons.certificate.classList.add('ring-4', 'ring-amber-100'); document.getElementById('cert-login-div').classList.remove('hidden'); document.getElementById('cert-download-div').classList.add('hidden'); document.getElementById('cert-login-form').reset(); });
         
-        // AUTO-SCROLL FIX FOR PROFILE
         document.getElementById('btn-nav-profile').addEventListener('click', () => { 
             hideAllSections(); 
             sections.profile.classList.remove('hidden'); 
-            sections.profile.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            sections.profile.scrollIntoView(); 
         });
 
         document.querySelectorAll('.close-section').forEach(btn => btn.addEventListener('click', () => { hideAllSections(); window.scrollTo({top:0}); }));
@@ -734,64 +765,55 @@
         setupPinToggle('toggle-cert-pin', 'cert-pin');
         setupPinToggle('toggle-prof-pin', 'prof-pin');
 
+        // --- STREAMING_CHUNK:Smart Phone & UDISE Validation Logic ---
         const submitBtn = document.getElementById('submit-btn');
         const learnersInput = document.getElementById('learners-enrolled');
+        const teacherPhoneInput = document.getElementById('teacher-phone');
 
-        // FORM VALIDITY CHECKER
-        function evaluateSubmitButton() {
-             if (isPhoneValid && isUdiseValid) {
-                  submitBtn.disabled = false;
-                  submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
-             } else {
-                  submitBtn.disabled = true;
-                  submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
-             }
-        }
-
-        // NEW: SMART PHONE CHECKER
-        document.getElementById('teacher-phone').addEventListener('input', async function(e) {
+        // Smart Phone Check
+        teacherPhoneInput.addEventListener('input', async function(e) {
             const val = e.target.value.trim();
-            const errBox = document.getElementById('phone-duplicate-error');
-            const loader = document.getElementById('phone-loader');
-            const validIcon = document.getElementById('phone-valid');
+            const loader = document.getElementById('phone-check-loader');
+            const successIcon = document.getElementById('phone-success-icon');
+            const dupError = document.getElementById('phone-duplicate-error');
             
-            errBox.classList.add('hidden');
-            this.classList.remove('border-red-500', 'bg-red-50', 'border-emerald-500', 'bg-emerald-50');
-            validIcon.classList.add('hidden');
-            isPhoneValid = false;
-            evaluateSubmitButton();
+            dupError.classList.add('hidden');
+            this.classList.remove('border-red-500', 'bg-red-50');
+            successIcon.classList.add('hidden');
+            isPhoneValidForRegistration = false;
+            updateSubmitButtonState();
 
             if(val.length === 10) {
+                if (!isFirebaseReady) return;
                 loader.classList.remove('hidden');
+                
                 try {
                     const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
                     loader.classList.add('hidden');
                     
                     if (!dupSnap.empty) {
-                        errBox.classList.remove('hidden');
+                        dupError.classList.remove('hidden');
                         this.classList.add('border-red-500', 'bg-red-50');
-                        isPhoneValid = false;
                     } else {
-                        this.classList.add('border-emerald-500', 'bg-emerald-50');
-                        validIcon.classList.remove('hidden');
-                        isPhoneValid = true;
+                        successIcon.classList.remove('hidden');
+                        isPhoneValidForRegistration = true;
+                        updateSubmitButtonState();
                     }
                 } catch (err) {
-                    console.error("Phone check error:", err);
+                    console.error("Phone check error", err);
                     loader.classList.add('hidden');
                 }
-                evaluateSubmitButton();
+            } else {
+                loader.classList.add('hidden');
             }
         });
 
+        // UDISE Smart Auto-Fill
         document.getElementById('school-udise').addEventListener('input', function(e) {
             const val = e.target.value.trim();
             const panel = document.getElementById('verified-school-panel');
             const err = document.getElementById('udise-error');
             const loader = document.getElementById('udise-loader');
-
-            isUdiseValid = false;
-            evaluateSubmitButton();
 
             if(val.length === 11) {
                 loader.classList.remove('hidden');
@@ -800,6 +822,7 @@
                 
                 learnersInput.disabled = true;
                 learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
+                updateSubmitButtonState();
                 
                 setTimeout(() => {
                     loader.classList.add('hidden');
@@ -808,15 +831,12 @@
                         document.getElementById('v-school-name').textContent = s.n;
                         document.getElementById('v-block').textContent = koraputBlocks[s.b] || s.b;
                         document.getElementById('v-cluster').textContent = s.c;
-                        
                         panel.classList.remove('hidden');
                         
                         learnersInput.disabled = false;
                         learnersInput.className = "w-full px-4 py-3 border-2 border-indigo-300 rounded-xl focus:ring-4 focus:ring-indigo-100 bg-white font-black text-indigo-700 text-center text-xl transition-all shadow-inner";
                         learnersInput.placeholder = "Minimum 20";
-                        
-                        isUdiseValid = true;
-                        evaluateSubmitButton();
+                        updateSubmitButtonState();
                     } else {
                         err.classList.remove('hidden');
                     }
@@ -829,9 +849,23 @@
                 learnersInput.disabled = true;
                 learnersInput.className = "w-full px-4 py-3 border border-slate-300 rounded-xl bg-slate-100 font-bold text-slate-400 cursor-not-allowed text-center text-lg transition-colors";
                 learnersInput.placeholder = "ଲକ୍ଡ୍ (Locked)";
+                updateSubmitButtonState();
             }
         });
 
+        // Master unlock function for Submit Button
+        function updateSubmitButtonState() {
+            const isUdisePanelVisible = !document.getElementById('verified-school-panel').classList.contains('hidden');
+            if (isPhoneValidForRegistration && isUdisePanelVisible) {
+                submitBtn.disabled = false;
+                submitBtn.className = "px-8 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 font-bold shadow-lg flex items-center gap-2 transition-all relative overflow-hidden";
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.className = "px-8 py-3 bg-slate-300 text-slate-500 rounded-xl font-bold flex items-center gap-2 cursor-not-allowed transition-all relative overflow-hidden";
+            }
+        }
+
+        // --- STREAMING_CHUNK:Image processing & Forgot PIN logic ---
         function compressImage(file, isAvatar = false) {
             return new Promise((resolve, reject) => {
                 if (!file) return resolve(null);
@@ -872,7 +906,72 @@
             }
         });
 
-        // --- SUBMISSION LOGIC ---
+        // Global Forgot PIN Modal Logic
+        const forgotPinModal = document.getElementById('modal-forgot-pin');
+        document.querySelectorAll('.btn-forgot-pin').forEach(btn => {
+            btn.addEventListener('click', () => {
+                forgotPinModal.classList.remove('hidden');
+                setTimeout(() => {
+                    forgotPinModal.classList.remove('opacity-0');
+                    forgotPinModal.querySelector('div').classList.remove('scale-95');
+                }, 10);
+            });
+        });
+
+        document.getElementById('close-forgot-pin').addEventListener('click', () => {
+            forgotPinModal.classList.add('opacity-0');
+            forgotPinModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                forgotPinModal.classList.add('hidden');
+                document.getElementById('forgot-pin-form').reset();
+            }, 300);
+        });
+
+        document.getElementById('forgot-pin-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-reset-submit');
+            
+            const phone = document.getElementById('reset-phone').value.trim();
+            const udise = document.getElementById('reset-udise').value.trim();
+            const newPin = document.getElementById('reset-pin').value.trim();
+            const confirmPin = document.getElementById('reset-pin-confirm').value.trim();
+
+            if (newPin !== confirmPin) return showToast('Error', 'PINs do not match.', 'error');
+            
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ଯାଞ୍ଚ ହେଉଛି...`; 
+            btn.disabled = true;
+
+            try {
+                const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
+                
+                if (snap.empty) {
+                    showToast('Error', 'Phone Number not registered.', 'error');
+                    btn.innerHTML = originalText; btn.disabled = false; return;
+                }
+
+                const docSnap = snap.docs[0];
+                const data = docSnap.data();
+
+                if (data.udiseCode !== udise) {
+                    showToast('Error', 'Incorrect UDISE Code for this account.', 'error');
+                    btn.innerHTML = originalText; btn.disabled = false; return;
+                }
+
+                await updateDoc(docSnap.ref, { securityPin: newPin, lastUpdated: serverTimestamp() });
+
+                showToast('Success', 'PIN reset successfully! You can now login.', 'success');
+                document.getElementById('close-forgot-pin').click();
+
+            } catch (err) { 
+                console.error(err); 
+                showToast('Error', 'System error occurred.', 'error'); 
+            } finally { 
+                btn.innerHTML = originalText; btn.disabled = false; 
+            }
+        });
+
+        // --- STREAMING_CHUNK:Form Submission & Update Score Logic ---
         document.getElementById('nomination-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!isFirebaseReady || !currentUser) return showToast('Error', 'Database offline.', 'error');
@@ -890,13 +989,6 @@
             try {
                 const phone = document.getElementById('teacher-phone').value.trim();
                 const learners = parseInt(document.getElementById('learners-enrolled').value, 10);
-
-                // Double check just in case
-                const dupSnap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', phone)));
-                if (!dupSnap.empty) {
-                    showToast('Duplicate Phone', 'Phone Number already registered.', 'error');
-                    submitBtn.disabled = false; spinner.classList.add('hidden'); return;
-                }
 
                 const ts = Date.now();
                 let photoUrl = "https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo";
@@ -931,14 +1023,9 @@
 
                 document.getElementById('nomination-form').reset();
                 document.getElementById('verified-school-panel').classList.add('hidden');
+                document.getElementById('phone-success-icon').classList.add('hidden');
+                isPhoneValidForRegistration = false;
                 learnersInput.disabled = true;
-                
-                // Reset flags
-                isPhoneValid = false;
-                isUdiseValid = false;
-                evaluateSubmitButton();
-                document.getElementById('phone-valid').classList.add('hidden');
-                document.getElementById('teacher-phone').classList.remove('border-emerald-500', 'bg-emerald-50');
                 
                 hideAllSections(); sections.success.classList.remove('hidden');
                 
@@ -946,7 +1033,6 @@
             finally { submitBtn.disabled = false; spinner.classList.add('hidden'); }
         });
 
-        // --- UPDATE LOGIC ---
         document.getElementById('update-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-up-login');
@@ -1002,7 +1088,7 @@
             finally { btn.disabled = false; spinner.classList.add('hidden'); }
         });
 
-        // --- MY PROFILE EDITING LOGIC ---
+        // --- STREAMING_CHUNK:Profile & Certificate Actions... ---
         document.getElementById('profile-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-prof-login');
@@ -1022,7 +1108,6 @@
                 document.getElementById('profile-login-div').classList.add('hidden');
                 document.getElementById('profile-view-div').classList.remove('hidden');
                 
-                // Populate Edit View
                 document.getElementById('prof-disp-name').value = activeProfileData.teacherName;
                 document.getElementById('prof-disp-photo').src = activeProfileData.photoUrl || "https://placehold.co/150x150/e2e8f0/64748b?text=No+Photo";
                 document.getElementById('prof-disp-school').textContent = activeProfileData.schoolName;
@@ -1036,7 +1121,6 @@
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
-        // Handle profile photo re-upload preview
         document.getElementById('prof-file-photo').addEventListener('change', async (e) => {
             if(e.target.files.length > 0) {
                 const file = e.target.files[0];
@@ -1045,7 +1129,6 @@
             }
         });
 
-        // Save Profile Edits
         document.getElementById('profile-edit-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-prof-save');
@@ -1074,7 +1157,7 @@
                     updatePayload.lastUpdated = serverTimestamp();
                     await updateDoc(activeProfileRef, updatePayload);
                     showToast('Success', 'Profile updated successfully!', 'success');
-                    activeProfileData = { ...activeProfileData, ...updatePayload }; // update local cache
+                    activeProfileData = { ...activeProfileData, ...updatePayload };
                 } else {
                     showToast('Info', 'No changes made.', 'success');
                 }
@@ -1083,7 +1166,6 @@
             finally { btn.innerHTML = originalText; btn.disabled = false; }
         });
 
-        // Profile Logout
         document.getElementById('btn-prof-logout').addEventListener('click', () => {
             activeProfileRef = null;
             activeProfileData = null;
@@ -1092,7 +1174,6 @@
             document.getElementById('profile-login-div').classList.remove('hidden');
         });
 
-        // --- CORE IMAGE GENERATOR ---
         function getGeneratedCertificateCanvas(nameToPrint, score, callback) {
             const canvas = document.getElementById('cert-canvas');
             const ctx = canvas.getContext('2d');
@@ -1113,7 +1194,6 @@
             img.onerror = () => { callback(null); };
         }
 
-        // WHATSAPP SHARE IMAGE + TEXT FUNCTION (Web Share API)
         async function shareToWhatsApp(name, score, btnElement) {
             const originalText = btnElement.innerHTML;
             btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xl"></i> ଅପେକ୍ଷା କରନ୍ତୁ...`;
@@ -1150,17 +1230,14 @@
             });
         }
 
-        // ATTACH TO WHATSAPP BUTTON ON SUCCESS PAGE
         document.getElementById('btn-success-whatsapp').addEventListener('click', function() {
             if(newlyRegisteredTeacherName) { shareToWhatsApp(newlyRegisteredTeacherName, newlyRegisteredScore, this); }
         });
 
-        // ATTACH TO WHATSAPP BUTTON ON CERTIFICATE PAGE
         document.getElementById('btn-whatsapp-share').addEventListener('click', function() {
             shareToWhatsApp(certTeacherName, certTeacherScore, this);
         });
 
-        // ATTACH TO DOWNLOAD BUTTON ON SUCCESS PAGE
         document.getElementById('btn-success-to-cert').addEventListener('click', function() {
             if (newlyRegisteredTeacherName) {
                 const btnElement = this;
@@ -1185,7 +1262,6 @@
             }
         });
 
-        // --- CERTIFICATE LOGIN LOGIC ---
         document.getElementById('cert-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-cert-login');
@@ -1228,7 +1304,6 @@
             finally { btn.innerHTML = `ଲଗ୍ ଇନ୍ (Login)`; btn.disabled = false; }
         });
 
-        // STANDARD DOWNLOAD BUTTON (Certificate Page)
         document.getElementById('btn-download-cert').addEventListener('click', function() {
             const btnElement = this;
             const originalText = btnElement.innerHTML;
@@ -1249,7 +1324,7 @@
             });
         });
 
-        // --- LEADERBOARD LOGIC ---
+        // --- STREAMING_CHUNK:Leaderboard Fetching... ---
         document.getElementById('btn-back-blocks').addEventListener('click', loadOverallLeaderboard);
 
         async function loadOverallLeaderboard() {
@@ -1366,7 +1441,6 @@
             renderTeacherTable(e.target.value);
         });
 
-        // --- TOAST NOTIFICATION FUNCTION ---
         function showToast(title, msg, type = 'success') {
             const t = document.getElementById('custom-toast');
             document.getElementById('toast-title').textContent = title;

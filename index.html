@@ -573,7 +573,18 @@
                 <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-2 text-center">ନୂଆ ପିନ୍ ସେଟ୍ କରିବା ପାଇଁ ଆପଣଙ୍କର ପଞ୍ଜୀକୃତ ଫୋନ୍ ନମ୍ବର ଏବଂ ବିଦ୍ୟାଳୟର UDISE କୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ।</p>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">ଫୋନ୍ ନମ୍ବର (Phone Number) *</label>
-                    <input type="tel" id="reset-phone" pattern="[0-9]{10}" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-sm font-bold tracking-widest text-center">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 font-medium text-sm">+91</span>
+                        <input type="tel" id="reset-phone" pattern="[0-9]{10}" maxlength="10" required class="w-full pl-10 pr-10 py-2.5 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-sm font-bold tracking-widest text-center" placeholder="9876543210">
+                        <!-- Dynamic Icons -->
+                        <div id="reset-phone-loader" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <i class="fa-solid fa-spinner fa-spin text-indigo-500"></i>
+                        </div>
+                        <div id="reset-phone-success" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <i class="fa-solid fa-circle-check text-green-500 text-lg"></i>
+                        </div>
+                    </div>
+                    <p id="reset-phone-error" class="hidden mt-1 text-center text-red-500 text-xs font-bold">ଏହି ନମ୍ବରଟି ପଞ୍ଜିକୃତ ନୁହେଁ (Not registered)</p>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">UDISE କୋଡ୍ (UDISE Code) *</label>
@@ -589,7 +600,7 @@
                         <input type="password" id="reset-pin-confirm" pattern="[0-9]{4}" maxlength="4" required class="w-full px-2 py-2 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-center text-lg font-black tracking-widest" placeholder="••••">
                     </div>
                 </div>
-                <button type="submit" id="btn-reset-submit" class="w-full py-3 mt-4 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm">
+                <button type="submit" id="btn-reset-submit" disabled class="w-full py-3 mt-4 bg-slate-300 text-slate-500 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm cursor-not-allowed">
                     ପିନ୍ ଅପଡେଟ୍ କରନ୍ତୁ (Reset)
                 </button>
             </form>
@@ -924,7 +935,67 @@
             setTimeout(() => {
                 forgotPinModal.classList.add('hidden');
                 document.getElementById('forgot-pin-form').reset();
+                
+                // Reset live validation states
+                isResetPhoneValid = false;
+                updateResetButtonState();
+                const resetPhoneInput = document.getElementById('reset-phone');
+                resetPhoneInput.classList.remove('border-red-500', 'bg-red-50', 'border-green-500', 'bg-green-50');
+                document.getElementById('reset-phone-error').classList.add('hidden');
+                document.getElementById('reset-phone-success').classList.add('hidden');
             }, 300);
+        });
+
+        // Live Phone Validation for Forgot PIN
+        let isResetPhoneValid = false;
+        const btnResetSubmit = document.getElementById('btn-reset-submit');
+
+        function updateResetButtonState() {
+            if (isResetPhoneValid) {
+                btnResetSubmit.disabled = false;
+                btnResetSubmit.className = "w-full py-3 mt-4 bg-slate-800 text-white rounded-xl hover:bg-slate-900 font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm";
+            } else {
+                btnResetSubmit.disabled = true;
+                btnResetSubmit.className = "w-full py-3 mt-4 bg-slate-300 text-slate-500 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2 text-sm cursor-not-allowed";
+            }
+        }
+
+        document.getElementById('reset-phone').addEventListener('input', async function(e) {
+            const val = e.target.value.trim();
+            const loader = document.getElementById('reset-phone-loader');
+            const successIcon = document.getElementById('reset-phone-success');
+            const errText = document.getElementById('reset-phone-error');
+            
+            errText.classList.add('hidden');
+            this.classList.remove('border-red-500', 'bg-red-50', 'border-green-500', 'bg-green-50');
+            successIcon.classList.add('hidden');
+            isResetPhoneValid = false;
+            updateResetButtonState();
+
+            if(val.length === 10) {
+                if (!isFirebaseReady) return;
+                loader.classList.remove('hidden');
+                
+                try {
+                    const snap = await getDocs(query(collection(db, 'artifacts', appId, 'public', 'data', 'nominations'), where('phone', '==', val)));
+                    loader.classList.add('hidden');
+                    
+                    if (snap.empty) {
+                        errText.classList.remove('hidden');
+                        this.classList.add('border-red-500', 'bg-red-50');
+                    } else {
+                        successIcon.classList.remove('hidden');
+                        this.classList.add('border-green-500', 'bg-green-50');
+                        isResetPhoneValid = true;
+                        updateResetButtonState();
+                    }
+                } catch (err) {
+                    console.error("Phone check error", err);
+                    loader.classList.add('hidden');
+                }
+            } else {
+                loader.classList.add('hidden');
+            }
         });
 
         document.getElementById('forgot-pin-form').addEventListener('submit', async (e) => {

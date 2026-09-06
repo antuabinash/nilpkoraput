@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="or">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +21,6 @@
             top: 0; bottom: 0; left: 0; right: 0;
             background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
         }
-
-        .fade-in { animation: fadeIn 0.5s ease-in forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -34,24 +31,22 @@
             <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-orange-500/30">
                 <i class="fa-solid fa-graduation-cap text-3xl text-white"></i>
             </div>
-            <h3 id="tut-step" class="text-orange-400 font-bold tracking-widest uppercase text-sm mb-3">Welcome</h3>
-            <h1 id="tut-title" class="text-5xl font-black text-white leading-tight mb-6 transition-all duration-300">Koraput ULLAS Initiative</h1>
-            <p id="tut-desc" class="text-xl text-slate-400 font-medium leading-relaxed transition-all duration-300">Automated Platform Demonstration.</p>
+            <h3 id="tut-step" class="text-orange-400 font-bold tracking-widest uppercase text-sm mb-3">ସ୍ୱାଗତମ୍ (WELCOME)</h3>
+            <h1 id="tut-title" class="text-5xl font-black text-white leading-tight mb-6 transition-all duration-300">କୋରାପୁଟ ଉଲ୍ଲାସ ଇନିସିଏଟିଭ</h1>
+            <p id="tut-desc" class="text-xl text-slate-400 font-medium leading-relaxed transition-all duration-300">ସ୍ୱୟଂଚାଳିତ ପ୍ଲାଟଫର୍ମ ଡେମୋ | Automated Platform Demonstration.</p>
             
             <button id="start-btn" onclick="startTutorial()" class="mt-12 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-full w-max shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all">
-                <i class="fa-solid fa-play mr-2"></i> Start Automation
+                <i class="fa-solid fa-play mr-2"></i> ଡେମୋ ଆରମ୍ଭ କରନ୍ତୁ
             </button>
         </div>
 
         <!-- RIGHT PANE: Mobile Simulator -->
         <div class="w-7/12 h-full flex items-center justify-center relative overflow-hidden">
-            <!-- Decorative background elements -->
             <div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
             <div class="absolute bottom-[-10%] left-[10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl"></div>
 
             <!-- Mobile Phone Hardware Frame -->
             <div class="relative w-[400px] h-[820px] bg-slate-800 rounded-[3.5rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] border-[12px] border-slate-800 overflow-hidden ring-1 ring-slate-700 z-20">
-                <!-- Phone Camera Notch -->
                 <div class="absolute top-0 inset-x-0 h-7 w-40 bg-slate-800 rounded-b-3xl mx-auto z-50 flex items-center justify-center gap-4">
                     <div class="w-16 h-1.5 bg-slate-700 rounded-full"></div>
                     <div class="w-3 h-3 bg-slate-900 rounded-full border border-slate-700/50"></div>
@@ -66,7 +61,7 @@
     <script>
         const frame = document.getElementById('app-frame');
         
-        // Automation Helper Functions
+        // Automation Helpers
         const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         
         const updateText = async (step, title, desc) => {
@@ -87,11 +82,11 @@
         const simulateTyping = async (inputId, text, speed = 100) => {
             const doc = frame.contentWindow.document;
             const input = doc.getElementById(inputId);
+            if(!input) return;
             input.focus();
             input.value = '';
             for (let i = 0; i < text.length; i++) {
                 input.value += text[i];
-                // Dispatch input event so your site's JS detects the changes
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 await wait(speed);
             }
@@ -102,7 +97,7 @@
             const doc = frame.contentWindow.document;
             const el = doc.getElementById(id);
             if(el) {
-                el.style.transform = "scale(0.95)"; // Visual click effect
+                el.style.transform = "scale(0.95)";
                 await wait(150);
                 el.style.transform = "scale(1)";
                 el.click();
@@ -119,54 +114,114 @@
         // THE MASTER AUTOMATION SCRIPT
         async function startTutorial() {
             document.getElementById('start-btn').classList.add('hidden');
-            const doc = frame.contentWindow.document;
+            
+            // Smart Demo Data Generator (Prevents duplication errors)
+            const randomPhone = "98" + Math.floor(10000000 + Math.random() * 90000000); 
+            const baseScore = Math.floor(25 + Math.random() * 15);
+            const upgradedScore = baseScore + 20;
 
-            // Phase 1: Intro
-            await updateText("Phase 1", "Zero-Cost District Portal", "Designed specifically for Koraput's rural connectivity. Lightning fast and highly secure.");
-            await wait(3000);
+            await wait(2000);
 
-            // Phase 2: Registration Click
-            await updateText("Step 1", "Teacher Registration", "Teachers simply click the registration tile to begin enrolling illiterate adults.");
+            // ================= PHASE 1: REGISTRATION ================= //
+            await updateText("ପଦକ୍ଷେପ ୧ (Step 1)", "ଶିକ୍ଷକ ପଞ୍ଜିକରଣ", "ନୂଆ ଆବେଦନ କରିବା ପାଇଁ ଶିକ୍ଷକମାନେ 'ପଞ୍ଜିକରଣ' (Registration) ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ।");
             await smoothScrollTo('btn-show-form');
             await clickElement('btn-show-form');
             await wait(2000);
 
-            // Phase 3: Personal Details
-            await updateText("Step 2", "Secure Identification", "Every teacher uses their own mobile number and sets a secure 4-digit PIN.");
+            await updateText("ପଦକ୍ଷେପ ୨ (Step 2)", "ବ୍ୟକ୍ତିଗତ ବିବରଣୀ", "ନିଜର ସଠିକ୍ ନାମ, ଫୋନ୍ ନମ୍ବର ଏବଂ ଏକ ୪-ଅଙ୍କ ବିଶିଷ୍ଟ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ। ଏହି ପିନ୍ ଆପଣଙ୍କୁ ପରେ ଦରକାର ହେବ।");
             await smoothScrollTo('teacher-name');
             await simulateTyping('teacher-name', 'Rajesh Kumar');
             await wait(500);
-            await simulateTyping('teacher-phone', '9876543210');
+            await simulateTyping('teacher-phone', randomPhone);
             await wait(500);
             await simulateTyping('teacher-pin', '1234');
             await simulateTyping('teacher-pin-confirm', '1234');
             await wait(1500);
 
-            // Phase 4: The Magic UDISE
-            await updateText("Step 3", "The Magic UDISE System", "100% Anti-Fraud. Watch what happens when the 11th digit is entered...");
+            await updateText("ପଦକ୍ଷେପ ୩ (Step 3)", "ମ୍ୟାଜିକ୍ UDISE ଟେକ୍ନୋଲୋଜି", "କେବଳ ୧୧-ଅଙ୍କ ବିଶିଷ୍ଟ ସ୍କୁଲ୍ UDISE କୋଡ୍ ଟାଇପ୍ କରନ୍ତୁ, ବିଦ୍ୟାଳୟର ସମସ୍ତ ତଥ୍ୟ ସରକାରୀ ଡାଟାବେସ୍ ରୁ ଆପେ ଆପେ ଆସିଯିବ। (100% ସୁରକ୍ଷିତ)");
             await smoothScrollTo('school-udise');
-            await simulateTyping('school-udise', '21290100104', 300); // Typing slowly for drama
-            await wait(2000);
+            await simulateTyping('school-udise', '21290100104', 200); 
+            await wait(2500);
 
-            await updateText("Verified", "Instant Database Sync", "The system instantly pulls the official School Name, Block, and Cluster from the server. Fake entries are mathematically impossible.");
-            await wait(4000);
-
-            // Phase 5: Submission
-            await updateText("Step 4", "Score Submission", "The teacher inputs the number of adults they have successfully enrolled.");
-            await simulateTyping('learners-enrolled', '55');
+            await updateText("ପଦକ୍ଷେପ ୪ (Step 4)", "ସ୍କୋର୍ ଦାଖଲ", "ବର୍ତ୍ତମାନ ଆପଣ ନାମାଙ୍କନ କରିଥିବା ମୋଟ ଶିକ୍ଷାର୍ଥୀଙ୍କ ସଂଖ୍ୟା ଲେଖି ଫର୍ମ୍ ଦାଖଲ କରନ୍ତୁ।");
+            await smoothScrollTo('learners-enrolled');
+            await simulateTyping('learners-enrolled', baseScore.toString());
             await wait(1000);
             await clickElement('submit-btn');
-            await wait(3000);
+            await wait(4000); // Wait for submission success page
 
-            // Phase 6: Success
-            await updateText("Step 5", "Instant Gratification", "The system confirms the submission and instantly updates the live district maps and leaderboards.");
-            await wait(3000);
-            
-            await updateText("Final Step", "Automated Certificates", "Teachers are rewarded instantly with a Tiered Certificate based on their enrollment count.");
-            await clickElement('btn-success-to-cert');
+            // Return to Home for next feature
+            const doc = frame.contentWindow.document;
+            const homeBtn = doc.querySelector('#section-success .close-section');
+            if(homeBtn) homeBtn.click();
+            await wait(2000);
+
+
+            // ================= PHASE 2: UPDATE SCORE ================= //
+            await updateText("ପଦକ୍ଷେପ ୫ (Step 5)", "ସ୍କୋର୍ ଅପଡେଟ୍ (Update Score)", "ଭବିଷ୍ୟତରେ ଆପଣଙ୍କର ନାମାଙ୍କନ ସଂଖ୍ୟା ବଢିଲେ, 'ସ୍କୋର୍ ଅପଡେଟ୍' ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ। ନୂଆ କରି ଫର୍ମ୍ ପୂରଣ କରିବା ଦରକାର ନାହିଁ।");
+            await smoothScrollTo('btn-show-update');
+            await clickElement('btn-show-update');
+            await wait(2000);
+
+            await updateText("ଲଗ୍-ଇନ୍ (Login)", "ସୁରକ୍ଷିତ ଲଗ୍-ଇନ୍", "କେବଳ ନିଜର ପଞ୍ଜୀକୃତ ଫୋନ୍ ନମ୍ବର ଏବଂ ସେହି ୪-ଅଙ୍କ ପିନ୍ ବ୍ୟବହାର କରି ଲଗ୍ ଇନ୍ କରନ୍ତୁ।");
+            await simulateTyping('up-phone', randomPhone);
+            await simulateTyping('up-pin', '1234');
+            await wait(500);
+            await clickElement('btn-up-login');
+            await wait(2500);
+
+            await updateText("ଅପଡେଟ୍ ସେଭ୍", "ନୂଆ ମୋଟ ସଂଖ୍ୟା (New Total)", "ଆପଣଙ୍କର ପୁରୁଣା ସ୍କୋର୍ ସେଠାରେ ଦେଖାଇବ। କେବଳ ନୂଆ ବର୍ଦ୍ଧିତ ମୋଟ ସଂଖ୍ୟା ଟାଇପ୍ କରି ସେଭ୍ କରନ୍ତୁ।");
+            await simulateTyping('new-score', upgradedScore.toString());
+            await wait(1000);
+            await clickElement('btn-save-update');
             await wait(4000);
 
-            await updateText("End of Demo", "Koraput is Ready", "Thank you for watching. The system is live.");
+            // Return to Home
+            const doc2 = frame.contentWindow.document;
+            const homeBtn2 = doc2.querySelector('#section-success .close-section');
+            if(homeBtn2) homeBtn2.click();
+            await wait(2000);
+
+
+            // ================= PHASE 3: LEADERBOARD ================= //
+            await updateText("ପଦକ୍ଷେପ ୬ (Step 6)", "ଲିଡରବୋର୍ଡ (Live Leaderboard)", "ଜିଲ୍ଲା ସ୍ତରରେ ଆପଣଙ୍କ ବ୍ଲକ୍ ଏବଂ ସ୍କୁଲର ପ୍ରଦର୍ଶନ ଏବଂ ରାଙ୍କ୍ (Rank) ଟ୍ରାକ୍ କରନ୍ତୁ।");
+            await smoothScrollTo('btn-show-leaderboard');
+            await clickElement('btn-show-leaderboard');
+            await wait(3000);
+
+            await updateText("ବ୍ଲକ୍ ରାଙ୍କିଙ୍ଗ୍", "ଲାଇଭ୍ ଡାଟା ଟ୍ରାକିଂ", "ଆପଣ କୌଣସି ବି ବ୍ଲକ୍ ଉପରେ କ୍ଲିକ୍ କରି ସେହି ବ୍ଲକର ଶ୍ରେଷ୍ଠ ୧୦୦ ଜଣ ଶିକ୍ଷକଙ୍କ ତାଲିକା ଦେଖିପାରିବେ।");
+            // Simulate clicking the first block in the leaderboard table
+            const doc3 = frame.contentWindow.document;
+            const firstBlock = doc3.querySelector('#tbody-blocks tr');
+            if(firstBlock) firstBlock.click();
+            await wait(4000);
+            
+            // Go back
+            const backBtn = doc3.getElementById('btn-back-blocks');
+            if(backBtn) backBtn.click();
+            await wait(2000);
+            
+            // Close Leaderboard
+            const closeBtnLb = doc3.querySelector('#section-leaderboard .close-section');
+            if(closeBtnLb) closeBtnLb.click();
+            await wait(2000);
+
+
+            // ================= PHASE 4: CERTIFICATE ================= //
+            await updateText("ପଦକ୍ଷେପ ୭ (Step 7)", "ପ୍ରମାଣପତ୍ର ଓ ହ୍ୱାଟସ୍ଆପ୍ ସେୟାର୍", "ସାର୍ଟିଫିକେଟ୍ ଟାଇଲ୍ ଉପରେ କ୍ଲିକ୍ କରି, ଆପଣ ଯେକୌଣସି ସମୟରେ ନିଜର ପ୍ରମାଣପତ୍ର ଡାଉନଲୋଡ୍ କିମ୍ବା ସେୟାର୍ କରିପାରିବେ।");
+            await smoothScrollTo('btn-show-certificate');
+            await clickElement('btn-show-certificate');
+            await wait(2000);
+
+            await updateText("ସାର୍ଟିଫିକେଟ୍", "ଡାଉନଲୋଡ୍ କରନ୍ତୁ", "ନିଜର ନମ୍ବର ଏବଂ ପିନ୍ ଦେଇ ନିଜର ସିଲଭର, ଗୋଲ୍ଡ, କିମ୍ବା ଡାଇମଣ୍ଡ ବ୍ୟାଜ୍ ସାର୍ଟିଫିକେଟ୍ ପ୍ରାପ୍ତ କରନ୍ତୁ।");
+            await simulateTyping('cert-phone', randomPhone);
+            await simulateTyping('cert-pin', '1234');
+            await wait(500);
+            await clickElement('btn-cert-login');
+            await wait(3000);
+
+            // Wait on the final certificate screen
+            await updateText("ସମ୍ପୂର୍ଣ୍ଣ (Complete)", "କୋରାପୁଟ ପ୍ରସ୍ତୁତ ଅଛି", "ଡେମୋ ସରିଲା | ଆଜି ହିଁ ଯୋଗଦାନ କରନ୍ତୁ ଏବଂ କୋରାପୁଟକୁ ୧୦୦% ସାକ୍ଷର କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ | \n\nଧନ୍ୟବାଦ (Thank You).");
         }
     </script>
 </body>
